@@ -18,6 +18,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const app = express();
 
+
 // This serves static files from the specified directory
 app.use(express.static(__dirname + '/build'));
 
