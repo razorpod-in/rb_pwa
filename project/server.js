@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get(['/', '/index.html'], (req, res) => {
-  res.sendFile(__dirname + '/app/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/api/getAll', (req, res) => {
