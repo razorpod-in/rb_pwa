@@ -13,33 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-html {
-  background-color: #04a9f4;
-}
-
-body {
-  align-items: center;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Roboto','Helvetica','Arial',sans-serif;
-  margin: 0;
-  text-align: center;
-  width: 100%;
-  min-height: 100vh;
-  justify-content: space-between;
-}
-
-img {
-  max-width: 100%;
-}
-
-header {
-  width: 100%;
-}
-
-.navbar {
+  .navbar {
   align-items: center;
   background-color: #03A9F4;
   display: flex;
@@ -54,10 +28,66 @@ header {
   text-decoration: none;
 }
 
+/* Splash Screen */
 .splash-screen-logo{
-  left: 22%;
-  position: absolute;
-  top: 42%;
+  margin-top: 70%;
+}
+
+/* Pick persona screen */
+.pick-screen-logo{
+  margin-top: 20px;
+  width: 40%;
+}
+
+.pick-screen-heading{
+  font-weight: 900;
+  color: black;
+  font-size: 21px;  
+}
+.pick-screen-circle{
+  border: 5px solid;
+  margin: 30px;
+  width: 45%;
+  background-color: #C4C4C4;
+  height: 150px;
+  border-radius: 50%;
+  border-color: white;
+}
+
+.pick-screen-circle-clicked{
+  border: 5px solid;
+  margin: 30px;
+  width: 45%;
+  background-color: #C4C4C4;
+  height: 150px;
+  border-radius: 50%;
+  border-color: green;
+}
+
+.inner-pick-screen-circle{
+  padding-top: 35%;
+  width: 50%;
+  font-size: 10px;
+  color: white;
+}
+
+.pick-screen-button{
+  background-color: #E5E5E5;
+  border-radius: 20px;
+  color: #A1AEB7;
+  height: 41px;
+  width: 70%;
+  box-shadow: -1px 8px #585858;
+}
+
+.clicked{
+  color: white;
+  background-color: #E8268E;
+  box-shadow: -1px 8px #B10061;
+}
+
+.pick-screen-button-text{
+  padding-top: 10px;
 }
 
 .profile {
