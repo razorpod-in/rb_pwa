@@ -17,5 +17,5 @@ steps:
 
 - script: |
     npm install
-    gulp && concurrently --kill-others \"gulp watch\" \"node server.js\"
+    npm start
   displayName: 'npm install and build'
