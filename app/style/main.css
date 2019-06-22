@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-  .navbar {
+.navbar {
   align-items: center;
   background-color: #03A9F4;
   display: flex;
@@ -29,22 +29,23 @@ limitations under the License.
 }
 
 /* Splash Screen */
-.splash-screen-logo{
+.splash-screen-logo {
   margin-top: 70%;
 }
 
 /* Pick persona screen */
-.pick-screen-logo{
+.pick-screen-logo {
   margin-top: 20px;
   width: 40%;
 }
 
-.pick-screen-heading{
+.pick-screen-heading {
   font-weight: 900;
   color: black;
-  font-size: 21px;  
+  font-size: 21px;
 }
-.pick-screen-circle{
+
+.pick-screen-circle {
   border: 5px solid;
   margin: 30px;
   width: 45%;
@@ -54,7 +55,7 @@ limitations under the License.
   border-color: white;
 }
 
-.pick-screen-circle-clicked{
+.pick-screen-circle-clicked {
   border: 5px solid;
   margin: 30px;
   width: 45%;
@@ -64,14 +65,14 @@ limitations under the License.
   border-color: green;
 }
 
-.inner-pick-screen-circle{
+.inner-pick-screen-circle {
   padding-top: 35%;
   width: 50%;
   font-size: 10px;
   color: white;
 }
 
-.pick-screen-button{
+.pick-screen-button {
   background-color: #E5E5E5;
   border-radius: 20px;
   color: #A1AEB7;
@@ -80,14 +81,45 @@ limitations under the License.
   box-shadow: -1px 8px #585858;
 }
 
-.clicked{
+.clicked {
   color: white;
   background-color: #E8268E;
   box-shadow: -1px 8px #B10061;
 }
 
-.pick-screen-button-text{
+.pick-screen-button-text {
   padding-top: 10px;
+}
+
+/* Registration Page */
+
+.reg-screen-heading {
+  width: 70%;
+}
+
+.reg-screen-heading-text {
+  font-size: 15px;
+  color: white;
+  margin-top: 80%;
+}
+
+.reg-form-div {
+  height: 250px;
+  bottom: -5px;
+  background-color: white;
+  width: 95%;
+  position: absolute;
+  border-radius: 8px;
+}
+
+.reg-form-input {
+  margin-top: 5px;
+  padding: 7px 15px;
+  border-radius: 4px;
+  border: 1px solid #A1AEB7;
+  width: 60%;
+  margin-bottom: 10px;
+  color: #000000;
 }
 
 .profile {
@@ -106,7 +138,7 @@ section {
 }
 
 .message {
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12), 0 3px 5px -1px rgba(0,0,0,.2);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
   display: none;
   padding: 15px;
 }
@@ -146,7 +178,7 @@ form {
 
 .card {
   background-color: #fff;
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12), 0 3px 5px -1px rgba(0,0,0,.2);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
   display: flex;
   flex-flow: row wrap;
   margin: 5px 20px;
@@ -188,7 +220,7 @@ input {
   border-bottom: 1px solid #e0e0e0;
   color: #757575;
   display: block;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   margin: 0;
   padding: 4px 0;
@@ -196,7 +228,7 @@ input {
 }
 
 .support-text {
-  color: rgba(0,0,0,.54);
+  color: rgba(0, 0, 0, .54);
   font-size: 1rem;
   line-height: 18px;
   overflow: hidden;
@@ -207,7 +239,7 @@ input {
 .textfield {
   display: flex;
   flex-wrap: wrap;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 18px;
@@ -237,7 +269,7 @@ input {
   border: none;
   cursor: pointer;
   display: inline-block;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 36px;
@@ -252,7 +284,7 @@ input {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+  transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
   vertical-align: middle;
   width: 30%;
   will-change: box-shadow;
@@ -274,7 +306,7 @@ input {
 
 .raised {
   background: rgb(3, 169, 244);
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
   color: #fff;
 }
 
@@ -283,10 +315,12 @@ input {
     opacity: 1;
     transform: scale(0, 0);
   }
+
   20% {
     opacity: 1;
     transform: scale(25, 25);
   }
+
   100% {
     opacity: 0;
     transform: scale(40, 40);
