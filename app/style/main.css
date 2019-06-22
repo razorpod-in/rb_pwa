@@ -54,6 +54,12 @@ header {
   text-decoration: none;
 }
 
+.splash-screen-logo{
+  left: 22%;
+  position: absolute;
+  top: 42%;
+}
+
 .profile {
   border-radius: 50%;
   display: inline-block;
