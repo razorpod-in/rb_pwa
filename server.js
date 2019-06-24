@@ -33,7 +33,7 @@ app.get('/api/getAll', (req, res) => {
     root: __dirname + '/server-data/'
   };
 
-  const fileName = 'events.json';
+  const fileName = 'modules.json';
   res.sendFile(fileName, options, (err) => {
     if (err) {
       res.sendStatus(500);
