@@ -13,6 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+hr.top_bar { 
+  border-top: 3px solid #DD137B;
+}
+
+hr.bottom_bar { 
+  border-top: 3px solid #0093DD;
+}
+
 .navbar {
   align-items: center;
   background-color: #03A9F4;
@@ -120,6 +128,14 @@ limitations under the License.
   width: 60%;
   margin-bottom: 10px;
   color: #000000;
+}
+
+/* Tabs */
+.footer-nav{
+  right: 0;
+  bottom: 10px;
+  position: absolute;
+  left: 0;
 }
 
 .profile {
