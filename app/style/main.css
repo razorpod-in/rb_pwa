@@ -18,6 +18,7 @@ hr.top_bar {
 }
 
 hr.bottom_bar { 
+  margin-top: 0px;
   border-top: 3px solid #0093DD;
 }
 
@@ -132,11 +133,44 @@ hr.bottom_bar {
 
 /* Tabs */
 .footer-nav{
+  background-color: white;
   right: 0;
-  bottom: 10px;
-  position: absolute;
+  bottom: 0;
+  position: fixed;
   left: 0;
 }
+
+/* Books Tab */
+.module-card{
+  margin: 20px;
+  height: 150px;
+  width: 90%;
+  border-radius: 12px;
+  border: 2px solid #00803A;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.module-card-image{
+  margin: 10px;
+  height: 125px;
+  background-color: #00803A;
+  border-radius: 12px;
+}
+
+.module-card-heading{
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 25px;
+  color: #383431;
+}
+
+.module-card-sub-heading{
+  font-size: 14px;
+  line-height: 19px;
+  color: #5C5550;
+}
+
 
 .profile {
   border-radius: 50%;
