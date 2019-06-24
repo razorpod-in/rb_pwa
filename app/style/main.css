@@ -13,13 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-hr.top_bar { 
+hr.top_bar {
   border-top: 3px solid #DD137B;
 }
 
-hr.bottom_bar { 
+hr.bottom_bar {
   margin-top: 0px;
   border-top: 3px solid #0093DD;
+}
+
+.back-button{
+  margin-top: 40px;
+  margin-left: 20px;
 }
 
 .navbar {
@@ -132,7 +137,7 @@ hr.bottom_bar {
 }
 
 /* Tabs */
-.footer-nav{
+.footer-nav {
   background-color: white;
   right: 0;
   bottom: 0;
@@ -141,7 +146,7 @@ hr.bottom_bar {
 }
 
 /* Books Tab */
-.module-card{
+.module-card {
   margin: 20px;
   height: 150px;
   width: 90%;
@@ -150,14 +155,14 @@ hr.bottom_bar {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 }
 
-.module-card-image{
+.module-card-image {
   margin: 10px;
   height: 125px;
   background-color: #00803A;
   border-radius: 12px;
 }
 
-.module-card-heading{
+.module-card-heading {
   font-weight: 600;
   margin-top: 10px;
   font-size: 18px;
@@ -165,12 +170,36 @@ hr.bottom_bar {
   color: #383431;
 }
 
-.module-card-sub-heading{
+.module-card-sub-heading {
   font-size: 14px;
   line-height: 19px;
   color: #5C5550;
 }
 
+/* Chapter Page */
+.chapter-screen-logo {
+  margin-top: 20px;
+  width: 40%;
+  margin-left: 25%;
+}
+
+.chapter-container {
+  margin: 0px;
+}
+
+.chapter-card {
+  height: 150px;
+  background-color: #DD137B;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.chapter-card-heading {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #383431;
+  font-weight: 600;
+}
 
 .profile {
   border-radius: 50%;
