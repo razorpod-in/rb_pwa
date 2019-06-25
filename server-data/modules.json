@@ -1,0 +1,101 @@
+[
+    {
+        "id": 1,
+        "module_name": "Hygiene and Sanitation",
+        "steps":[
+            {
+                "id": 1,
+                "step_short":"PER_HYG",
+                "step_title": "Personal Hygiene",
+                "step_image": "",
+                "step_audio":"",
+                "step_video": "",
+                "step_description": "Personal hygiene and sanitation is a practice that one should follow at any time, especially during pregnancy."
+            },
+            {
+                "id": 2,
+                "step_short": "WAS_HAN",
+                "step_title": "Washing Hands",
+                "step_image": "",
+                "step_audio":"",
+                "step_video": "",
+                "step_description": "Washing hands is the best way to prevent yourself from falling sick. Hence, doctors recommend washing hands with soap before cooking, eating, drinking water and after using washrooms."
+            },
+            {
+                "id": 3,
+                "step_short": "CLE_YOU",
+                "step_title": "Cleaning Yourself",
+                "step_image": "",
+                "step_audio":"",
+                "step_video":"",
+                "step_description": "Cleaning yourself after using washroom will keep your pubic region clean and dry and can prevent infections."
+            },
+            {
+                "id": 4,
+                "step_short": "DAM_SWE",
+                "step_title": "Sweat Dampness",
+                "step_image": "",
+                "step_audio":"",
+                "step_video": "",
+                "step_description": "Dampness due to sweat can cause itchiness and irritation in your breasts. Make it a practice to wear clean and dry undergarments, and clean your breasts regularly"
+            },
+            {
+                "id": 5,
+                "step_short": "CHE_BRE",
+                "step_title": "Checking Your Breasts",
+                "step_image": "",
+                "step_audio":"",
+                "step_video": "",
+                "step_description": "Check your breasts at regular intervals for lumps, sore or fissured nipples, inverted nipples. In case of any unusualness, contact nearest hospital or anganwaadi"
+            }
+        ],
+        "questions": [{
+                "id": 1,
+                "question_text": "Which of these signs are unusual and should be taken care of?",
+                "answers": [{
+                        "id": 1,
+                        "answer_text": "Breast Lumps"
+                    },
+                    {
+                        "id": 2,
+                        "answer_text": "Sore or Fissured Nipples"
+                    },
+                    {
+                        "id": 3,
+                        "answer_text": "Flat or Inverted Nipples"
+                    },
+                    {
+                        "id": 4,
+                        "answer_text": "Breast Abscess"
+                    },
+                    {
+                        "id": 5,
+                        "answer_text": "Unusual pain or discomfort"
+                    },
+                    {
+                        "id": 6,
+                        "answer_text": "All of the above"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "question_text": "What should you do in case of any of these symptoms?",
+                "answers": [{
+                        "id": 1,
+                        "answer_text": "Check with other women in the house"
+                    },
+                    {
+                        "id": 2,
+                        "answer_text": "Wait for the symptoms to vanish on their own"
+                    },
+                    {
+                        "id": 3,
+                        "answer_text": "Visit the nearest hospital immediately"
+                    }
+                ]
+            }
+        ],
+        "resources":[]
+    }
+]
