@@ -68,7 +68,7 @@ limitations under the License.
         function valid_form() {
             var num_user = document.getElementById("num_id").value;
             var name_user = document.getElementById("name_id").value;
-            if(num_user == "" && name_user == ""){
+            if(num_user == "" || name_user == ""){
                 console.log('Enter Valid Values')
             } else{
                 document.getElementById('b1').className += " clicked"
