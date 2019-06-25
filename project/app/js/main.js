@@ -28,6 +28,7 @@ if ('serviceWorker' in navigator) {
 }
 
 const container = document.getElementById('module-card-container');
+const chapterContainer = document.getElementById('chapter-card-container');
 
 Notification.requestPermission();
 
@@ -37,80 +38,69 @@ const dbPromise = createIndexedDB();
 loadContentNetworkFirst();
 
 function saveEventDataLocally(modules) {
-  if (!('indexedDB' in window)) {return null;}
+  if (!('indexedDB' in window)) {
+    return null;
+  }
   return dbPromise.then(db => {
     const tx = db.transaction('modules', 'readwrite');
     const store = tx.objectStore('modules');
     return Promise.all(modules.map(module => store.put(module)))
-    .catch(() => {
-      tx.abort();
-      throw Error('Modules were not added to the store');
-    });
+      .catch(() => {
+        tx.abort();
+        throw Error('Modules were not added to the store');
+      });
   });
 }
+
 function getLocalEventData() {
-  if (!('indexedDB' in window)) {return null;}
+  if (!('indexedDB' in window)) {
+    return null;
+  }
   return dbPromise.then(db => {
     const tx = db.transaction('modules', 'readonly');
     const store = tx.objectStore('modules');
     return store.getAll();
   });
 }
-// function loadContentNetworkFirst() {
-//   getServerData()
-//   .then(dataFromNetwork => {
-//     saveEventDataLocally(dataFromNetwork)
-//     .then(() => {
-//       setLastUpdated(new Date());
-//     }).catch(err => {
-//       console.warn(err);
-//     });
 
-//     getLocalEventData()
-//     .then(offlineData => {
-//       if (!offlineData.length) {
-//       } 
-//       else {        
-//         updateUI(offlineData); 
-//       }
-//     });
-//   }).catch(err => {
-//     console.log('Network requests have failed, this is expected if offline');
-//     getLocalEventData()
-//     .then(offlineData => {
-//       if (!offlineData.length) {
-//       } else {
-//         updateUI(offlineData); 
-//       }
-//     });
-//   });
-// }
 function loadContentNetworkFirst() {
   getServerData()
-  .then(dataFromNetwork => {
-    updateUI(dataFromNetwork);
-    saveEventDataLocally(dataFromNetwork)
-    .then(() => {
-      setLastUpdated(new Date());
+    .then(dataFromNetwork => {
+      saveEventDataLocally(dataFromNetwork)
+        .then(() => {
+          setLastUpdated(new Date());
+        }).catch(err => {
+          console.warn(err);
+        });
+
+      getLocalEventData()
+        .then(offlineData => {
+          if (!offlineData.length) {} else {
+            updateUI(offlineData);
+            chapterUI(offlineData);
+          }
+        });
     }).catch(err => {
-      console.warn(err);
+      console.log('Network requests have failed, this is expected if offline');
+      getLocalEventData()
+        .then(offlineData => {
+          if (!offlineData.length) {} else {
+            updateUI(offlineData);
+            chapterUI(offlineData);
+          }
+        });
     });
-  }).catch(err => {
-    console.log('Network requests have failed, this is expected if offline');
-    getLocalEventData()
-    .then(offlineData => {
-      if (!offlineData.length) {
-      } else {
-        updateUI(offlineData); 
-      }
-    });
-  });
 }
+
 function createIndexedDB() {
-  if (!('indexedDB' in window)) {return null;}
-  return idb.open('dashboardr', 1, function(upgradeDb) {
+  if (!('indexedDB' in window)) {
+    return null;
+  }
+  return idb.open('dashboardr', 1, function (upgradeDb) {
     if (!upgradeDb.objectStoreNames.contains('modules')) {
-      const modulesOS = upgradeDb.createObjectStore('modules', {keyPath: 'id'});
+      const modulesOS = upgradeDb.createObjectStore('modules', {
+        keyPath: 'id'
+      });
     }
   });
 }
@@ -127,10 +117,10 @@ function getServerData() {
 
 /* UI functions */
 
-function updateUI(events) {
-  events.forEach(event => {
+function updateUI(modules) {
+  modules.forEach(module => {
     const card = `
-    <a href="chapter.html">
+    <a href="chapter.html?id=${module.id}">
                         <div class="module-card">
                             <div class="row">
                                 <div class="col-xs-6">
@@ -139,15 +129,40 @@ function updateUI(events) {
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
-                                    <p class="module-card-heading">${event.title}</p>
-                                    <p class="module-card-sub-heading">${event.note}</p>
+                                    <p class="module-card-heading">${module.module_name}</p>
+                                    <p class="module-card-sub-heading">${module.note}</p>
             
                                 </div>
                             </div>
                         </div>
-            
     </a>`;
-    container.insertAdjacentHTML('beforeend', card);
+    if(container){
+      container.insertAdjacentHTML('beforeend', card);
+    }
+  });
+}
+
+function chapterUI(modules) {
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var c = url.searchParams.get("id");
+  var steps =''
+  modules.forEach(module=> {
+    if(c == module.id){
+      steps = module.steps
+    }
+  });
+
+  steps.forEach(step => {
+    const card = `
+    <div class="col-xs-6">
+      <div class="chapter-card">
+      </div>
+      <p class="chapter-card-heading">${step.step_title}</p>
+    </div>`;
+    if(chapterContainer){
+      chapterContainer.insertAdjacentHTML('beforeend', card);
+    }
   });
 }
 
