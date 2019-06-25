@@ -19,7 +19,7 @@ limitations under the License.
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
-    <title>Pick Persona</title>
+    <title>Registration Page</title>
     <link rel="stylesheet" href="style/main.css" />
 
     <!-- Manifest -->
@@ -45,44 +45,38 @@ limitations under the License.
 
 </head>
 
-<body>
-    <div>
-        <center>
-            <img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" />
-            <p class="pick-screen-heading">Please choose one</p>
-        </center>
-    </div>
-
+<body style="background-color: #E8268E;">
     <center>
-        <div class="pick-screen-circle" id="c1" onclick=select_one(c1)>
-            <div class="inner-pick-screen-circle" >
-                Pregnant Mother Illustration will go here
-            </div>
+        <div class="reg-screen-heading">
+            <p class="reg-screen-heading-text">
+                Illustration depicting a happy Mother and her young kid will go here
+            </p>
         </div>
-        <div class="pick-screen-circle" id="c2" onclick=select_one(c2)>
-            <div class="inner-pick-screen-circle" >
-                Pregnant Mother Illustration will go here
-            </div>
-        </div>
-
     </center>
-
     <center>
-        <div class="pick-screen-button" id="b1">
-            <p class="pick-screen-button-text">I have choosen</p>
+        <div class="reg-form-div">
+            <p class="pick-screen-heading">Please choose one</p>
+            <form>
+                <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id"
+                    onkeyup="valid_form()" />
+                <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id"
+                    onkeyup="valid_form()" />
+            </form>
+            <a href="/tabs-home.html" class="submit-button">
+                <div class="pick-screen-button" id="b1">
+                    <p class="pick-screen-button-text">I have choosen</p>
+                </div>
+
+            </a>
         </div>
     </center>
     <script>
-        function select_one(id_select){
-            if(id_select.id == "c1"){
-                document.getElementById(id_select.id).style.borderColor = "green";
-                document.getElementById("c2").style.borderColor = "white";
+        function valid_form() {
+            var num_user = document.getElementById("num_id").value;
+            var name_user = document.getElementById("name_id").value;
+            if (num_user && name_user) {
+                console.log("working");
             }
-            else{
-                document.getElementById(id_select.id).style.borderColor = "green";
-                document.getElementById("c1").style.borderColor = "white";
-            }
-            document.getElementById("b1").classList.add('clicked');
         }
     </script>
     <script src="js/idb-promised.js"></script>

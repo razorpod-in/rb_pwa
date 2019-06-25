@@ -22,7 +22,7 @@ limitations under the License.
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
-    <title>Home Page</title>
+    <title>Chapter Page</title>
     <link rel="stylesheet" href="style/main.css" />
 
     <!-- Manifest -->
@@ -49,23 +49,58 @@ limitations under the License.
 </head>
 
 <body>
-    <div>
-        <center>
-            <img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" />
-        </center>
+    <div class="row">
+            <a href="tabs-book.html">
+        <div class="col-xs-3">
+                <img src="images/back_arrow.png" class="back-button" />
+        </div>
+    </a>
+    <div class="col-xs-9">
+            <img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" />
+        </div>
     </div>
     <hr class="top_bar" />
+    <center>
+        <p class="pick-screen-heading"> Your Module</p>
+    </center>
+
+    <center>
+        <div class="row chapter-container">
+            <div class="col-xs-6">
+                <div class="chapter-card">
+                </div>
+                <p class="chapter-card-heading"> Chapter Heading</p>
+            </div>
+            <div class="col-xs-6">
+                <div class="chapter-card">
+                </div>
+                <p class="chapter-card-heading"> Chapter Heading</p>
+            </div>
+        </div>
+        <div class="row chapter-container">
+            <div class="col-xs-6">
+                <div class="chapter-card">
+                </div>
+                <p class="chapter-card-heading"> Chapter Heading</p>
+            </div>
+            <div class="col-xs-6">
+                <div class="chapter-card">
+                </div>
+                <p class="chapter-card-heading"> Chapter Heading</p>
+            </div>
+        </div>
+    </center>
 
     <div class="row footer-nav">
         <hr class="bottom_bar" />
         <div class="col-xs-3">
             <center>
-                <img src="images/nav-icons/selected-home.png" />
+                <img src="images/nav-icons/home.png" />
             </center>
         </div>
         <div class="col-xs-3">
             <center>
-                <img src="images/nav-icons/book.png" />
+                <img src="images/nav-icons/selected-book.png" />
             </center>
         </div>
         <div class="col-xs-3">
