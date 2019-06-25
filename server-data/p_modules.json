@@ -2,6 +2,7 @@
     {
         "id": 1,
         "module_name": "Hygiene and Sanitation",
+        "module_image":"./assets/png/hyg_san.png",
         "steps":[
             {
                 "id": 1,
@@ -10,6 +11,7 @@
                 "step_image": "",
                 "step_audio":"",
                 "step_video": "",
+                "assistant_image":"",
                 "step_description": "Personal hygiene and sanitation is a practice that one should follow at any time, especially during pregnancy."
             },
             {
@@ -19,6 +21,7 @@
                 "step_image": "",
                 "step_audio":"",
                 "step_video": "",
+                "assistant_image": "",
                 "step_description": "Washing hands is the best way to prevent yourself from falling sick. Hence, doctors recommend washing hands with soap before cooking, eating, drinking water and after using washrooms."
             },
             {
@@ -28,6 +31,7 @@
                 "step_image": "",
                 "step_audio":"",
                 "step_video":"",
+                "assistant_image": "",
                 "step_description": "Cleaning yourself after using washroom will keep your pubic region clean and dry and can prevent infections."
             },
             {
@@ -37,6 +41,7 @@
                 "step_image": "",
                 "step_audio":"",
                 "step_video": "",
+                "assistant_image": "",
                 "step_description": "Dampness due to sweat can cause itchiness and irritation in your breasts. Make it a practice to wear clean and dry undergarments, and clean your breasts regularly"
             },
             {
@@ -46,12 +51,15 @@
                 "step_image": "",
                 "step_audio":"",
                 "step_video": "",
+                "assistant_image": "",
                 "step_description": "Check your breasts at regular intervals for lumps, sore or fissured nipples, inverted nipples. In case of any unusualness, contact nearest hospital or anganwaadi"
             }
         ],
         "questions": [{
                 "id": 1,
                 "question_text": "Which of these signs are unusual and should be taken care of?",
+                "question_audio":"",
+                "assistant_image": "",
                 "answers": [{
                         "id": 1,
                         "answer_text": "Breast Lumps"
@@ -81,6 +89,8 @@
             {
                 "id": 2,
                 "question_text": "What should you do in case of any of these symptoms?",
+                "question_audio": "",
+                "assistant_image": "",
                 "answers": [{
                         "id": 1,
                         "answer_text": "Check with other women in the house"

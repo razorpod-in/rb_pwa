@@ -63,8 +63,7 @@ hr.bottom_bar {
   border: 5px solid;
   margin: 30px;
   width: 45%;
-  background-color: #C4C4C4;
-  height: 150px;
+  height: 192px;
   border-radius: 50%;
   border-color: white;
 }
@@ -74,13 +73,13 @@ hr.bottom_bar {
   margin: 30px;
   width: 45%;
   background-color: #C4C4C4;
-  height: 150px;
+  height:192px;
   border-radius: 50%;
   border-color: green;
 }
 
 .inner-pick-screen-circle {
-  padding-top: 35%;
+  padding-top: 50%;
   width: 50%;
   font-size: 10px;
   color: white;
