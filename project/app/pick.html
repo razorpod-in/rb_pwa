@@ -42,10 +42,14 @@ limitations under the License.
     <!-- Tile for Win8 -->
     <meta name="msapplication-TileColor" content="#90a8b2">
     <meta name="msapplication-TileImage" content="images/touch/icon-192x192.png">
-
 </head>
-
 <body>
+    <style>
+        .pick-screen-button.clicked:active {
+            box-shadow: none;
+            transition: ease-in 0.1s;
+        }
+    </style>
     <div>
         <center>
             <img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" />
@@ -54,37 +58,41 @@ limitations under the License.
     </div>
 
     <center>
-        <div class="pick-screen-circle" id="c1" onclick=select_one(c1)>
-            <div class="inner-pick-screen-circle">
-                Pregnant Mother Illustration will go here
-            </div>
+        <div class="pick-screen-circle pregnant" id="c1" style="background-image: url(assets/png/pregnant_woman@2x.png);background-size:200px 200px;height:192px;"
+            onclick="select_one(c1)">
+            
         </div>
-        <div class="pick-screen-circle" id="c2" onclick=select_one(c2)>
-            <div class="inner-pick-screen-circle">
-                Pregnant Mother Illustration will go here
-            </div>
+        <div class="pick-screen-circle" id="c2"
+            style="background-image: url(assets/png/young_mother@2x.png);background-size:200px 200px;height:192px;"
+            onclick=select_one(c2)>
+            
         </div>
 
     </center>
 
     <center>
-        <a href="/registration.html" class="submit-button">
-            <div class="pick-screen-button" id="b1">
-                <p class="pick-screen-button-text">I have choosen</p>
-            </div>
-
-        </a>
+        <div class="pick-screen-button" id="b1" onclick="router_registration()">
+            <p class="pick-screen-button-text">I have choosen</p>
+        </div>
     </center>
     <script>
-        function select_one(id_select) {
-            if (id_select.id == "c1") {
+        var selected = "none"
+        function select_one(id_select){
+            if(id_select.id == "c1"){
+                selected = "1"
                 document.getElementById(id_select.id).style.borderColor = "green";
                 document.getElementById("c2").style.borderColor = "white";
-            } else {
+            }
+            else{
+                selected = '2'
                 document.getElementById(id_select.id).style.borderColor = "green";
                 document.getElementById("c1").style.borderColor = "white";
             }
             document.getElementById("b1").classList.add('clicked');
+        }
+        function router_registration(){
+            var status = (selected == "none") ? null : 1;
+            if (status) location.href="registration.html"
         }
     </script>
     <script src="js/idb-promised.js"></script>

@@ -45,14 +45,8 @@ limitations under the License.
 
 </head>
 
-<body style="background-color: #E8268E;">
-    <center>
-        <div class="reg-screen-heading">
-            <p class="reg-screen-heading-text">
-                Illustration depicting a happy Mother and her young kid will go here
-            </p>
-        </div>
-    </center>
+<body style="background-image: url(assets/png/reg_bg.png);background-size:500px 750px;">
+    
     <center>
         <div class="reg-form-div">
             <p class="pick-screen-heading">Please choose one</p>
@@ -74,8 +68,10 @@ limitations under the License.
         function valid_form() {
             var num_user = document.getElementById("num_id").value;
             var name_user = document.getElementById("name_id").value;
-            if (num_user && name_user) {
-                console.log("working");
+            if(num_user == "" && name_user == ""){
+                console.log('Enter Valid Values')
+            } else{
+                document.getElementById('b1').className += " clicked"
             }
         }
     </script>
