@@ -27,6 +27,11 @@ hr.bottom_bar {
   margin-left: 20px;
 }
 
+.submit-button{
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .navbar {
   align-items: center;
   background-color: #03A9F4;
@@ -179,8 +184,8 @@ hr.bottom_bar {
 /* Chapter Page */
 .chapter-screen-logo {
   margin-top: 20px;
-  width: 40%;
-  margin-left: 25%;
+  width: 50%;
+  margin-left: 12%;
 }
 
 .chapter-container {

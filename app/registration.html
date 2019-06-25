@@ -57,19 +57,24 @@ limitations under the License.
         <div class="reg-form-div">
             <p class="pick-screen-heading">Please choose one</p>
             <form>
-                <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id" onkeyup="valid_form()"/>
-                <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id" onkeyup="valid_form()"/>
+                <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id"
+                    onkeyup="valid_form()" />
+                <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id"
+                    onkeyup="valid_form()" />
             </form>
-            <div class="pick-screen-button" id="b1">
-                <p class="pick-screen-button-text">I have choosen</p>
-            </div>
+            <a href="/tabs-home.html" class="submit-button">
+                <div class="pick-screen-button" id="b1">
+                    <p class="pick-screen-button-text">I have choosen</p>
+                </div>
+
+            </a>
         </div>
     </center>
     <script>
-        function valid_form(){
+        function valid_form() {
             var num_user = document.getElementById("num_id").value;
             var name_user = document.getElementById("name_id").value;
-            if(num_user && name_user){
+            if (num_user && name_user) {
                 console.log("working");
             }
         }

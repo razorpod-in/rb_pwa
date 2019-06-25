@@ -55,12 +55,12 @@ limitations under the License.
 
     <center>
         <div class="pick-screen-circle" id="c1" onclick=select_one(c1)>
-            <div class="inner-pick-screen-circle" >
+            <div class="inner-pick-screen-circle">
                 Pregnant Mother Illustration will go here
             </div>
         </div>
         <div class="pick-screen-circle" id="c2" onclick=select_one(c2)>
-            <div class="inner-pick-screen-circle" >
+            <div class="inner-pick-screen-circle">
                 Pregnant Mother Illustration will go here
             </div>
         </div>
@@ -68,17 +68,19 @@ limitations under the License.
     </center>
 
     <center>
-        <div class="pick-screen-button" id="b1">
-            <p class="pick-screen-button-text">I have choosen</p>
-        </div>
+        <a href="/registration.html" class="submit-button">
+            <div class="pick-screen-button" id="b1">
+                <p class="pick-screen-button-text">I have choosen</p>
+            </div>
+
+        </a>
     </center>
     <script>
-        function select_one(id_select){
-            if(id_select.id == "c1"){
+        function select_one(id_select) {
+            if (id_select.id == "c1") {
                 document.getElementById(id_select.id).style.borderColor = "green";
                 document.getElementById("c2").style.borderColor = "white";
-            }
-            else{
+            } else {
                 document.getElementById(id_select.id).style.borderColor = "green";
                 document.getElementById("c1").style.borderColor = "white";
             }

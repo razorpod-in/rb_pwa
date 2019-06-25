@@ -34,7 +34,6 @@ const dataSavedMessage = document.getElementById('data-saved');
 const saveErrorMessage = document.getElementById('save-error');
 const addEventButton = document.getElementById('add-event-button');
 
-addEventButton.addEventListener('click', addAndPostEvent);
 
 Notification.requestPermission();
 
@@ -65,6 +64,7 @@ function getLocalEventData() {
 function loadContentNetworkFirst() {
   getServerData()
   .then(dataFromNetwork => {
+    console.log(dataFromNetwork);
     updateUI(dataFromNetwork);
     saveEventDataLocally(dataFromNetwork)
     .then(() => {
