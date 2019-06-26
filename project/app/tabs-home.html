@@ -49,12 +49,33 @@ limitations under the License.
 </head>
 
 <body>
+    <style>
+        .homepage_content{
+            text-align: center;
+            font-size: 55px;
+            margin: 20px;
+        }
+
+        .pick-screen-button.clicked:active {
+        box-shadow: none;
+        transition: ease-in 0.1s;
+        }
+    </style>
     <div>
         <center>
             <img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" />
         </center>
     </div>
     <hr class="top_bar" />
+
+    <div class="content homepage_content">
+        Welcome to the RB Nutrition India App
+    </div>
+    <center>
+        <div class="pick-screen-button clicked" id="b4" onclick="gofirst()">
+            <p class="pick-screen-button-text">Proceed to Learning</p>
+        </div>
+    </center>
 
     <div class="row footer-nav">
         <hr class="bottom_bar" />
@@ -89,7 +110,11 @@ limitations under the License.
     </div>
     <script src="js/idb-promised.js"></script>
     <script src="js/main.js"></script>
-
+    <script>
+        function gofirst(){
+            location.href= "chapter.html?id=1"
+        }
+    </script>
 </body>
 
 </html>

@@ -143,10 +143,9 @@ hr.bottom_bar {
 /* Tabs */
 .footer-nav {
   background-color: white;
-  right: 0;
   bottom: 0;
   position: fixed;
-  left: 0;
+  width: 100%
 }
 
 /* Books Tab */

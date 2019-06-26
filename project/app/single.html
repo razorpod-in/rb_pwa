@@ -51,6 +51,14 @@ limitations under the License.
 </head>
 
 <body>
+    <style>
+     .description_content{
+        text-align: center;
+        width: 80%;
+        margin: 20px;
+        font-size: 22px;
+     }
+    </style>
     <div class="row">
         <a href="tabs-book.html">
             <div class="col-xs-3">
@@ -72,8 +80,11 @@ limitations under the License.
         </div> -->
         <div class="row">
             <div class="single-image">
-                <img class="chapter_image" style="width: 80%" src="" alt="">
+                <img class="chapter_image" style="width: 300px;height:300px" src="" alt="">
                 <div class="video_element">
+
+                </div>
+                <div class="description_content">
 
                 </div>
             </div>
@@ -126,6 +137,7 @@ limitations under the License.
                 console.log(ss)
                 $('.pick-screen-heading').text(ss.step_title)
                 $('.chapter_image').attr('src', ss.step_image)
+                $('.description_content').text(ss.step_description)
                 if (ss.step_audio != "") {
                     var sound = new Howl({
                         src: [ss.step_audio]
