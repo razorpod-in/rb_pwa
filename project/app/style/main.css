@@ -67,7 +67,7 @@ hr.bottom_bar {
 .pick-screen-circle {
   border: 5px solid;
   margin: 30px;
-  width: 45%;
+  width: 38%;
   height: 192px;
   border-radius: 50%;
   border-color: white;
@@ -76,7 +76,7 @@ hr.bottom_bar {
 .pick-screen-circle-clicked {
   border: 5px solid;
   margin: 30px;
-  width: 45%;
+  width: 38%;
   background-color: #C4C4C4;
   height:192px;
   border-radius: 50%;

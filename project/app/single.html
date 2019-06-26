@@ -21,6 +21,8 @@ limitations under the License.
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet">
+
     <meta charset="utf-8">
     <title>Chapter Page</title>
     <link rel="stylesheet" href="style/main.css" />
@@ -65,8 +67,16 @@ limitations under the License.
     </center>
 
     <center>
-        <div class="row chapter-container" id="chapter-card-container">
-            
+        <!-- <div class="row chapter-container" id="chapter-card-container">
+
+        </div> -->
+        <div class="row">
+            <div class="single-image">
+                <img class="chapter_image" style="width: 80%" src="" alt="">
+                <div class="video_element">
+
+                </div>
+            </div>
         </div>
     </center>
 
@@ -95,18 +105,52 @@ limitations under the License.
         </div>
     </div>
     <script>
-        
+
     </script>
     <script src="js/idb-promised.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.js"></script>
+    <script src='https://vjs.zencdn.net/7.5.5/video.js'></script>
     <script>
-        
-        function wow(id,mn){
-            console.log('wow',id,mn)
-            location.href = `single.html?id=${id}&mn=${mn}`
+        const url = new URL(window.location.href)
+        var params = url.searchParams
+        var id = params.get('id')
+        var mn = params.get('mn')
+        wow(id, mn)
+
+        function wow(id, mn) {
+            console.log('wow', id, mn)
             getLocalEventData().then(offlinedata => {
-                console.log(offlinedata[0].steps[Number(id) - 1])
+
+                var ss = offlinedata[0].steps[Number(id) - 1]
+                console.log(ss)
+                $('.pick-screen-heading').text(ss.step_title)
+                $('.chapter_image').attr('src', ss.step_image)
+                if (ss.step_audio != "") {
+                    var sound = new Howl({
+                        src: [ss.step_audio]
+                    });
+                    sound.play()
+                    if (ss.step_video != "") {
+                        $('.video_element').html(`
+                        <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' width='500' height='264'
+                            poster='' data-setup='{}'>
+                            <source src='${ss.step_video}' type='video/webm'>
+                        </video>
+                    `)
+                    }
+                } else {
+                    if (ss.step_video != "") {
+                    $('.video_element').html(`
+                    <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' width='500' height='264'
+                        poster='' data-setup='{}'>
+                        <source src='${ss.step_video}' type='video/webm'>
+                    </video>
+                    `)
+                    }
+                }
             })
+
         }
     </script>
 </body>

@@ -119,20 +119,18 @@ function getServerData() {
 
 function updateUI(modules) {
   modules.forEach(module => {
-    const card = `
+    var card = `
     <a href="chapter.html?id=${module.id}">
                         <div class="module-card">
                             <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="module-card-image">
-            
+                                <div class="col-sm-12">
+                                    
+                                    <div class="col-sm-6">
+                                      <p class="module-card-heading">${module.module_name}</p>
+                                      <p class="module-card-sub-heading">${module.module_description}</p>
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
-                                    <p class="module-card-heading">${module.module_name}</p>
-                                    <p class="module-card-sub-heading">${module.note}</p>
-            
-                                </div>
+                                
                             </div>
                         </div>
     </a>`;
@@ -146,20 +144,22 @@ function chapterUI(modules) {
   var url_string = window.location.href;
   var url = new URL(url_string);
   var c = url.searchParams.get("id");
-  var steps =''
+  var steps = ''
+  var module_name = ''
   modules.forEach(module=> {
-    if(c == module.id){
+    if (c == module.id) {
+      module_name = module.module_name
       steps = module.steps
     }
   });
 
   steps.forEach(step => {
     const card = `
-    <div class="col-xs-6">
-      <div class="chapter-card">
-      </div>
-      <p class="chapter-card-heading">${step.step_title}</p>
-    </div>`;
+      <div class="col-xs-6">
+        <div class="chapter-card" onclick="wow('${step.id}','${module_name}')">
+        </div>
+        <p class="chapter-card-heading">${step.step_title}</p>
+      </div>`;
     if(chapterContainer){
       chapterContainer.insertAdjacentHTML('beforeend', card);
     }

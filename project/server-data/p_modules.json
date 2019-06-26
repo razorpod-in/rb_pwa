@@ -2,6 +2,7 @@
     {
         "id": 1,
         "module_name": "Hygiene and Sanitation",
+        "module_description":"Sample Description",
         "module_image":"./assets/png/hyg_san.png",
         "steps":[
             {
@@ -10,7 +11,7 @@
                 "step_title": "Personal Hygiene",
                 "step_image": "",
                 "step_audio":"",
-                "step_video": "",
+                "step_video": "assets/vid/personal_hygiene.webm",
                 "assistant_image":"",
                 "step_description": "Personal hygiene and sanitation is a practice that one should follow at any time, especially during pregnancy."
             },
@@ -18,8 +19,8 @@
                 "id": 2,
                 "step_short": "WAS_HAN",
                 "step_title": "Washing Hands",
-                "step_image": "",
-                "step_audio":"",
+                "step_image": "assets/png/washing_hands.png",
+                "step_audio":"w",
                 "step_video": "",
                 "assistant_image": "",
                 "step_description": "Washing hands is the best way to prevent yourself from falling sick. Hence, doctors recommend washing hands with soap before cooking, eating, drinking water and after using washrooms."
@@ -28,8 +29,8 @@
                 "id": 3,
                 "step_short": "CLE_YOU",
                 "step_title": "Cleaning Yourself",
-                "step_image": "",
-                "step_audio":"",
+                "step_image": "assets/png/cleaning_your.png",
+                "step_audio":"assets/amr/cleaning_yourself.aac",
                 "step_video":"",
                 "assistant_image": "",
                 "step_description": "Cleaning yourself after using washroom will keep your pubic region clean and dry and can prevent infections."
@@ -38,7 +39,7 @@
                 "id": 4,
                 "step_short": "DAM_SWE",
                 "step_title": "Sweat Dampness",
-                "step_image": "",
+                "step_image": "assets/svg/asha_tai_big.svg",
                 "step_audio":"",
                 "step_video": "",
                 "assistant_image": "",
@@ -50,7 +51,7 @@
                 "step_title": "Checking Your Breasts",
                 "step_image": "",
                 "step_audio":"",
-                "step_video": "",
+                "step_video": "assets/vid/breast_check.mp4",
                 "assistant_image": "",
                 "step_description": "Check your breasts at regular intervals for lumps, sore or fissured nipples, inverted nipples. In case of any unusualness, contact nearest hospital or anganwaadi"
             }
