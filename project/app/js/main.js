@@ -156,8 +156,9 @@ function chapterUI(modules) {
   steps.forEach(step => {
     const card = `
       <div class="col-xs-6">
-        <div class="chapter-card" onclick="wow('${step.id}','${module_name}')">
-        </div>
+        
+          <img src="${step.thumbnail}" onclick="wow('${step.id}','${module_name}')" style="width:100%">
+        
         <p class="chapter-card-heading">${step.step_title}</p>
       </div>`;
     if(chapterContainer){

@@ -13,7 +13,8 @@
                 "step_audio":"",
                 "step_video": "assets/vid/personal_hygiene.webm",
                 "assistant_image":"",
-                "step_description": "Personal hygiene and sanitation is a practice that one should follow at any time, especially during pregnancy."
+                "step_description": "Personal hygiene and sanitation is a practice that one should follow at any time, especially during pregnancy.",
+                "thumbnail":"assets/png/step_one.png"
             },
             {
                 "id": 2,
@@ -23,7 +24,8 @@
                 "step_audio":"w",
                 "step_video": "",
                 "assistant_image": "",
-                "step_description": "Washing hands is the best way to prevent yourself from falling sick. Hence, doctors recommend washing hands with soap before cooking, eating, drinking water and after using washrooms."
+                "step_description": "Washing hands is the best way to prevent yourself from falling sick. Hence, doctors recommend washing hands with soap before cooking, eating, drinking water and after using washrooms.",
+                "thumbnail": "assets/png/step_one.png"
             },
             {
                 "id": 3,
@@ -33,7 +35,8 @@
                 "step_audio":"assets/amr/cleaning_yourself.aac",
                 "step_video":"",
                 "assistant_image": "",
-                "step_description": "Cleaning yourself after using washroom will keep your pubic region clean and dry and can prevent infections."
+                "step_description": "Cleaning yourself after using washroom will keep your pubic region clean and dry and can prevent infections.",
+                "thumbnail": "assets/png/step_one.png"
             },
             {
                 "id": 4,
@@ -43,7 +46,8 @@
                 "step_audio":"",
                 "step_video": "",
                 "assistant_image": "",
-                "step_description": "Dampness due to sweat can cause itchiness and irritation in your breasts. Make it a practice to wear clean and dry undergarments, and clean your breasts regularly"
+                "step_description": "Dampness due to sweat can cause itchiness and irritation in your breasts. Make it a practice to wear clean and dry undergarments, and clean your breasts regularly",
+                "thumbnail": "assets/png/step_one.png"
             },
             {
                 "id": 5,
@@ -53,7 +57,8 @@
                 "step_audio":"",
                 "step_video": "assets/vid/breast_check.mp4",
                 "assistant_image": "",
-                "step_description": "Check your breasts at regular intervals for lumps, sore or fissured nipples, inverted nipples. In case of any unusualness, contact nearest hospital or anganwaadi"
+                "step_description": "Check your breasts at regular intervals for lumps, sore or fissured nipples, inverted nipples. In case of any unusualness, contact nearest hospital or anganwaadi",
+                "thumbnail": "assets/png/step_one.png"
             }
         ],
         "questions": [{
