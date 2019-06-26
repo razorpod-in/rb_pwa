@@ -122,14 +122,15 @@ function updateUI(modules) {
     var card = `
     <a href="chapter.html?id=${module.id}">
                         <div class="module-card">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    
+                        
+                            <div class="row" style="display: inline-flex">
+                                    <div class="col-sm-6">
+                                      <img style="width:200px;height:auto;" src="${module.thumbnail}">
+                                    </div>
                                     <div class="col-sm-6">
                                       <p class="module-card-heading">${module.module_name}</p>
                                       <p class="module-card-sub-heading">${module.module_description}</p>
                                     </div>
-                                </div>
                                 
                             </div>
                         </div>

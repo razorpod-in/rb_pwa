@@ -4,6 +4,7 @@
         "module_name": "Hygiene and Sanitation",
         "module_description":"Sample Description",
         "module_image":"./assets/png/hyg_san.png",
+        "thumbnail": "assets/png/step_one.png",
         "steps":[
             {
                 "id": 1,

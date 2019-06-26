@@ -123,11 +123,12 @@ hr.bottom_bar {
 
 .reg-form-div {
   height: 250px;
-  bottom: -5px;
+  bottom: -17px;
   background-color: white;
   width: 95%;
   position: absolute;
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .reg-form-input {
@@ -145,13 +146,12 @@ hr.bottom_bar {
   background-color: white;
   bottom: 0;
   position: fixed;
-  width: 100%
+  width: 100%;
 }
 
 /* Books Tab */
 .module-card {
   margin: 20px;
-  height: 150px;
   width: 90%;
   border-radius: 12px;
   border: 2px solid #00803A;
