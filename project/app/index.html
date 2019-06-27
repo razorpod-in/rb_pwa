@@ -15,6 +15,7 @@ limitations under the License.
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta charset="utf-8">
@@ -45,26 +46,103 @@ limitations under the License.
 </head>
 
 <body>
-  <div>
+  <div id="splash-screen">
     <center>
-        <img src="images/NIP Logo Unit.svg" alt="main-logo" class="splash-screen-logo" />
+      <img src="images/NIP Logo Unit.svg" alt="main-logo" class="splash-screen-logo" />
     </center>
   </div>
+
+  <div id="pick-screen" style="display: none;">
+    <div>
+      <center>
+        <img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" />
+        <p class="pick-screen-heading">Please choose one</p>
+      </center>
+    </div>
+
+    <center>
+      <div class="pick-screen-circle pregnant" id="c1" onclick="select_one(c1)">
+      </div>
+      <div class="pick-screen-circle young-mother" id="c2" onclick="select_one(c2)">
+      </div>
+
+    </center>
+
+    <center>
+      <div class="pick-screen-button" id="b1" onclick="router_registration()">
+        <p class="pick-screen-button-text">I have choosen</p>
+      </div>
+    </center>
+  </div>
+
+  <div id="registration-screen" class="reg-screen" style="display: none;" >
+    <center>
+        <div class="reg-form-div">
+            <p class="pick-screen-heading">Please choose one</p>
+            <form>
+                <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id"
+                    onkeyup="valid_form()" />
+                <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id"
+                    onkeyup="valid_form()" />
+            </form>
+            <a href="/tabs-home.html" class="submit-button">
+                <div class="pick-screen-button" id="b1">
+                    <p class="pick-screen-button-text">I have choosen</p>
+                </div>
+
+            </a>
+        </div>
+    </center>
+</div>
+
+
   <script>
+    var timePeriodInMs = 2000;
 
-   // function call_main_screen(){
-     // console.log("calling new url ");
-     // window.location.href = '/pick.html';
-   // }
+    setTimeout(function () {
+        document.getElementById("splash-screen").style.display = "none";
+        document.getElementById("pick-screen").style.display = "block";
+      },
+      timePeriodInMs);
 
-    // setTimeout(call_main_screen(), 5000);
-    setTimeout(function(){
-      window.location.href = 'pick.html'
-    },3000)
+    var selected = "none"
+
+    function select_one(id_select) {
+      if (id_select.id == "c1") {
+        selected = "1"
+        document.getElementById(id_select.id).style.borderColor = "green";
+        document.getElementById("c2").style.borderColor = "white";
+      } else {
+        selected = '2'
+        document.getElementById(id_select.id).style.borderColor = "green";
+        document.getElementById("c1").style.borderColor = "white";
+      }
+      document.getElementById("b1").classList.add('clicked');
+    }
+
+    function router_registration() {
+      var status = (selected == "none") ? null : 1;
+      if (status){
+        document.getElementById("registration-screen").style.display = "block";
+        document.getElementById("pick-screen").style.display = "none";
+      }
+    }
+  
+    function valid_form() {
+            var num_user = document.getElementById("num_id").value;
+            var name_user = document.getElementById("name_id").value;
+            if(num_user == "" || name_user == ""){
+                console.log('Enter Valid Values')
+            } else{
+                document.getElementById('b1').className += " clicked"
+            }
+        }
+  
   </script>
 
   <script src="js/idb-promised.js"></script>
   <script src="js/main.js"></script>
 
 </body>
+
 </html>

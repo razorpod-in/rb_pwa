@@ -155,18 +155,21 @@ function chapterUI(modules) {
     }
   });
 
-  steps.forEach(step => {
-    const card = `
-      <div class="col-xs-6">
-        
-          <img src="${step.thumbnail}" onclick="wow('${step.id}','${module_name}')" style="width:100%">
-        
-        <p class="chapter-card-heading">${step.step_title}</p>
-      </div>`;
-    if (chapterContainer) {
-      chapterContainer.insertAdjacentHTML('beforeend', card);
-    }
-  });
+  if(steps){
+    steps.forEach(step => {
+      const card = `
+        <div class="col-xs-6">
+          
+            <img src="${step.thumbnail}" onclick="wow('${step.id}','${module_name}')" style="width:100%">
+          
+          <p class="chapter-card-heading">${step.step_title}</p>
+        </div>`;
+      if (chapterContainer) {
+        chapterContainer.insertAdjacentHTML('beforeend', card);
+      }
+    });
+  }
+
 }
 
 /* Storage functions */

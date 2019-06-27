@@ -13,6 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+html{
+  overflow-y: hidden;
+}
 hr.top_bar {
   border-top: 3px solid #DD137B;
 }
@@ -65,12 +69,20 @@ hr.bottom_bar {
 }
 
 .pick-screen-circle {
+  background-repeat: no-repeat;
   border: 5px solid;
-  margin: 30px;
-  width: 38%;
-  height: 192px;
+  margin: 20px;
+  width: 50%;
+  height: 165px;
   border-radius: 50%;
   border-color: white;
+  background-size: cover;
+}
+.pregnant{
+  background-image: url(../assets/png/pregnant_woman@2x.png);
+}
+.young-mother{
+  background-image: url(../assets/png/young_mother@2x.png);
 }
 
 .pick-screen-circle-clicked {
@@ -82,7 +94,10 @@ hr.bottom_bar {
   border-radius: 50%;
   border-color: green;
 }
-
+.pick-screen-button.clicked:active {
+  box-shadow: none;
+  transition: ease-in 0.1s;
+}
 .inner-pick-screen-circle {
   padding-top: 50%;
   width: 50%;
@@ -111,6 +126,12 @@ hr.bottom_bar {
 
 /* Registration Page */
 
+.reg-screen{
+  background-image: url(../assets/png/reg_bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height:100vh;
+}
 .reg-screen-heading {
   width: 70%;
 }

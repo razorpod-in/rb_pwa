@@ -45,25 +45,27 @@ limitations under the License.
 
 </head>
 
-<body style="background-image: url(assets/png/reg_bg.png);background-repeat: no-repeat;background-size: cover;height:100vh;">
+<body >
+    <div class="registration-screen">
+        <center>
+            <div class="reg-form-div">
+                <p class="pick-screen-heading">Please choose one</p>
+                <form>
+                    <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id"
+                        onkeyup="valid_form()" />
+                    <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id"
+                        onkeyup="valid_form()" />
+                </form>
+                <a href="/tabs-home.html" class="submit-button">
+                    <div class="pick-screen-button" id="b1">
+                        <p class="pick-screen-button-text">I have choosen</p>
+                    </div>
     
-    <center>
-        <div class="reg-form-div">
-            <p class="pick-screen-heading">Please choose one</p>
-            <form>
-                <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id"
-                    onkeyup="valid_form()" />
-                <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id"
-                    onkeyup="valid_form()" />
-            </form>
-            <a href="/tabs-home.html" class="submit-button">
-                <div class="pick-screen-button" id="b1">
-                    <p class="pick-screen-button-text">I have choosen</p>
-                </div>
-
-            </a>
-        </div>
-    </center>
+                </a>
+            </div>
+        </center>
+    </div>
+    
     <script>
         function valid_form() {
             var num_user = document.getElementById("num_id").value;
