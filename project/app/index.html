@@ -17,13 +17,13 @@ limitations under the License.
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <meta charset="utf-8">
-    <title>Nutrition</title>
-    <link rel="stylesheet" href="style/main.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <title>Nutrition</title>
+  <link rel="stylesheet" href="style/main.css" />
 
   <!-- Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -46,6 +46,15 @@ limitations under the License.
   <meta name="msapplication-TileColor" content="#90a8b2">
   <meta name="msapplication-TileImage" content="images/touch/icon-192x192.png">
 
+  <style>
+    .pregnant {
+      background-image: url(../assets/png/pregnant_woman@2x.png);
+    }
+
+    .young-mother {
+      background-image: url(../assets/png/young_mother@2x.png);
+    }
+  </style>
 </head>
 
 <body>
@@ -102,48 +111,54 @@ limitations under the License.
     <hr class="top_bar" />
 
     <div class="tab-content" id="home">
-        <div class="content homepage_content">
-            Welcome to the RB Nutrition India App
+      <div class="content homepage_content">
+        Welcome to the RB Nutrition India App
+      </div>
+      <center>
+        <div class="pick-screen-button clicked" id="b4" onclick="gofirst()">
+          <p class="pick-screen-button-text">Proceed to Learning</p>
         </div>
-        <center>
-            <div class="pick-screen-button clicked" id="b4" onclick="gofirst()">
-                <p class="pick-screen-button-text">Proceed to Learning</p>
-            </div>
-        </center>
+      </center>
     </div>
     <div class="tab-content" id="book">
-        book
+      <center>
+        <p class="pick-screen-heading"> Your Module</p>
+      </center>
+
+      <div id="module-card-container">
+
+      </div>
     </div>
     <div class="tab-content" id="info">
-        info
+      info
     </div>
     <div class="tab-content" id="lady">
-       lady
+      lady
     </div>
 
     <div class="footer-nav">
       <hr class="bottom_bar" />
       <div class="row">
-          <div class="col-xs-3">
-              <center><img src="images/nav-icons/selected-home.png" onclick="open_tab(event,'home')" class="tab-link" />
-              </center>
-            </div>
-            <div class="col-xs-3">
-              <center><img src="images/nav-icons/book.png" onclick="open_tab(event,'book')" class="tab-link" /></center>
-            </div>
-            <div class="col-xs-3">
-              <center><img src="images/nav-icons/info.png" onclick="open_tab(event,'info')" class="tab-link" /></center>
-            </div>
-            <div class="col-xs-3">
-              <center><img src="images/nav-icons/lady.png" onclick="open_tab(event,'lady')" class="tab-link" /></center>
-            </div>
+        <div class="col-xs-3">
+          <center><img src="images/nav-icons/selected-home.png" onclick="open_tab(event,'home')" class="tab-link" />
+          </center>
+        </div>
+        <div class="col-xs-3">
+          <center><img src="images/nav-icons/book.png" onclick="open_tab(event,'book')" class="tab-link" /></center>
+        </div>
+        <div class="col-xs-3">
+          <center><img src="images/nav-icons/info.png" onclick="open_tab(event,'info')" class="tab-link" /></center>
+        </div>
+        <div class="col-xs-3">
+          <center><img src="images/nav-icons/lady.png" onclick="open_tab(event,'lady')" class="tab-link" /></center>
+        </div>
       </div>
 
     </div>
   </div>
 
   <script>
-    var timePeriodInMs = 2000;
+    var timePeriodInMs = 1000;
 
     setTimeout(function () {
         document.getElementById("splash-screen").style.display = "none";
@@ -204,7 +219,9 @@ limitations under the License.
       for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
       }
+
       document.getElementById(tabName).style.display = "block";
+
       evt.currentTarget.className += " active";
     }
   </script>

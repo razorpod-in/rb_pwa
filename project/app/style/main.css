@@ -78,12 +78,6 @@ hr.bottom_bar {
   border-color: white;
   background-size: cover;
 }
-.pregnant{
-  background-image: url(../assets/png/pregnant_woman@2x.png);
-}
-.young-mother{
-  background-image: url(../assets/png/young_mother@2x.png);
-}
 
 .pick-screen-circle-clicked {
   border: 5px solid;
@@ -143,11 +137,13 @@ hr.bottom_bar {
 }
 
 .reg-form-div {
+  padding-top: 5%;
+  left: 2.5%;
   height: 250px;
   bottom: -2%;
   background-color: white;
   width: 95%;
-  position: absolute;
+  position: fixed;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
@@ -228,6 +224,15 @@ hr.bottom_bar {
   font-size: 16px;
   color: #383431;
   font-weight: 600;
+}
+
+
+/* Home Page */
+
+.homepage_content{
+  text-align: center;
+  font-size: 55px;
+  margin: 20px;
 }
 
 .profile {
