@@ -200,6 +200,11 @@ hr.bottom_bar {
   color: #5C5550;
 }
 
+/* Style the tab content */
+.tab-content {
+  display: none;
+}
+
 /* Chapter Page */
 .chapter-screen-logo {
   margin-top: 20px;
