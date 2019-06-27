@@ -89,6 +89,9 @@ limitations under the License.
                 </div>
             </div>
         </div>
+        <div >
+            <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
+        </div>
     </center>
 
     <div class="row footer-nav">
@@ -139,10 +142,16 @@ limitations under the License.
                 $('.chapter_image').attr('src', ss.step_image)
                 $('.description_content').text(ss.step_description)
                 if (ss.step_audio != "") {
+                    $('.asha_didi').removeClass('hide_didi')
                     var sound = new Howl({
-                        src: [ss.step_audio]
+                        src: [ss.step_audio],
+                        preload: true,
+                        onend: function(){
+                            $('.asha_didi').addClass('hide_didi')
+                            console.log('Sound Over. Didi Hide')
+                        }
                     });
-                    sound.play()
+                    sound.play();
                     if (ss.step_video != "") {
                         $('.video_element').html(`
                         <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' width='500' height='264'

@@ -460,3 +460,18 @@ footer {
 .social-link {
   color: white;
 }
+
+/*
+  Asha Didi CSS
+*/
+.asha_didi{
+  position: absolute;
+  left: 0;
+  z-index: 10000;
+  bottom: 6%;
+  height: 200px;
+}
+
+.hide_didi{
+  display: none;
+}
