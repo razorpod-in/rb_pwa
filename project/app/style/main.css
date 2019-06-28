@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-html{
+/* html{
   overflow-y: hidden;
-}
+} */
 hr.top_bar {
   border-top: 3px solid #DD137B;
 }
@@ -25,7 +25,10 @@ hr.bottom_bar {
   margin-top: 0px;
   border-top: 3px solid #0093DD;
 }
-
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
 .back-button{
   margin-top: 40px;
   margin-left: 20px;
@@ -225,8 +228,26 @@ hr.bottom_bar {
   color: #383431;
   font-weight: 600;
 }
+.chapter-image{
+  width: 100%;
+}
 
+.description-content{
+  text-align: center;
+  width: 80%;
+  margin: 20px;
+  font-size: 22px;
+}
 
+.asha-tai{
+  position: fixed;
+  margin-left: 20px;
+  bottom: 12%;
+}
+
+.my-video-dimensions {
+  width: 100% !important;
+}
 /* Home Page */
 
 .homepage_content{

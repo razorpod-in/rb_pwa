@@ -75,23 +75,22 @@ limitations under the License.
     </center>
 
     <center>
-        <!-- <div class="row chapter-container" id="chapter-card-container">
 
-        </div> -->
         <div class="row">
             <div class="single-image">
-                <img class="chapter_image" style="width: 300px;height:300px" src="" alt="">
-                <div class="video_element">
+                <img class="chapter-image" src="" alt="">
+                <div class="video_element" id="video-element">
 
                 </div>
-                <div class="description_content">
+                <div class="description-content">
 
                 </div>
             </div>
         </div>
     </center>
-
+    <img src="images/asha_tai.png" alt="asha tai" class="asha-tai">
     <div class="row footer-nav">
+        
         <hr class="bottom_bar" />
         <div class="col-xs-3">
             <center>
@@ -137,16 +136,15 @@ limitations under the License.
                 console.log(ss)
                 $('.pick-screen-heading').text(ss.step_title)
                 $('.chapter_image').attr('src', ss.step_image)
-                $('.description_content').text(ss.step_description)
+                $('.description-content').text(ss.step_description)
                 if (ss.step_audio != "") {
                     var sound = new Howl({
                         src: [ss.step_audio]
                     });
                     sound.play()
                     if (ss.step_video != "") {
-                        $('.video_element').html(`
-                        <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' width='500' height='264'
-                            poster='' data-setup='{}'>
+                        $('#video-element').html(`
+                        <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' poster='' data-setup='{}'>
                             <source src='${ss.step_video}' type='video/webm'>
                         </video>
                     `)
