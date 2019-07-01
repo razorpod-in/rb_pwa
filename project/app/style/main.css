@@ -486,13 +486,13 @@ footer {
   Asha Didi CSS
 */
 .asha_didi{
-  position: absolute;
-  left: 0;
-  z-index: 10000;
-  bottom: 12%;
-  height: 200px;
-  display: block;
-  transition: ease-in 1s;
+    position: absolute;
+    left: 0;
+    z-index: 10000;
+    bottom: 10%;
+    height: 120px;
+    display: block;
+    transition: ease-in 1s;
 }
 
 .hide_didi{
