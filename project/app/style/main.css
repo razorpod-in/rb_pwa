@@ -229,7 +229,7 @@ hr.bottom_bar {
   font-weight: 600;
 }
 .chapter-image{
-  width: 100%;
+  width: 80%;
 }
 
 .description-content{
@@ -489,7 +489,7 @@ footer {
   position: absolute;
   left: 0;
   z-index: 10000;
-  bottom: 9%;
+  bottom: 12%;
   height: 200px;
   display: block;
   transition: ease-in 1s;
