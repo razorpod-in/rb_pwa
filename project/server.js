@@ -42,7 +42,7 @@ app.get('/api/getAll', (req, res) => {
   });
 });
 
-const server = app.listen(3001, () => {
+const server = app.listen(3002, () => {
 
   const host = server.address().address;
   const port = server.address().port;
