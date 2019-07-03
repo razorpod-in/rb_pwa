@@ -42,6 +42,8 @@ app.get('/api/getAll', (req, res) => {
   });
 });
 
+app.use('/server', require('./routes/api.js'))
+
 const server = app.listen(3002, () => {
 
   const host = server.address().address;
