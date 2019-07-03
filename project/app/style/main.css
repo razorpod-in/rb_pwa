@@ -18,6 +18,7 @@ limitations under the License.
   overflow-y: hidden;
 } */
 hr.top_bar {
+  margin-bottom: 0px;
   border-top: 3px solid #DD137B;
 }
 
@@ -181,7 +182,6 @@ hr.bottom_bar {
 .module-card-image {
   margin: 10px;
   height: 125px;
-  background-color: #00803A;
   border-radius: 12px;
 }
 
@@ -243,6 +243,11 @@ hr.bottom_bar {
   position: fixed;
   margin-left: 20px;
   bottom: 12%;
+}
+
+.single-container{
+  background: rgb(144,196,62);
+  background: linear-gradient(90deg, rgba(144,196,62,1) 0%, rgba(97,154,65,1) 100%);
 }
 
 .my-video-dimensions {

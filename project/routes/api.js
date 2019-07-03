@@ -1,7 +1,15 @@
 const express = require('express')
 
-const router = express.router()
+const router = express.Router()
 const Modules = require('../models/modules.js')
+
+// TESt GET 
+
+router.get('/test',(req,res,next)=>{
+    res.json({
+        status: "Success"
+    })
+})
 
 // GET MODULES (Model.find())
 
@@ -17,3 +25,5 @@ const Modules = require('../models/modules.js')
 // POST CHAPTERS CREATE or UPDATE
 
 // POST QUESTIONS CREATE or UPDATE
+
+module.exports = router

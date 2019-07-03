@@ -5,8 +5,9 @@
   "main": "db_setup.js",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.3",
-    "fs": "^0.0.1-security"
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^5.6.2"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
