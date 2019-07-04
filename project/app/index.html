@@ -77,7 +77,9 @@ limitations under the License.
       </div>
       <div class="pick-screen-circle young-mother" id="c2" onclick="select_one(c2)">
       </div>
-
+      <div>
+        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
+      </div>
     </center>
 
     <center>
@@ -118,6 +120,7 @@ limitations under the License.
         <div class="pick-screen-button clicked" id="b4" onclick="gofirst()">
           <p class="pick-screen-button-text">Proceed to Learning</p>
         </div>
+
       </center>
     </div>
     <div class="tab-content" id="book">
@@ -135,7 +138,7 @@ limitations under the License.
     <div class="tab-content" id="lady">
       lady
     </div>
-    
+
 
     <div class="footer-nav">
       <hr class="bottom_bar" />
@@ -158,8 +161,10 @@ limitations under the License.
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.js"></script>
+
   <script>
-    var timePeriodInMs = 1000;
+    var timePeriodInMs = 2000;
 
     setTimeout(function () {
         document.getElementById("splash-screen").style.display = "none";
@@ -170,6 +175,18 @@ limitations under the License.
     var selected = "none"
 
     function select_one(id_select) {
+      if(selected == "none"){
+        $('.asha_didi').removeClass('hide_didi')
+        var sound = new Howl({
+        src: ['assets/amr/intro.mp3'],
+        preload: true,
+        onend: function () {
+        $('.asha_didi').addClass('hide_didi')
+        console.log('Sound Over. Didi Hide')
+        }
+        });
+        sound.play()
+      }
       if (id_select.id == "c1") {
         selected = "1"
         document.getElementById(id_select.id).style.borderColor = "green";
