@@ -174,17 +174,19 @@ limitations under the License.
 
     var selected = "none"
 
-    function select_one(id_select) {
-      if(selected == "none"){
-        $('.asha_didi').removeClass('hide_didi')
-        var sound = new Howl({
-        src: ['assets/amr/intro.mp3'],
-        preload: true,
-        onend: function () {
+    var sound = new Howl({
+      src: ['assets/amr/intro.mp3'],
+      preload: true,
+      onend: function () {
         $('.asha_didi').addClass('hide_didi')
         console.log('Sound Over. Didi Hide')
-        }
-        });
+      }
+    });
+
+    function select_one(id_select) {
+      if (selected == "none") {
+        $('.asha_didi').removeClass('hide_didi')
+
         sound.play()
       }
       if (id_select.id == "c1") {
