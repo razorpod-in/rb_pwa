@@ -5,9 +5,10 @@ var options = {};
 var questionSchema = new Schema({
     text: {
         type: String,
-        alias: "questionText"
+        alias: "questionText",
+        required: true
     },
-    audio: {
+    aud: {
         type: String,
         alias: "audioPath"
     },
@@ -22,8 +23,17 @@ var questionSchema = new Schema({
     }],
     answer: {
         type: String
+    },
+    createdAt: {
+        type: String
+    },
+    updatedAt: {
+        type: String
+    },
+    lastUpdatedBy: {
+        type: String
     }
 }, options);
 
-var Modules = mongoose.model('Modules', moduleSchema);
-module.exports = Modules;
+var Questions = mongoose.model('Questions', questionSchema);
+module.exports = Questions;

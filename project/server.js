@@ -18,6 +18,18 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const app = express();
 
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://rbadmin:razorpod123@ds347467.mlab.com:47467/rb', {
+  useNewUrlParser: true
+});
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log("CONNECTED :  MONGODB SERVICE ON " + new Date().toString())
+});
+
 // This serves static files from the specified directory
 app.use(express.static(__dirname + '/build'));
 
