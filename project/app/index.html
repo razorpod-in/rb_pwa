@@ -112,7 +112,7 @@ limitations under the License.
     </div>
     <hr class="top_bar" />
 
-    <div class="tab-content" id="home">
+    <div class="tab-content" id="home" style="display: block;">
       <div class="content homepage_content">
         Welcome to the RB Nutrition India App
       </div>
@@ -144,17 +144,18 @@ limitations under the License.
       <hr class="bottom_bar" />
       <div class="row">
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/selected-home.png" onclick="open_tab(event,'home')" class="tab-link" />
+          <center>
+            <img src="images/nav-icons/selected-img-home.png" id="img-home" onclick="open_tab(event,'home')" class="tab-link" />
           </center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/book.png" onclick="open_tab(event,'book')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-book.png" id="img-book" onclick="open_tab(event,'book')" class="tab-link" /></center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/info.png" onclick="open_tab(event,'info')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-info.png" id="img-info" onclick="open_tab(event,'info')" class="tab-link" /></center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/lady.png" onclick="open_tab(event,'lady')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-lady.png" id="img-lady" onclick="open_tab(event,'lady')" class="tab-link" /></center>
         </div>
       </div>
 
@@ -256,15 +257,19 @@ limitations under the License.
       for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
       }
+
       tablinks = document.getElementsByClassName("tab-link");
-
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      var tab_id = "img-"+tabName;
+      for (i = 0; i < tablinks.length; i++){
+        if(tablinks[i].id == tab_id)
+        {
+        tablinks[i].src =  "images/nav-icons/selected-"+tablinks[i].id+".png"
+        }
+        else{
+          tablinks[i].src =  "images/nav-icons/"+tablinks[i].id+".png"
+        }
       }
-
       document.getElementById(tabName).style.display = "block";
-
-      // evt.currentTarget.className += " active";
     }
   </script>
 
