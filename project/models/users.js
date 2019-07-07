@@ -4,10 +4,12 @@ var options = {};
 // schema
 var userSchema = new Schema({
     fullName: {
-        type: String
+        type: String,
+        required: true
     },
     phone: {
-        type: String
+        type: String,
+        required: true
     },
     lastModuleVisited: {
         type: String
