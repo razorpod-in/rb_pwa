@@ -19,7 +19,7 @@ limitations under the License.
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
-    <title>Pick Persona</title>
+    <title>Registration Page</title>
     <link rel="stylesheet" href="style/main.css" />
 
     <!-- Manifest -->
@@ -42,34 +42,16 @@ limitations under the License.
     <!-- Tile for Win8 -->
     <meta name="msapplication-TileColor" content="#90a8b2">
     <meta name="msapplication-TileImage" content="images/touch/icon-192x192.png">
+
 </head>
-<body>
-    <style>
-        .pick-screen-button.clicked:active {
-            box-shadow: none;
-            transition: ease-in 0.1s;
-        }
-    </style>
+
+<body >
+    <div class="task-screen">
+       
+    </div>
     
     <script>
-        var selected = "none"
-        function select_one(id_select){
-            if(id_select.id == "c1"){
-                selected = "1"
-                document.getElementById(id_select.id).style.borderColor = "green";
-                document.getElementById("c2").style.borderColor = "white";
-            }
-            else{
-                selected = '2'
-                document.getElementById(id_select.id).style.borderColor = "green";
-                document.getElementById("c1").style.borderColor = "white";
-            }
-            document.getElementById("b1").classList.add('clicked');
-        }
-        function router_registration(){
-            var status = (selected == "none") ? null : 1;
-            if (status) location.href="registration.html"
-        }
+        
     </script>
     <script src="js/idb-promised.js"></script>
     <script src="js/main.js"></script>

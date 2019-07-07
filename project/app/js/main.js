@@ -18,10 +18,10 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then(registration => {
-        console.log(`Service Worker registered! Scope: ${registration.scope}`);
+        // console.log(`Service Worker registered! Scope: ${registration.scope}`);
       })
       .catch(err => {
-        console.log(`Service Worker registration failed: ${err}`);
+        // console.log(`Service Worker registration failed: ${err}`);
       });
   });
 }
@@ -33,6 +33,15 @@ Notification.requestPermission();
 
 // TODO - create indexedDB database
 const dbPromise = createIndexedDB();
+
+const getModules = async () => {
+  try {
+    var reponseModules = await axios.get('/server/modules');
+    return reponseModules.data.payload;
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 loadContentNetworkFirst();
 
@@ -63,8 +72,9 @@ function getLocalEventData() {
 }
 
 function loadContentNetworkFirst() {
-  getServerData()
+  getModules()
     .then(dataFromNetwork => {
+      console.log(dataFromNetwork);
       saveEventDataLocally(dataFromNetwork)
         .then(() => {
           setLastUpdated(new Date());
@@ -76,16 +86,13 @@ function loadContentNetworkFirst() {
         .then(offlineData => {
           if (!offlineData.length) {} else {
             updateUI(offlineData);
-            chapterUI(offlineData);
           }
         });
     }).catch(err => {
-      console.log('Network requests have failed, this is expected if offline');
       getLocalEventData()
         .then(offlineData => {
           if (!offlineData.length) {} else {
             updateUI(offlineData);
-            chapterUI(offlineData);
           }
         });
     });
@@ -113,6 +120,8 @@ function getServerData() {
     return response.json();
   });
 }
+
+
 
 /* UI functions */
 
@@ -154,7 +163,7 @@ function chapterUI(modules) {
     }
   });
 
-  if(steps){
+  if (steps) {
     steps.forEach(step => {
       const card = `
         <div class="col-xs-6">

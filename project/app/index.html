@@ -112,7 +112,7 @@ limitations under the License.
     </div>
     <hr class="top_bar" />
 
-    <div class="tab-content" id="home">
+    <div class="tab-content" id="home" style="display: block;">
       <div class="content homepage_content">
         Welcome to the RB Nutrition India App
       </div>
@@ -144,17 +144,18 @@ limitations under the License.
       <hr class="bottom_bar" />
       <div class="row">
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/selected-home.png" onclick="open_tab(event,'home')" class="tab-link" />
+          <center>
+            <img src="images/nav-icons/selected-img-home.png" id="img-home" onclick="open_tab(event,'home')" class="tab-link" />
           </center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/book.png" onclick="open_tab(event,'book')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-book.png" id="img-book" onclick="open_tab(event,'book')" class="tab-link" /></center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/info.png" onclick="open_tab(event,'info')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-info.png" id="img-info" onclick="open_tab(event,'info')" class="tab-link" /></center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/lady.png" onclick="open_tab(event,'lady')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-lady.png" id="img-lady" onclick="open_tab(event,'lady')" class="tab-link" /></center>
         </div>
       </div>
 
@@ -162,17 +163,23 @@ limitations under the License.
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <script>
+    // Global variables
+    var user_type = '';
+    var selected = "none"
     var timePeriodInMs = 2000;
+    var user_info_status = 0;
+    var user_name = '';
+    var user_number = '';
 
+    // Functions 
     setTimeout(function () {
         document.getElementById("splash-screen").style.display = "none";
         document.getElementById("pick-screen").style.display = "block";
       },
       timePeriodInMs);
-
-    var selected = "none"
 
     var sound = new Howl({
       src: ['assets/amr/intro.mp3'],
@@ -191,10 +198,12 @@ limitations under the License.
       }
       if (id_select.id == "c1") {
         selected = "1"
+        user_type = 'pregnant';
         document.getElementById(id_select.id).style.borderColor = "green";
         document.getElementById("c2").style.borderColor = "white";
       } else {
         selected = '2'
+        user_type = 'mother';
         document.getElementById(id_select.id).style.borderColor = "green";
         document.getElementById("c1").style.borderColor = "white";
       }
@@ -212,18 +221,33 @@ limitations under the License.
     function valid_form() {
       var num_user = document.getElementById("num_id").value;
       var name_user = document.getElementById("name_id").value;
+      if (num_user.length == 10 && name_user.length >= 4) {
+        user_info_status = 1;
+        user_name = name_user;
+        user_number = num_user;
+      }
+      else{
+        user_info_status = 0;
+      }
 
-      if (num_user == "" || name_user == "") {} else {
-        if (document.getElementById("b2").classList.contains('clicked')) {} else {
-          console.log("working");
+      if (user_info_status > 0) {
+        if (document.getElementById("b2").classList.contains('clicked')) {
+
+        } else {
           document.getElementById('b2').className += " clicked";
         }
+      }
+
+      if(user_info_status == 0){
+        document.getElementById('b2').className = "pick-screen-button";
       }
     }
 
     function router_tabs_screen() {
-      document.getElementById("registration-screen").style.display = "none";
-      document.getElementById("tabs-screen").style.display = "block";
+      if (user_info_status > 0 ) {
+        document.getElementById("registration-screen").style.display = "none";
+        document.getElementById("tabs-screen").style.display = "block";
+      }
     }
 
     function open_tab(event, tabName) {
@@ -234,15 +258,19 @@ limitations under the License.
       for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
       }
+
       tablinks = document.getElementsByClassName("tab-link");
-
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      var tab_id = "img-"+tabName;
+      for (i = 0; i < tablinks.length; i++){
+        if(tablinks[i].id == tab_id)
+        {
+        tablinks[i].src =  "images/nav-icons/selected-"+tablinks[i].id+".png"
+        }
+        else{
+          tablinks[i].src =  "images/nav-icons/"+tablinks[i].id+".png"
+        }
       }
-
       document.getElementById(tabName).style.display = "block";
-
-      // evt.currentTarget.className += " active";
     }
   </script>
 
