@@ -67,7 +67,6 @@ function saveEventDataLocally(modules) {
     const store = tx.objectStore('modules');
     return Promise.all(store.put(modules))
       .catch(() => {
-        console.log("error ");
         tx.abort();
         throw Error('Modules were not added to the store');
       });
@@ -88,7 +87,6 @@ function getLocalEventData() {
 function loadContentNetworkFirst() {
   getModules()
     .then(dataFromNetwork => {
-      console.log(dataFromNetwork);
       saveEventDataLocally(dataFromNetwork)
         .then(() => {
           setLastUpdated(new Date());
