@@ -37,4 +37,45 @@ router.route('/users')
         })
     })
 
+router.route('/user/:id')
+    .get(function(req,res,next){
+        var userid = req.params.id
+        User.findOne({"_id": userid}).exec((err,usr) => {
+            if(usr){
+                res.json({
+                    status: "Success",
+                    message: "User Data Fetched Successfully",
+                    payload: usr
+                })
+            } else {
+                res.json({
+                    status: "Failed",
+                    message:"User Data could not be fetched",
+                })
+            }
+        })
+    })
+    .put(function(req,res,next){
+        var userid = req.params.id
+        var payload = req.body
+        var options = {
+            new: true
+        }
+        User.findOneAndUpdate({"_id": userid },payload,options,function(err,savedUser){
+            if(savedUser){
+                res.json({
+                    status: "Success",
+                    message: "User Data Updated Successfully",
+                    payload: savedUser
+                })
+            } else {
+                if (err) console.log(err)
+                res.json({
+                    status: "Failed",
+                    message: "User Data Update Failed",
+                })
+            }
+        })
+    })
+
 module.exports = router

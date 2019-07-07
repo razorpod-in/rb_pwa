@@ -4,6 +4,7 @@ const router = express.Router()
 const Modules = require('../models/modules.js')
 const Chapters = require('../models/chapters.js')
 const Questions = require('../models/questions.js')
+const Rewards = require('../models/rewards.js')
 
 
 
@@ -73,6 +74,22 @@ router.get('/module/:id', (req, res, next) => {
 
 
 // GET CHAPTERS of MODULE
+
+
+router.get('/chapters', (req, res) => {
+    Chapters.find({}).exec((err, chapters) => {
+        if (chapters) {
+            res.json({
+                status: "Success",
+                payload: chapters
+            })
+        } else {
+            res.json({
+                status: "Failed"
+            })
+        }
+    })
+})
 
 router.get('/chapters/:mid', (req, res, next) => {
     const mid = req.params.mid
@@ -216,5 +233,145 @@ router.put('/edit/module/:id', (req, res, next) => {
         })
     }
 })
+
+router.get('/modules/finish/:id',function(req,res,next){
+    var mid = req.params.id
+    Rewards.find({"mid":mid}).exec((err,rewards)=>{
+        if(rewards){
+            res.json({
+                status: "Success",
+                message: "Successfully fetched rewards",
+                payload: rewards
+            })
+        } else {
+            res.json({
+                status: "Failed",
+                message: "Could not fetch Rewards"
+            })
+        }
+    })
+})
+
+
+/*  
+    <------------------------------------------------REWARDS ROUTER--------------------------------------------------------------->
+*/
+
+router.route('/rewards')
+    .get(function(req,res,next){
+        Rewards.find({}).exec((err,rewards)=>{
+            if(rewards){
+                res.json({
+                    status: "Success",
+                    message: "Successfully fetched Rewards",
+                    payload: rewards
+                })
+            } else {
+                res.json({
+                    status: "Failed",
+                    message: "Failed to fetch Rewards"
+                })
+            }
+        })
+    })
+    .post(function(req,res,next){
+        var payload = req.body
+        Rewards.findOne({title:payload.title}).exec((err,rwrd)=>{
+            if(rwrd){
+                res.json({
+                    status:"Failed",
+                    message: "Reward Already Exists"
+                })
+            } else {
+                var new_rwrd = new Reward(payload)
+                new_rwrd.save().then(savedReward => {
+                    if(savedReward){
+                        res.json({
+                            status: "Success",
+                            message: "Saved Reward Successfully",
+                            payload: savedReward
+                        })
+                    } else {
+                        res.json({
+                            status: "Failed",
+                            message: "Could not save Rewards"
+                        })
+                    }
+                })
+            }
+        })
+    })
+    .delete(function(req,res,next){
+        Rewards.remove({},function(err){
+            if(err){
+                res.json({
+                    status: "Failed",
+                    message: "Error in deleting documents"
+                })
+            } else {
+                res.json({
+                    status: "Success",
+                    message: "Deleted Documents Successfully"
+                })
+            }
+        })
+    })
+
+router.route('/rewards/:id')
+    .get(function(rew,res,next){
+        var rid = req.params.id
+        Rewards.findOne({"_id":rid}).exec((err,rwrd)=>{
+            if(rwrd){
+                res.json({
+                    status: "Success",
+                    message: "Successfully retrieved Reward for reward id " + rid,
+                    payload: rwrd
+                })
+            } else {
+                res.json({
+                    status: "Failed",
+                    message: "Failed to retrieve reward"
+                })
+            }
+        })
+    })
+    .put(function(req,res,next){
+        var rid = req.params.id
+        var payload = req.body
+        var options = {
+            new: true
+        }
+        Rewards.findOneAndUpdate({"_id":rid},payload,options,function(err,reward){
+            if(reward){
+                res.json({
+                    status: "Success",
+                    message: "Updated Reward",
+                    payload: reward
+                })
+            } else {
+                res.json({
+                    status: "Failed",
+                    message: "Failed to Update Reward"
+                })
+            }
+        })
+    })
+    .delete(function(req,res,next){
+        var rid = req.params.id
+        Rewards.remove({"_id":rid}, function(err){
+            if(err){
+                res.json({
+                    status: "Failed",
+                    message: "Failed to delete reward with reward id " + rid,
+                })
+            } else {
+                res.json({
+                    status: "Success",
+                    message: "Deleted Reward with reward id" + rid
+                })
+            }
+        })
+    })
+    
 
 module.exports = router
