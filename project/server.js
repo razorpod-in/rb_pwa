@@ -40,24 +40,11 @@ app.get(['/', '/index.html'], (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-// app.get('/api/getAll', (req, res) => {
-//   let options = {
-//     root: __dirname + '/server-data/'
-//   };
-
-//   const fileName = 'p_modules.json';
-//   res.sendFile(fileName, options, (err) => {
-//     if (err) {
-//       res.sendStatus(500);
-//       return;
-//     }
-//   });
-// });
 
 app.use('/server', require('./routes/api.js'))
 app.use('/api', require('./routes/user.js'))
 
-const server = app.listen(3002, () => {
+const server = app.listen(3000, () => {
 
   const host = server.address().address;
   const port = server.address().port;

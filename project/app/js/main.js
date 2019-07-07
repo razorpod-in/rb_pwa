@@ -26,6 +26,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Container
 const container = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
 
@@ -34,10 +35,21 @@ Notification.requestPermission();
 // TODO - create indexedDB database
 const dbPromise = createIndexedDB();
 
+// API calls to fetch the modules
 const getModules = async () => {
   try {
     var reponseModules = await axios.get('/server/modules');
     return reponseModules.data.payload;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const getChapter = async (id) => {
+  try {
+    var url = "/server/chapters/"+id;
+    var reponseChapter = await axios.get(url);
+    return reponseChapter.data.payload;
   } catch (error) {
     console.error(error)
   }
@@ -50,10 +62,12 @@ function saveEventDataLocally(modules) {
     return null;
   }
   return dbPromise.then(db => {
+    
     const tx = db.transaction('modules', 'readwrite');
     const store = tx.objectStore('modules');
-    return Promise.all(modules.map(module => store.put(module)))
+    return Promise.all(store.put(modules))
       .catch(() => {
+        console.log("error ");
         tx.abort();
         throw Error('Modules were not added to the store');
       });
@@ -102,7 +116,7 @@ function createIndexedDB() {
   if (!('indexedDB' in window)) {
     return null;
   }
-  return idb.open('dashboardr', 1, function (upgradeDb) {
+  return idb.open('dashboardr', 2, function (upgradeDb) {
     if (!upgradeDb.objectStoreNames.contains('modules')) {
       const modulesOS = upgradeDb.createObjectStore('modules', {
         keyPath: 'id'
