@@ -73,7 +73,7 @@ router.get('/module/:id', (req, res, next) => {
 })
 
 
-// GET CHAPTERS of MODULE
+
 
 
 router.get('/chapters', (req, res) => {
@@ -90,6 +90,8 @@ router.get('/chapters', (req, res) => {
         }
     })
 })
+
+// GET CHAPTERS of MODULE
 
 router.get('/chapters/:mid', (req, res, next) => {
     const mid = req.params.mid
@@ -108,6 +110,23 @@ router.get('/chapters/:mid', (req, res, next) => {
         }
     })
 })
+
+
+router.get('/questions', (req, res) => {
+    Questions.find({}).exec((err, questions) => {
+        if (chapters) {
+            res.json({
+                status: "Success",
+                payload: questions
+            })
+        } else {
+            res.json({
+                status: "Failed"
+            })
+        }
+    })
+})
+
 
 // GET QUESTIONS of CHAPTER
 
