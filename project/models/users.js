@@ -26,6 +26,10 @@ var userSchema = new Schema({
             enum:[]
         }
     ],
+    bid: {
+        type: String,
+        alias: "browserId"
+    },
     createdAt: {
         type: String
     },
