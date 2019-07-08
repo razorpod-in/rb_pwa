@@ -40,7 +40,9 @@ const serviceWorker = () => {
       'index.html',
       'js/idb-promised.js',
       'js/main.js',
+      'js/database.js',
       'images/**/*.*',
+      'assets/**/*.*',
       'manifest.json'
     ]
   }).then(resources => {
