@@ -16,29 +16,67 @@ router.get('/test',(req,res,next)=>{
     })
 })
 
-// GET MODULES (Model.find())
-
-router.get('/modules', (req, res, next) => {
-    Modules.find({}).exec((err, modules) => {
-        if (modules) {
-            res.json({
-                status: "Success",
-                message: "Modules Fetched Successfully",
-                payload: modules
-            })
-        } else if (err) {
-            res.json({
-                status: "Failed",
-                message: "Error in fetching modules"
-            })
-        } else {
-            res.json({
-                status: "Failed",
-                message: "Error in Fetching Modules or Module Not Found"
-            })
-        }
+// (http://localhost:3000/server/modules) - GET, POST, PUT
+router.route('/modules')
+    .get(function (req,res) {
+        Modules.find({}).exec((err, modules) => {
+            if (modules) {
+                res.json({
+                    status: "Success",
+                    message: "Modules Fetched Successfully",
+                    payload: modules
+                })
+            } else if (err) {
+                res.json({
+                    status: "Failed",
+                    message: "Error in fetching modules"
+                })
+            } else {
+                res.json({
+                    status: "Failed",
+                    message: "Error in Fetching Modules or Module Not Found"
+                })
+            }
+        })
     })
-})
+    .post(function (req,res){
+        var single_module = req.body
+        Modules.find({ "title": sm.title }).exec((err, smodule) => {
+            if (smodule) {
+                res.json({
+                    status: "Failed",
+                    message: "Already Contains Module with Same Title"
+                })
+            } else {
+                var dbm = new Modules(single_module)
+                var a = new Date()
+                dbm.createdAt = a
+                dbm.updatedAt = a
+                var ip = req.ip
+                ip = (ip == "::1") ? "127.0.0.1" : ip
+                dbm.lastUpdatedBy = "api request from " + ip
+                dbm.save(function (err, savedModule) {
+                    if (savedModule) {
+                        res.json({
+                            status: "Success",
+                            message: "Module Saved Successfully",
+                            payload: savedModule
+                        })
+                    } else {
+                        console.log(err)
+                        res.json({
+                            status: "Failed",
+                            message: "Module could not be saved"
+                        })
+                    }
+                })
+            }
+        })
+    })
+    .put()
+    .delete()
+
+
 
 // GET SINGLE MODULE (Model.findOne())
 
@@ -72,9 +110,7 @@ router.get('/module/:id', (req, res, next) => {
     }
 })
 
-
-
-
+// GET CHAPTERS
 
 router.get('/chapters', (req, res) => {
     Chapters.find({}).exec((err, chapters) => {
@@ -86,6 +122,33 @@ router.get('/chapters', (req, res) => {
         } else {
             res.json({
                 status: "Failed"
+            })
+        }
+    })
+})
+
+
+// POST CHAPTERS CREATE
+
+router.post('/chapters', (req, res, next) => {
+    var single_chapter = req.body
+    var dbc = new Chapters(single_chapter)
+    var a = new Date()
+    dbc.createdAt = a
+    dbc.updatedAt = a
+    var ip = (req.ip == "::1") ? "127.0.0.1" : req.ip
+    dbc.lastUpdatedBy = "api request from " + ip
+    dbc.save().then(savedChapter => {
+        if (savedChapter) {
+            res.json({
+                status: "Success",
+                message: "Chapter saved Successfully",
+                payload: savedChapter
+            })
+        } else {
+            res.json({
+                status: "Failed",
+                message: "Chapter could not be saved, Please Try Again"
             })
         }
     })
@@ -158,59 +221,9 @@ router.get('/questions/:mid', (req, res, next) => {
 })
 
 
-// POST MODULES CREATE
 
-router.post('/modules', (req, res, next) => {
-    var single_module = req.body
-    var dbm = new Modules(single_module)
-    var a = new Date()
-    dbm.createdAt = a
-    dbm.updatedAt = a
-    var ip = req.ip
-    ip = (ip == "::1") ? "127.0.0.1" : ip
-    dbm.lastUpdatedBy = "api request from " + ip
-    dbm.save(function (err, savedModule) {
-        if (savedModule) {
-            res.json({
-                status: "Success",
-                message: "Module Saved Successfully",
-                payload: savedModule
-            })
-        } else {
-            console.log(err)
-            res.json({
-                status: "Failed",
-                message: "Module could not be saved"
-            })
-        }
-    })
-})
 
-// POST CHAPTERS CREATE
 
-router.post('/chapters', (req, res, next) => {
-    var single_chapter = req.body
-    var dbc = new Chapters(single_chapter)
-    var a = new Date()
-    dbc.createdAt = a
-    dbc.updatedAt = a
-    var ip = (req.ip == "::1") ? "127.0.0.1" : req.ip
-    dbc.lastUpdatedBy = "api request from " + ip
-    dbc.save().then(savedChapter => {
-        if (savedChapter) {
-            res.json({
-                status: "Success",
-                message: "Chapter saved Successfully",
-                payload: savedChapter
-            })
-        } else {
-            res.json({
-                status: "Failed",
-                message: "Chapter could not be saved, Please Try Again"
-            })
-        }
-    })
-})
 
 // POST QUESTIONS CREATE
 
