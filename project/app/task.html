@@ -18,6 +18,8 @@ limitations under the License.
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
     <title>Registration Page</title>
     <link rel="stylesheet" href="style/main.css" />
@@ -42,14 +44,96 @@ limitations under the License.
     <!-- Tile for Win8 -->
     <meta name="msapplication-TileColor" content="#90a8b2">
     <meta name="msapplication-TileImage" content="images/touch/icon-192x192.png">
+    <style>
+        .task-heading {
+            font-family: Noto Sans Devanagari UI;
+            font-size: 18px;
+            line-height: 25px;
+            color: #383431;
+            font-weight: 900;
+        }
+        .task-text {
+            font-family: Noto Sans Devanagari UI;
+            font-size: 14px;
+            line-height: 19px;
+            color: #5C5550;
+        }
+        .options {
+            border: 2px solid #5C5550;
+            box-sizing: border-box;
+            border-radius: 12px;
+            margin:7%;
+            padding:2%;
+        }
+    </style>
 
 </head>
 
 <body >
-    <div class="task-screen">
-       
+    <div class="row">
+        <a onclick="history.back()">
+            <div class="col-xs-3">
+                <img src="images/back_arrow.png" class="back-button" />
+            </div>
+        </a>
+        <div class="col-xs-9">
+            <img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" />
+        </div>
     </div>
+    <hr class="top_bar" />
+
+    <div class="task-screen">
+        <center>
+            <p class="pick-screen-heading">Topic</p>
+        </center>
+        <center>
+            <h4 class="task-heading">
+                Question
+            </h4>
+            <p class="tast-text">
+                text
+            </p>
+            <div class="options">
+                <input type="radio" name="gender" id="" value="">option
+            </div>
+            <div class="options">
+                <input type="radio" name="gender" id="" value="">option
+            </div>
+            <div class="options">
+                <input type="radio" name="gender" id="" value="">option
+            </div>
+            <div class="options">
+                <input type="radio" name="gender" id="" value="">option
+            </div>
+
+        </center>
+    </div>
+
+    <div class="row footer-nav">
     
+        <hr class="bottom_bar" />
+        <div class="col-xs-3">
+            <center>
+                <img src="images/nav-icons/home.png" />
+            </center>
+        </div>
+        <div class="col-xs-3">
+            <center>
+                <img src="images/nav-icons/selected-book.png" />
+            </center>
+        </div>
+        <div class="col-xs-3">
+            <center>
+                <img src="images/nav-icons/info.png" />
+            </center>
+        </div>
+        <div class="col-xs-3">
+            <center>
+                <img src="images/nav-icons/lady.png" />
+            </center>
+    
+        </div>
+    </div> 
     <script>
         
     </script>
