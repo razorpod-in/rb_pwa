@@ -1,7 +1,17 @@
-var version = 1;
-// var version = Date.now();
+// var version = 1;
+var version = Date.now();
+if ('serviceWorker' in navigator) {
+   window.addEventListener('load', () => {
+     navigator.serviceWorker.register('/sw.js')
+       .then(registration => {
+         // console.log(`Service Worker registered! Scope: ${registration.scope}`);
+       })
+       .catch(err => {
+         // console.log(`Service Worker registration failed: ${err}`);
+       });
+   });
+ }
 
-console.log("index file called");
 //prefixes of implementation that we want to test
 window.indexedDB = window.indexedDB || window.mozIndexedDB ||
    window.webkitIndexedDB || window.msIndexedDB;
@@ -18,14 +28,11 @@ if (!window.indexedDB) {
 
 var reponseMod = '';
 
-const getModules1 = async () => {
+const getModules = async () => {
    
    try {
-      console.log("function called");
       var reponseModules = await axios.get('/server/modules');
-      console.log("function called");
       reponseMod = reponseModules.data.payload;
-      console.log(reponseMod);
       return reponseModules.data.payload;
    } catch (error) {
       console.error(error)
@@ -71,7 +78,7 @@ request.onupgradeneeded = function (event) {
 loadContentNetworkFirst();
 
 function loadContentNetworkFirst() {
-   getModules1()
+   getModules()
      .then(dataFromNetwork => {
          addModules(dataFromNetwork)
          readAllModules()
@@ -81,7 +88,6 @@ function loadContentNetworkFirst() {
  }
 
 function addModules(modules) {
-   console.log("Adding the modules");
    modules.forEach(module => {
       var request = db.transaction(["modules"], "readwrite")
       .objectStore("modules")
@@ -124,7 +130,6 @@ function readModules() {
 }
 
 function readAllModules() {
-   console.log("Reading the modules");
    var objectStore = db.transaction("modules").objectStore("modules");
    objectStore.openCursor().onsuccess = function (event) {
       var cursor = event.target.result;
@@ -134,7 +139,6 @@ function readAllModules() {
 }
 
 function updateModuleUI(module){
-   console.log(module);
       var card = `
         <a href="chapter.html?id=${module.id}">
           <div class="module-card">
