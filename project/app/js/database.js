@@ -58,14 +58,17 @@ const getChaptersFromNetwork = async () => {
 
 var db;
 var request = window.indexedDB.open("nutrition", version);
-
 request.onerror = function (event) {
    console.log("error: ");
 };
 
+
+
 request.onsuccess = function (event) {
    db = request.result;
+   loadContentNetworkFirst();
 };
+
 
 request.onupgradeneeded = function (event) {
    var db = event.target.result;
@@ -81,7 +84,6 @@ request.onupgradeneeded = function (event) {
    }
 }
 
-loadContentNetworkFirst();
 
 function loadContentNetworkFirst() {
    getModulesFromNetwork()
