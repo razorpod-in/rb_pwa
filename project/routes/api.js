@@ -114,7 +114,7 @@ router.get('/chapters/:mid', (req, res, next) => {
 
 router.get('/questions', (req, res) => {
     Questions.find({}).exec((err, questions) => {
-        if (chapters) {
+        if (questions) {
             res.json({
                 status: "Success",
                 payload: questions

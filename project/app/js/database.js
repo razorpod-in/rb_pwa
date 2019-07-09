@@ -1,5 +1,5 @@
-var version = 1;
-// var version = Date.now();
+// var version = 1;
+var version = Date.now();
 if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -55,6 +55,16 @@ const getChaptersFromNetwork = async () => {
    }
 }
 
+const getQuestionsFromNetwork = async () => {
+   try {
+      var reponseQuestions = await axios.get('/server/questions');
+      reponseQues = reponseQuestions.data.payload;
+      return reponseQuestions.data.payload;
+   } catch (error) {
+      readAll();
+      console.error(error)
+   }
+}
 
 var db;
 var request = window.indexedDB.open("nutrition", version);
@@ -82,6 +92,11 @@ request.onupgradeneeded = function (event) {
          keyPath: "id"
       });
    }
+   if (!db.objectStoreNames.contains('questions')) {
+      var questionStore = db.createObjectStore("questions", {
+         keyPath: "id"
+      });
+   }
 }
 
 
@@ -99,6 +114,12 @@ function loadContentNetworkFirst() {
          addChapters(chapters)
       }).catch(err => {
          console.log("you are offline");
+      });
+
+      getQuestionsFromNetwork()
+      .then(questions => {
+         addQuestions(questions)
+      }).catch(err => {
       });
 
 
@@ -188,6 +209,49 @@ function addChapters(chapters) {
       .add({
          id: primaryId,
          chapterArray: chapterArray,
+      });
+}
+
+function openChapter(mid) {
+   var transaction = db.transaction(["chapters"]);
+   var objectStore = transaction.objectStore("chapters");
+   var request = objectStore.get(mid);
+   var chaptersList = '';
+   request.onsuccess = function (event) {
+      // Do something with the request.result!
+      if (request.result) {
+         chaptersList = request.result.chapterArray;
+         updateChapterUI(chaptersList);
+      }
+   };
+}
+
+function updateChapterUI(chaptersList) {
+   for (var i = 0; i < chaptersList.length; i++) {
+      var chapterCard = `
+        <div class="col-xs-6"> 
+            <img src="${chaptersList[i].thumb}" style="width:100%">
+          <p class="chapter-card-heading">${chaptersList[i].title}</p>
+        </div>`;
+      chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
+   }
+   moduleContainer.style.display = "none";
+   chapterContainer.style.display = "block";
+}
+
+function addQuestions(questions) {
+   var primaryId = '';
+   questionsArray = [];
+   questions.forEach(question => {
+      primaryId = question.mid;
+      questionsArray.push(question);
+   })
+
+   var request = db.transaction(["questions"], "readwrite")
+      .objectStore("questions")
+      .add({
+         id: primaryId,
+         questionsArray: questionsArray,
       });
 }
 
