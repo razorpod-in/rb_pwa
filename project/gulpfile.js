@@ -36,11 +36,9 @@ const serviceWorker = () => {
     swDest: 'build/sw.js',
     globDirectory: 'build',
     globPatterns: [
-      'style/main.css',
+      'style/*.*',
       'index.html',
-      'js/idb-promised.js',
-      'js/main.js',
-      'js/database.js',
+      'js/*.*',
       'images/**/*.*',
       'assets/**/*.*',
       'manifest.json'

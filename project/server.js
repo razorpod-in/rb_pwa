@@ -44,7 +44,7 @@ app.get(['/', '/index.html'], (req, res) => {
 app.use('/server', require('./routes/api.js'))
 app.use('/api', require('./routes/user.js'))
 
-const server = app.listen(3000, () => {
+const server = app.listen(3001, () => {
 
   const host = server.address().address;
   const port = server.address().port;
