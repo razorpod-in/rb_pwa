@@ -1,5 +1,5 @@
-// var version = 1;
-var version = Date.now();
+var version = 1;
+// var version = Date.now();
 if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -39,6 +39,7 @@ const getModulesFromNetwork = async () => {
       reponseMod = reponseModules.data.payload;
       return reponseModules.data.payload;
    } catch (error) {
+      readAllModules();
       console.error(error)
    }
 }
@@ -49,6 +50,7 @@ const getChaptersFromNetwork = async () => {
       reponseChap = reponseChapters.data.payload;
       return reponseChapters.data.payload;
    } catch (error) {
+      readAll();
       console.error(error)
    }
 }
@@ -63,7 +65,6 @@ request.onerror = function (event) {
 
 request.onsuccess = function (event) {
    db = request.result;
-   console.log("success: " + db);
 };
 
 request.onupgradeneeded = function (event) {
@@ -88,14 +89,14 @@ function loadContentNetworkFirst() {
          addModules(dataFromNetwork)
          readAllModules()
       }).catch(err => {
-         console.log(err);
+         readAllModules()
       });
 
    getChaptersFromNetwork()
       .then(chapters => {
          addChapters(chapters)
       }).catch(err => {
-         console.log(err);
+         console.log("you are offline");
       });
 
 
@@ -145,31 +146,30 @@ function readModules() {
 
 function readAllModules() {
    var objectStore = db.transaction("modules").objectStore("modules");
-   objectStore.openCursor().onsuccess = function (event) {
-      var cursor = event.target.result;
-      updateModuleUI(cursor.value);
-      return cursor.value;
+   objectStore.getAll().onsuccess = function (event) {
+      var modules = event.target.result;
+      updateModuleUI(modules);
+      return modules;
    };
 }
 
-function updateModuleUI(module) {
-   var card = `
-          <div class="module-card" onclick="openChapter('${module.id}')">
+function updateModuleUI(modules) {
+   for (var i = 0; i < modules.length; i++) {
+      var moduleCard = `
+      <div class="module-card" onclick="openChapter('${modules[i].id}')">
           
-              <div class="row">
-                      <div class="col-xs-6">
-                        <img class="module-card-image" src="${module.thumbnailPath}">
-                      </div>
-                      <div class="col-xs-6">
-                        <p class="module-card-heading">${module.title}</p>
-                        <p class="module-card-sub-heading">${module.description}</p>
-                      </div>
-                  
+      <div class="row">
+              <div class="col-xs-6">
+                <img class="module-card-image" src="${modules[i].thumbnailPath}">
               </div>
-          </div>
-      `
-   if (moduleContainer) {
-      moduleContainer.insertAdjacentHTML('beforeend', card);
+              <div class="col-xs-6">
+                <p class="module-card-heading">${modules[i].title}</p>
+                <p class="module-card-sub-heading">${modules[i].description}</p>
+              </div>
+          
+      </div>
+  </div>`;
+      moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
 }
 
@@ -199,7 +199,6 @@ function openChapter(mid) {
       if (request.result) {
          chaptersList = request.result.chapterArray;
          updateChapterUI(chaptersList);
-         console.log(chaptersList);
       }
    };
 }
