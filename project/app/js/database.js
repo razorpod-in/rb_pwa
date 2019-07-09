@@ -2,15 +2,15 @@
 var version = Date.now();
 if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
-     navigator.serviceWorker.register('/sw.js')
-       .then(registration => {
-         // console.log(`Service Worker registered! Scope: ${registration.scope}`);
-       })
-       .catch(err => {
-         // console.log(`Service Worker registration failed: ${err}`);
-       });
+      navigator.serviceWorker.register('/sw.js')
+         .then(registration => {
+            // console.log(`Service Worker registered! Scope: ${registration.scope}`);
+         })
+         .catch(err => {
+            // console.log(`Service Worker registration failed: ${err}`);
+         });
    });
- }
+}
 
 //prefixes of implementation that we want to test
 window.indexedDB = window.indexedDB || window.mozIndexedDB ||
@@ -27,9 +27,13 @@ if (!window.indexedDB) {
 }
 
 var reponseMod = '';
+var reponseChap = '';
 
-const getModules = async () => {
-   
+const moduleContainer = document.getElementById('module-card-container');
+const chapterContainer = document.getElementById('chapter-card-container');
+
+const getModulesFromNetwork = async () => {
+
    try {
       var reponseModules = await axios.get('/server/modules');
       reponseMod = reponseModules.data.payload;
@@ -38,21 +42,18 @@ const getModules = async () => {
       console.error(error)
    }
 }
-const moduleContainer = document.getElementById('module-card-container');
 
-const employeeData = [{
-      id: "00-01",
-      name: "gopal",
-      age: 35,
-      email: "gopal@tutorialspoint.com"
-   },
-   {
-      id: "00-02",
-      name: "prasad",
-      age: 32,
-      email: "prasad@tutorialspoint.com"
+const getChaptersFromNetwork = async () => {
+   try {
+      var reponseChapters = await axios.get('/server/chapters');
+      reponseChap = reponseChapters.data.payload;
+      return reponseChapters.data.payload;
+   } catch (error) {
+      console.error(error)
    }
-];
+}
+
+
 var db;
 var request = window.indexedDB.open("nutrition", version);
 
@@ -68,38 +69,51 @@ request.onsuccess = function (event) {
 request.onupgradeneeded = function (event) {
    var db = event.target.result;
    if (!db.objectStoreNames.contains('modules')) {
-      var moduleStore = db.createObjectStore("modules", {keyPath: "id"});
+      var moduleStore = db.createObjectStore("modules", {
+         keyPath: "id"
+      });
    }
    if (!db.objectStoreNames.contains('chapters')) {
-      var chapterStore = db.createObjectStore("chapters", {keyPath: "id"});
-   }   
+      var chapterStore = db.createObjectStore("chapters", {
+         keyPath: "id"
+      });
+   }
 }
 
 loadContentNetworkFirst();
 
 function loadContentNetworkFirst() {
-   getModules()
-     .then(dataFromNetwork => {
+   getModulesFromNetwork()
+      .then(dataFromNetwork => {
          addModules(dataFromNetwork)
          readAllModules()
-     }).catch(err => {
-        console.log(err);
-     });
- }
+      }).catch(err => {
+         console.log(err);
+      });
+
+   getChaptersFromNetwork()
+      .then(chapters => {
+         addChapters(chapters)
+      }).catch(err => {
+         console.log(err);
+      });
+
+
+}
 
 function addModules(modules) {
    modules.forEach(module => {
       var request = db.transaction(["modules"], "readwrite")
-      .objectStore("modules")
-      .add({
-         id: module._id,
-         createdAt:module.createdAt,
-         description:module.description,
-         lastUpdatedBy:module.lastUpdatedBy,
-         thumbnailPath:module.thumbnailPath,
-         title:module.title,
-         updatedAt:module.updatedAt,
-      });
+         .objectStore("modules")
+         .add({
+            id: module._id,
+            createdAt: module.createdAt,
+            description: module.description,
+            lastUpdatedBy: module.lastUpdatedBy,
+            thumbnailPath: module.thumbnailPath,
+            title: module.title,
+            updatedAt: module.updatedAt,
+         });
    })
    request.onsuccess = function (event) {
       alert("Modules has been added to your database.");
@@ -138,10 +152,9 @@ function readAllModules() {
    };
 }
 
-function updateModuleUI(module){
-      var card = `
-        <a href="chapter.html?id=${module.id}">
-          <div class="module-card">
+function updateModuleUI(module) {
+   var card = `
+          <div class="module-card" onclick="openChapter('${module.id}')">
           
               <div class="row">
                       <div class="col-xs-6">
@@ -154,11 +167,54 @@ function updateModuleUI(module){
                   
               </div>
           </div>
-        </a>
       `
-      if (moduleContainer) {
-         moduleContainer.insertAdjacentHTML('beforeend', card);
+   if (moduleContainer) {
+      moduleContainer.insertAdjacentHTML('beforeend', card);
+   }
+}
+
+function addChapters(chapters) {
+   var primaryId = '';
+   chapterArray = [];
+   chapters.forEach(chapter => {
+      primaryId = chapter.mid;
+      chapterArray.push(chapter);
+   })
+
+   var request = db.transaction(["chapters"], "readwrite")
+      .objectStore("chapters")
+      .add({
+         id: primaryId,
+         chapterArray: chapterArray,
+      });
+}
+
+function openChapter(mid) {
+   var transaction = db.transaction(["chapters"]);
+   var objectStore = transaction.objectStore("chapters");
+   var request = objectStore.get(mid);
+   var chaptersList = '';
+   request.onsuccess = function (event) {
+      // Do something with the request.result!
+      if (request.result) {
+         chaptersList = request.result.chapterArray;
+         updateChapterUI(chaptersList);
+         console.log(chaptersList);
       }
+   };
+}
+
+function updateChapterUI(chaptersList) {
+   for (var i = 0; i < chaptersList.length; i++) {
+      var chapterCard = `
+        <div class="col-xs-6"> 
+            <img src="${chaptersList[i].thumb}" style="width:100%">
+          <p class="chapter-card-heading">${chaptersList[i].title}</p>
+        </div>`;
+      chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
+   }
+   moduleContainer.style.display = "none";
+   chapterContainer.style.display = "block";
 }
 
 function remove() {
