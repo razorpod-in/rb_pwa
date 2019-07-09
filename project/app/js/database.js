@@ -1,5 +1,5 @@
-// var version = 1;
-var version = Date.now();
+var version = 1;
+// var version = Date.now();
 
 console.log("index file called");
 //prefixes of implementation that we want to test
@@ -19,14 +19,19 @@ if (!window.indexedDB) {
 var reponseMod = '';
 
 const getModules1 = async () => {
+   
    try {
+      console.log("function called");
       var reponseModules = await axios.get('/server/modules');
+      console.log("function called");
       reponseMod = reponseModules.data.payload;
+      console.log(reponseMod);
       return reponseModules.data.payload;
    } catch (error) {
       console.error(error)
    }
 }
+const moduleContainer = document.getElementById('module-card-container');
 
 const employeeData = [{
       id: "00-01",
@@ -76,6 +81,7 @@ function loadContentNetworkFirst() {
  }
 
 function addModules(modules) {
+   console.log("Adding the modules");
    modules.forEach(module => {
       var request = db.transaction(["modules"], "readwrite")
       .objectStore("modules")
@@ -89,10 +95,8 @@ function addModules(modules) {
          updatedAt:module.updatedAt,
       });
    })
-   readAllModules();
    request.onsuccess = function (event) {
       alert("Modules has been added to your database.");
-      readAllModules();
    };
 
    request.onerror = function (event) {
@@ -120,6 +124,7 @@ function readModules() {
 }
 
 function readAllModules() {
+   console.log("Reading the modules");
    var objectStore = db.transaction("modules").objectStore("modules");
    objectStore.openCursor().onsuccess = function (event) {
       var cursor = event.target.result;
@@ -128,7 +133,28 @@ function readAllModules() {
    };
 }
 
-function updateModuleUI(offlineData){
+function updateModuleUI(module){
+   console.log(module);
+      var card = `
+        <a href="chapter.html?id=${module.id}">
+          <div class="module-card">
+          
+              <div class="row">
+                      <div class="col-xs-6">
+                        <img class="module-card-image" src="${module.thumbnailPath}">
+                      </div>
+                      <div class="col-xs-6">
+                        <p class="module-card-heading">${module.title}</p>
+                        <p class="module-card-sub-heading">${module.description}</p>
+                      </div>
+                  
+              </div>
+          </div>
+        </a>
+      `
+      if (moduleContainer) {
+         moduleContainer.insertAdjacentHTML('beforeend', card);
+      }
 }
 
 function remove() {
