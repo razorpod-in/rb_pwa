@@ -41,7 +41,7 @@ const getModulesFromNetwork = async () => {
       reponseMod = reponseModules.data.payload;
       return reponseModules.data.payload;
    } catch (error) {
-      readAllModules();
+      console.log("You are offline bitch");
       console.error(error)
    }
 }
@@ -119,7 +119,6 @@ function loadContentNetworkFirst() {
       .then(chapters => {
          addChapters(chapters)
       }).catch(err => {
-         console.log("you are offline");
       });
    getQuestionsFromNetwork()
       .then(questions => {
