@@ -148,11 +148,11 @@ function addModules(modules) {
       moduleIDArray.push(module._id);
    })
    request.onsuccess = function (event) {
-      alert("Modules has been added to your database.");
+      // alert("Modules has been added to your database.");
    };
 
    request.onerror = function (event) {
-      alert("Unable to add data\r\n Module is aready exist in your database! ");
+      // alert("Unable to add data\r\n Module is aready exist in your database! ");
    }
 }
 
@@ -162,15 +162,15 @@ function readModules() {
    var request = objectStore.get("00-03");
 
    request.onerror = function (event) {
-      alert("Unable to retrieve daa from database!");
+      // alert("Unable to retrieve daa from database!");
    };
 
    request.onsuccess = function (event) {
       // Do something with the request.result!
       if (request.result) {
-         alert("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
+         // alert("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
       } else {
-         alert("Kenny couldn't be found in your database!");
+         // alert("Kenny couldn't be found in your database!");
       }
    };
 }
@@ -246,7 +246,6 @@ function openChapter(mid) {
          var userUpdateRequest = userObjectStore.put(userData);
          userUpdateRequest.onsuccess = function (event) {
             // Do something with the request.result!
-            console.log("user updated");
          };
       };
    };
@@ -306,7 +305,6 @@ function openEachChapter(mid, id) {
          var userUpdateRequest = userObjectStore.put(userData);
          userUpdateRequest.onsuccess = function (event) {
             // Do something with the request.result!
-            console.log("user updated");
          };
       };
    };
@@ -329,7 +327,7 @@ function updateEachChapterUI(eachChapter) {
    if (eachChapter.aud != "") {
       $('.asha_didi').removeClass('hide_didi')
       var sound = new Howl({
-         src: [ss.step_audio],
+         src: [eachChapter.aud],
          preload: true,
          onend: function () {
             $('.asha_didi').addClass('hide_didi')
@@ -371,11 +369,11 @@ function addUser(userData) {
          lastChapter:'',
       });
    request.onsuccess = function (event) {
-      alert("User has been added to your database.");
+      // alert("User has been added to your database.");
    };
 
    request.onerror = function (event) {
-      alert("Unable to add data\r\n Module is aready exist in your database! ");
+      // alert("Unable to add data\r\n Module is aready exist in your database! ");
    }
 }
 
@@ -385,7 +383,7 @@ function remove() {
       .delete("00-03");
 
    request.onsuccess = function (event) {
-      alert("Kenny's entry has been removed from your database.");
+      // alert("Kenny's entry has been removed from your database.");
    };
 }
 
@@ -507,3 +505,15 @@ function open_tab(event, tabName) {
    }
    document.getElementById(tabName).style.display = "block";
 }
+
+function backNav(pagename) {
+   if(pagename == 'module' ){
+      chapterContainer.style.display = "none";
+      moduleContainer.style.display = "block";
+   }
+
+   else if (pagename == 'chapter'){
+      chapterContainer.style.display = "block";
+      eachChapterContainer.style.display = "none";
+   }
+ }

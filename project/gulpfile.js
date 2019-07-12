@@ -44,8 +44,7 @@ const serviceWorker = () => {
       'manifest.json'
     ]
   }).then(resources => {
-    console.log(`Injected ${resources.count} resources for precaching, ` +
-        `totaling ${resources.size} bytes.`);
+    console.log(`Injected ${resources.count} resources for precaching, ` +`totaling ${resources.size} bytes.`);
   }).catch(err => {
     console.log('Uh oh 😬', err);
   });

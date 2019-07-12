@@ -84,7 +84,7 @@
 
   function router_tabs_screen() {
     if (user_info_status > 0) {
-      
+
       document.getElementById("registration-screen").style.display = "none";
       document.getElementById("tabs-screen").style.display = "block";
     }
@@ -109,4 +109,8 @@
       }
     }
     document.getElementById(tabName).style.display = "block";
+  }
+
+  function backNav(pagename) {
+    console.log(pagename);
   }
