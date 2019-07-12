@@ -112,7 +112,7 @@ limitations under the License.
     </div>
     <hr class="top_bar" />
 
-    <div class="tab-content" id="home" >
+    <div class="tab-content" id="home">
       <div class="content homepage_content">
         Welcome to the RB Nutrition India App
       </div>
@@ -124,13 +124,21 @@ limitations under the License.
       </center>
     </div>
     <div class="tab-content" id="book" style="display: block;">
-      <center>
-        <p class="pick-screen-heading"> Your Module</p>
-      </center>
 
-      <div id="module-card-container"></div>
+      <div id="module-card-container">
+        <center>
+          <p class="pick-screen-heading"> Your Modules</p>
+        </center>
+      </div>
 
-      <div class="row chapter-container" id="chapter-card-container" style="display: none;"></div>
+      <div id="chapter-card-container" style="display: none;">
+        <center>
+          <p class="pick-screen-heading"> Your Chapters</p>
+        </center>
+      </div>
+      <div id="each-chapter-card-container" style="display: none;">
+
+      </div>
     </div>
     <div class="tab-content" id="info">
       info
@@ -149,13 +157,16 @@ limitations under the License.
           </center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/selected-img-book.png" id="img-book" onclick="open_tab(event,'book')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/selected-img-book.png" id="img-book" onclick="open_tab(event,'book')"
+              class="tab-link" /></center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/img-info.png" id="img-info" onclick="open_tab(event,'info')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-info.png" id="img-info" onclick="open_tab(event,'info')"
+              class="tab-link" /></center>
         </div>
         <div class="col-xs-3">
-          <center><img src="images/nav-icons/img-lady.png" id="img-lady" onclick="open_tab(event,'lady')" class="tab-link" /></center>
+          <center><img src="images/nav-icons/img-lady.png" id="img-lady" onclick="open_tab(event,'lady')"
+              class="tab-link" /></center>
         </div>
       </div>
 
@@ -176,15 +187,14 @@ limitations under the License.
 
     // Functions 
     setTimeout(function () {
-      if(1==1){
-        document.getElementById("splash-screen").style.display = "none";
-        document.getElementById("tabs-screen").style.display = "block";
-      }
-      else{
-        document.getElementById("splash-screen").style.display = "none";
-        document.getElementById("pick-screen").style.display = "block";
-      }
-        
+        if (1 == 1) {
+          document.getElementById("splash-screen").style.display = "none";
+          document.getElementById("tabs-screen").style.display = "block";
+        } else {
+          document.getElementById("splash-screen").style.display = "none";
+          document.getElementById("pick-screen").style.display = "block";
+        }
+
       },
       timePeriodInMs);
 
@@ -232,8 +242,7 @@ limitations under the License.
         user_info_status = 1;
         user_name = name_user;
         user_number = num_user;
-      }
-      else{
+      } else {
         user_info_status = 0;
       }
 
@@ -245,13 +254,13 @@ limitations under the License.
         }
       }
 
-      if(user_info_status == 0){
+      if (user_info_status == 0) {
         document.getElementById('b2').className = "pick-screen-button";
       }
     }
 
     function router_tabs_screen() {
-      if (user_info_status > 0 ) {
+      if (user_info_status > 0) {
         document.getElementById("registration-screen").style.display = "none";
         document.getElementById("tabs-screen").style.display = "block";
       }
@@ -267,14 +276,12 @@ limitations under the License.
       }
 
       tablinks = document.getElementsByClassName("tab-link");
-      var tab_id = "img-"+tabName;
-      for (i = 0; i < tablinks.length; i++){
-        if(tablinks[i].id == tab_id)
-        {
-        tablinks[i].src =  "images/nav-icons/selected-"+tablinks[i].id+".png"
-        }
-        else{
-          tablinks[i].src =  "images/nav-icons/"+tablinks[i].id+".png"
+      var tab_id = "img-" + tabName;
+      for (i = 0; i < tablinks.length; i++) {
+        if (tablinks[i].id == tab_id) {
+          tablinks[i].src = "images/nav-icons/selected-" + tablinks[i].id + ".png"
+        } else {
+          tablinks[i].src = "images/nav-icons/" + tablinks[i].id + ".png"
         }
       }
       document.getElementById(tabName).style.display = "block";

@@ -32,6 +32,7 @@ var moduleIDArray = ["5d1f0a1093a3235fdcfa1977"];
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
+const eachChapterContainer = document.getElementById('each-chapter-card-container');
 
 const getModulesFromNetwork = async () => {
 
@@ -234,9 +235,9 @@ function openChapter(mid) {
 function updateChapterUI(chaptersList) {
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
-        <div class="col-xs-6" onclick="alert('${chaptersList[i].title}')"> 
+        <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
             <img src="${chaptersList[i].thumb}" style="width:100%">
-          <p class="chapter-card-heading">${chaptersList[i].title} hello</p>
+          <p class="chapter-card-heading">${chaptersList[i].title}</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
    }
@@ -260,38 +261,71 @@ function addQuestions(questions) {
       });
 }
 
-function openChapter(mid) {
+function openEachChapter(mid, id) {
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
-   var chaptersList = '';
    request.onsuccess = function (event) {
       // Do something with the request.result!
       if (request.result) {
-         chaptersList = request.result.chapterArray;
-         updateChapterUI(chaptersList);
+         var thatChapter = request.result.chapterArray
+         for (var i = 0; i < thatChapter.length; i++) {
+            if (thatChapter[i]._id == id) {
+               var eachChapter = thatChapter[i];
+               updateEachChapterUI(eachChapter);
+            }
+         }
       }
    };
 }
 
-function updateChapterUI(chaptersList) {
-   for (var i = 0; i < chaptersList.length; i++) {
-      var chapterCard = `
-        <div class="col-xs-6"> 
-            <img src="${chaptersList[i].thumb}" style="width:100%">
-          <p class="chapter-card-heading">${chaptersList[i].title}</p>
-        </div>`;
-      chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
+function updateEachChapterUI(eachChapter) {
+
+   if (eachChapter.img != '') {
+      var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
+   } else if (eachChapter.vid != '') {
+      var visualCard = ` <div class="row">
+      <div class = "col-md-12">
+      <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' poster='' data-setup='{}'>
+         <source src='${eachChapter.vid}' type='video/webm'>
+      </video>
+      </div>
+      </div>`
    }
-   moduleContainer.style.display = "none";
-   chapterContainer.style.display = "block";
+
+   if (eachChapter.aud != "") {
+      $('.asha_didi').removeClass('hide_didi')
+      var sound = new Howl({
+         src: [ss.step_audio],
+         preload: true,
+         onend: function () {
+            $('.asha_didi').addClass('hide_didi')
+            console.log('Sound Over. Didi Hide')
+         }
+      });
+      sound.play();
+   
+   }
+   var eachChapterCard = `
+   <center>
+   <div class="row">
+       <div class="single-image">
+           ${visualCard}
+           <div class="description-content last-element">
+            ${eachChapter.desc}
+           </div>
+       </div>
+   </div>
+   <div >
+       <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
+   </div>
+</center>`;
+   eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
+
+   chapterContainer.style.display = "none";
+   eachChapterContainer.style.display = "block";
 }
 
-function openSingleChapter(mid,id){
-   var transaction = db.transaction(["chapters"]);
-   var objectStore = transaction.objectStore("chapters");
-   var request = objectStore.get(mid);
-}
 function remove() {
    var request = db.transaction(["employee"], "readwrite")
       .objectStore("employee")

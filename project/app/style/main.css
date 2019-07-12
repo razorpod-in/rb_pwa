@@ -261,6 +261,16 @@ hr.bottom_bar {
   margin: 20px;
 }
 
+/* Each Chapter Page */
+
+.video-js{
+  width: 100%;
+}
+
+.last-element{
+  margin-bottom: 90px !important;
+}
+
 .profile {
   border-radius: 50%;
   display: inline-block;
