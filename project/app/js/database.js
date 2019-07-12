@@ -185,6 +185,7 @@ function readAllModules() {
 }
 
 function updateModuleUI(modules) {
+   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Modules</p></center>';
    for (var i = 0; i < modules.length; i++) {
       var moduleCard = `
       <div class="module-card" onclick="openChapter('${modules[i].id}')">
@@ -253,6 +254,7 @@ function openChapter(mid) {
 }
 
 function updateChapterUI(chaptersList) {
+   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Chapters</p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
@@ -351,6 +353,8 @@ function updateEachChapterUI(eachChapter) {
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
 </center>`;
+   var initialStateEachChapterContainer = '<div class="row"><a onclick=backNav("chapter")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
+   eachChapterContainer.innerHTML = initialStateEachChapterContainer;
    eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
 
    chapterContainer.style.display = "none";
@@ -366,7 +370,7 @@ function addUser(userData) {
          number: userData.user_number,
          type: userData.user_type,
          lastModule: '',
-         lastChapter:'',
+         lastChapter: '',
       });
    request.onsuccess = function (event) {
       // alert("User has been added to your database.");
@@ -507,13 +511,11 @@ function open_tab(event, tabName) {
 }
 
 function backNav(pagename) {
-   if(pagename == 'module' ){
+   if (pagename == 'module') {
       chapterContainer.style.display = "none";
       moduleContainer.style.display = "block";
-   }
-
-   else if (pagename == 'chapter'){
+   } else if (pagename == 'chapter') {
       chapterContainer.style.display = "block";
       eachChapterContainer.style.display = "none";
    }
- }
+}
