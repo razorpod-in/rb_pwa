@@ -28,6 +28,7 @@ if (!window.indexedDB) {
 
 var reponseMod = '';
 var reponseChap = '';
+var moduleIDArray = ["5d1f0a1093a3235fdcfa1977"];
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -46,8 +47,12 @@ const getModulesFromNetwork = async () => {
 
 const getChaptersFromNetwork = async () => {
    try {
-      var reponseChapters = await axios.get('/server/chapters');
-      reponseChap = reponseChapters.data.payload;
+      for (var i = 0; i < moduleIDArray.length; i++) {
+         var url = '/server/chapters/' + moduleIDArray[i];
+         var reponseChapters = await axios.get(url);
+         reponseChap = reponseChapters.data.payload;
+      }
+
       return reponseChapters.data.payload;
    } catch (error) {
       readAll();
@@ -115,12 +120,10 @@ function loadContentNetworkFirst() {
       }).catch(err => {
          console.log("you are offline");
       });
-
-      getQuestionsFromNetwork()
+   getQuestionsFromNetwork()
       .then(questions => {
          addQuestions(questions)
-      }).catch(err => {
-      });
+      }).catch(err => {});
 
 
 }
@@ -138,6 +141,7 @@ function addModules(modules) {
             title: module.title,
             updatedAt: module.updatedAt,
          });
+      moduleIDArray.push(module._id);
    })
    request.onsuccess = function (event) {
       alert("Modules has been added to your database.");
@@ -197,6 +201,7 @@ function updateModuleUI(modules) {
 }
 
 function addChapters(chapters) {
+
    var primaryId = '';
    chapterArray = [];
    chapters.forEach(chapter => {
@@ -229,9 +234,9 @@ function openChapter(mid) {
 function updateChapterUI(chaptersList) {
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
-        <div class="col-xs-6"> 
+        <div class="col-xs-6" onclick="alert('${chaptersList[i].title}')"> 
             <img src="${chaptersList[i].thumb}" style="width:100%">
-          <p class="chapter-card-heading">${chaptersList[i].title}</p>
+          <p class="chapter-card-heading">${chaptersList[i].title} hello</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
    }
@@ -282,6 +287,11 @@ function updateChapterUI(chaptersList) {
    chapterContainer.style.display = "block";
 }
 
+function openSingleChapter(mid,id){
+   var transaction = db.transaction(["chapters"]);
+   var objectStore = transaction.objectStore("chapters");
+   var request = objectStore.get(mid);
+}
 function remove() {
    var request = db.transaction(["employee"], "readwrite")
       .objectStore("employee")
