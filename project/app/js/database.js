@@ -233,8 +233,6 @@ function openChapter(mid) {
    var request = objectStore.get(mid);
    var chaptersList = '';
 
-
-
    request.onsuccess = function (event) {
 
       // Do something with the request.result!
@@ -269,6 +267,7 @@ function updateChapterUI(chaptersList) {
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
    }
    moduleContainer.style.display = "none";
+   eachChapterContainer.style.display = "none";
    chapterContainer.style.display = "block";
 }
 
@@ -514,6 +513,7 @@ var userId = '';
 setTimeout(function () {
       if (initialUserData.length > 0) {
          console.log(initialUserData[0]);
+         userId = initialUserData[0].id;
          if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
             openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
          }
