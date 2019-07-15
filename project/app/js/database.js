@@ -110,6 +110,7 @@ request.onupgradeneeded = function (event) {
    }
 }
 
+insertUserInMongo();
 
 function loadContentNetworkFirst() {
    getModulesFromNetwork()
@@ -359,6 +360,24 @@ function updateEachChapterUI(eachChapter) {
 
    chapterContainer.style.display = "none";
    eachChapterContainer.style.display = "block";
+}
+
+function insertUserInMongo(){
+   const url = '/api/users';
+   const user = {
+      name:"said",
+      id:21
+   }
+   axios({
+      method:'post',
+      url:url,
+      data:{
+         user
+      }
+   })
+   .then(dat=>console.log(dat))
+   .catch(err=>console.log(err))
+   console.log("function called");
 }
 
 function addUser(userData) {
