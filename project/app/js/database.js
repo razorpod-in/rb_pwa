@@ -73,6 +73,7 @@ const getQuestionsFromNetwork = async () => {
 }
 
 var db;
+var initialUserData = '';
 var request = window.indexedDB.open("nutrition", version);
 request.onerror = function (event) {
    console.log("error: ");
@@ -82,6 +83,10 @@ request.onerror = function (event) {
 
 request.onsuccess = function (event) {
    db = request.result;
+   var initialObjectStore = db.transaction("user").objectStore("user");
+   initialObjectStore.getAll().onsuccess = function (event) {
+      initialUserData = event.target.result;
+   };
    loadContentNetworkFirst();
 };
 
@@ -110,7 +115,6 @@ request.onupgradeneeded = function (event) {
    }
 }
 
-insertUserInMongo();
 
 function loadContentNetworkFirst() {
    getModulesFromNetwork()
@@ -240,7 +244,7 @@ function openChapter(mid) {
       }
       var userTransaction = db.transaction(["user"], "readwrite");
       var userObjectStore = userTransaction.objectStore("user");
-      var userRequest = userObjectStore.get(user_number);
+      var userRequest = userObjectStore.get(userId);
       userRequest.onsuccess = function (event) {
          var userData = userRequest.result;
          userData.lastModule = mid;
@@ -301,7 +305,7 @@ function openEachChapter(mid, id) {
       }
       var userTransaction = db.transaction(["user"], "readwrite");
       var userObjectStore = userTransaction.objectStore("user");
-      var userRequest = userObjectStore.get(user_number);
+      var userRequest = userObjectStore.get(userId);
       userRequest.onsuccess = function (event) {
          var userData = userRequest.result;
          userData.lastChapter = id;
@@ -311,6 +315,77 @@ function openEachChapter(mid, id) {
          };
       };
    };
+}
+
+function openLastEachChapter(mid, id) {
+
+   var transaction = db.transaction(["chapters"]);
+   var objectStore = transaction.objectStore("chapters");
+   var request = objectStore.get(mid);
+   request.onsuccess = function (event) {
+      
+      // Do something with the request.result!
+      if (request.result) {
+         var thatChapter = request.result.chapterArray
+         for (var i = 0; i < thatChapter.length; i++) {
+            if (thatChapter[i]._id == id) {
+               var eachChapter = thatChapter[i];
+               updateLastEachChapterUI(eachChapter,mid);
+            }
+         }
+      }
+   };
+}
+
+function updateLastEachChapterUI(eachChapter,mid) {
+
+   if (eachChapter.img != '') {
+      var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
+   } else if (eachChapter.vid != '') {
+      var visualCard = ` <div class="row">
+      <div class = "col-md-12">
+      <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' poster='' data-setup='{}'>
+         <source src='${eachChapter.vid}' type='video/webm'>
+      </video>
+      </div>
+      </div>`
+   }
+
+   if (eachChapter.aud != "") {
+      $('.asha_didi').removeClass('hide_didi')
+      var sound = new Howl({
+         src: [eachChapter.aud],
+         preload: true,
+         onend: function () {
+            $('.asha_didi').addClass('hide_didi')
+            console.log('Sound Over. Didi Hide')
+         }
+      });
+      sound.play();
+
+   }
+   var eachChapterCard = `
+   <center>
+   <div class="row">
+       <div class="single-image">
+           ${visualCard}
+           <div class="description-content last-element">
+            ${eachChapter.desc}
+           </div>
+       </div>
+   </div>
+   <div >
+       <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
+   </div>
+</center>`;
+   var initialStateEachChapterContainer = '<div class="row"><a onclick=openChapter("'+mid+'")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
+   eachChapterContainer.innerHTML = initialStateEachChapterContainer;
+   eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
+
+   document.getElementById("splash-screen").style.display = "none";
+   moduleContainer.style.display = "none";
+   document.getElementById("tabs-screen").style.display = "block";
+   eachChapterContainer.style.display = "block";
 }
 
 function updateEachChapterUI(eachChapter) {
@@ -372,51 +447,37 @@ function updateEachChapterUI(eachChapter) {
  */
 
 function insertUserInMongo() {
-   // const url = '/api/users';
-   // const user = {
-   //    name:"said",
-   //    id:21
-   // }
-   // axios({
-   //    method:'post',
-   //    url:url,
-   //    data:{
-   //       user
-   //    }
-   // })
-   // .then(dat=>console.log(dat))
-   // .catch(err=>console.log(err))
-   // console.log("function called");
-
    /**
     * POST request axios - @Users
     */
-   const user = {
-      fullName: "Kamla Devi",
-      phone: "1234567890",
-      bid: "123XCV789"
+   var userData = {
+      bid: user_type,
+      fullName: user_name,
+      phone: user_number
    }
-   axios.post('/api/users', user)
+
+   axios.post('/api/users', userData)
       .then(response => response.data)
       .catch(error => console.log(error))
       .then(data => {
          if (data.status == "Success") {
-            console.log(data.message)
+            userId = data.payload._id;
+            addUser(data.payload);
             console.log(data.payload)
          } else {
             alert('Request Failed')
          }
-   })
+      })
 }
 
 function addUser(userData) {
    var request = db.transaction(["user"], "readwrite")
       .objectStore("user")
       .add({
-         id: user_number,
-         name: userData.user_name,
-         number: userData.user_number,
-         type: userData.user_type,
+         id: userData._id,
+         name: userData.fullName,
+         number: userData.phone,
+         type: userData.bid,
          lastModule: '',
          lastChapter: '',
       });
@@ -447,14 +508,15 @@ var timePeriodInMs = 2000;
 var user_info_status = 0;
 var user_name = '';
 var user_number = '';
+var userId = '';
 
 // Functions 
 setTimeout(function () {
-      if (1 == 1) {
-         document.getElementById("splash-screen").style.display = "none";
-         document.getElementById("pick-screen").style.display = "block";
-         //   document.getElementById("splash-screen").style.display = "none";
-         //   document.getElementById("tabs-screen").style.display = "block";
+      if (initialUserData.length > 0) {
+         console.log(initialUserData[0]);
+         if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+            openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
+         }
       } else {
          document.getElementById("splash-screen").style.display = "none";
          document.getElementById("pick-screen").style.display = "block";
@@ -526,12 +588,7 @@ function valid_form() {
 
 function router_tabs_screen() {
    if (user_info_status > 0) {
-      var userData = {
-         user_type: user_type,
-         user_name: user_name,
-         user_number: user_number
-      }
-      addUser(userData);
+      insertUserInMongo();
       document.getElementById("registration-screen").style.display = "none";
       document.getElementById("tabs-screen").style.display = "block";
    }
