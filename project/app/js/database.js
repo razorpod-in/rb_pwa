@@ -362,22 +362,51 @@ function updateEachChapterUI(eachChapter) {
    eachChapterContainer.style.display = "block";
 }
 
-function insertUserInMongo(){
-   const url = '/api/users';
+
+/**
+ * fullName - Required
+ * phone - Required
+ * lastModuleVisited - module id
+ * lastChapterVisited - chapter id
+ * bid - Browser ID 
+ */
+
+function insertUserInMongo() {
+   // const url = '/api/users';
+   // const user = {
+   //    name:"said",
+   //    id:21
+   // }
+   // axios({
+   //    method:'post',
+   //    url:url,
+   //    data:{
+   //       user
+   //    }
+   // })
+   // .then(dat=>console.log(dat))
+   // .catch(err=>console.log(err))
+   // console.log("function called");
+
+   /**
+    * POST request axios - @Users
+    */
    const user = {
-      name:"said",
-      id:21
+      fullName: "Kamla Devi",
+      phone: "1234567890",
+      bid: "123XCV789"
    }
-   axios({
-      method:'post',
-      url:url,
-      data:{
-         user
-      }
+   axios.post('/api/users', user)
+      .then(response => response.data)
+      .catch(error => console.log(error))
+      .then(data => {
+         if (data.status == "Success") {
+            console.log(data.message)
+            console.log(data.payload)
+         } else {
+            alert('Request Failed')
+         }
    })
-   .then(dat=>console.log(dat))
-   .catch(err=>console.log(err))
-   console.log("function called");
 }
 
 function addUser(userData) {

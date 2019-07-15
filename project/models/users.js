@@ -28,7 +28,8 @@ var userSchema = new Schema({
     ],
     bid: {
         type: String,
-        alias: "browserId"
+        alias: "browserId",
+        required: true
     },
     createdAt: {
         type: String
