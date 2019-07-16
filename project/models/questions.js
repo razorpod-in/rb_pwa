@@ -24,6 +24,10 @@ var questionSchema = new Schema({
     answer: {
         type: String
     },
+    wrongText: {
+        type: String,
+        alias: "wt"
+    },
     createdAt: {
         type: String
     },

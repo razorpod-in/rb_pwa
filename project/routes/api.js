@@ -41,7 +41,7 @@ router.route('/modules')
     })
     .post(function (req,res){
         var single_module = req.body
-        Modules.find({ "title": sm.title }).exec((err, smodule) => {
+        Modules.findOne({ "title": single_module.title }).exec(function (err, smodule){
             if (smodule) {
                 res.json({
                     status: "Failed",

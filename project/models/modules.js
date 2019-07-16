@@ -7,6 +7,11 @@ var moduleSchema = new Schema({
         type: String,
         required: true
     },
+    moduleType: {
+        type: String,
+        required: true,
+        alias: "mt"
+    },
     description: {
         type: String,
         alias: "desc"
