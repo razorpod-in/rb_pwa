@@ -27,8 +27,8 @@ if (!window.indexedDB) {
 }
 
 var reponseMod = '';
-var reponseChap = '';
-var moduleIDArray = ["5d2d6400858cf009781aadb7"];
+var reponseChap = [];
+var moduleIDArray = [];
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -39,6 +39,9 @@ const getModulesFromNetwork = async () => {
    try {
       var reponseModules = await axios.get('/server/modules');
       reponseMod = reponseModules.data.payload;
+      for (var i = 0; i < reponseMod.length; i++) {
+         moduleIDArray.push(reponseMod[i]._id);
+      }
       return reponseModules.data.payload;
    } catch (error) {
       console.log("You are offline bitch");
@@ -51,10 +54,10 @@ const getChaptersFromNetwork = async () => {
       for (var i = 0; i < moduleIDArray.length; i++) {
          var url = '/server/chapters/' + moduleIDArray[i];
          var reponseChapters = await axios.get(url);
-         reponseChap = reponseChapters.data.payload;
+         reponseChap.push(reponseChapters.data.payload);
       }
 
-      return reponseChapters.data.payload;
+      return reponseChap;
    } catch (error) {
       readAll();
       console.error(error)
@@ -121,18 +124,17 @@ function loadContentNetworkFirst() {
       .then(dataFromNetwork => {
          addModules(dataFromNetwork)
          readAllModules()
+         getChaptersFromNetwork()
+            .then(chapters => {
+               addChapters(chapters)
+            }).catch(err => {});
+         getQuestionsFromNetwork()
+            .then(questions => {
+               addQuestions(questions)
+            }).catch(err => {});
       }).catch(err => {
          readAllModules()
       });
-
-   getChaptersFromNetwork()
-      .then(chapters => {
-         addChapters(chapters)
-      }).catch(err => {});
-   getQuestionsFromNetwork()
-      .then(questions => {
-         addQuestions(questions)
-      }).catch(err => {});
 
 
 }
@@ -150,7 +152,7 @@ function addModules(modules) {
             title: module.title,
             updatedAt: module.updatedAt,
          });
-      moduleIDArray.push(module._id);
+
    })
    request.onsuccess = function (event) {
       // alert("Modules has been added to your database.");
@@ -211,20 +213,22 @@ function updateModuleUI(modules) {
 }
 
 function addChapters(chapters) {
+   for (var i = 0; i < chapters.length; i++) {
+      var primaryId = '';
+      chapterArray = [];
+      primaryId = chapters[i][0].mid;
+      for (var j = 0; j < chapters[i].length; j++) {
+         chapterArray.push(chapters[i][j]);
+      }
+      var request = db.transaction(["chapters"], "readwrite")
+         .objectStore("chapters")
+         .add({
+            id: primaryId,
+            chapterArray: chapterArray,
+         });
+   }
 
-   var primaryId = '';
-   chapterArray = [];
-   chapters.forEach(chapter => {
-      primaryId = chapter.mid;
-      chapterArray.push(chapter);
-   })
 
-   var request = db.transaction(["chapters"], "readwrite")
-      .objectStore("chapters")
-      .add({
-         id: primaryId,
-         chapterArray: chapterArray,
-      });
 }
 
 function openChapter(mid) {
@@ -322,21 +326,21 @@ function openLastEachChapter(mid, id) {
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
    request.onsuccess = function (event) {
-      
+
       // Do something with the request.result!
       if (request.result) {
          var thatChapter = request.result.chapterArray
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
                var eachChapter = thatChapter[i];
-               updateLastEachChapterUI(eachChapter,mid);
+               updateLastEachChapterUI(eachChapter, mid);
             }
          }
       }
    };
 }
 
-function updateLastEachChapterUI(eachChapter,mid) {
+function updateLastEachChapterUI(eachChapter, mid) {
 
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
@@ -377,7 +381,7 @@ function updateLastEachChapterUI(eachChapter,mid) {
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
 </center>`;
-   var initialStateEachChapterContainer = '<div class="row"><a onclick=openChapter("'+mid+'")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
+   var initialStateEachChapterContainer = '<div class="row"><a onclick=openChapter("' + mid + '")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
    eachChapterContainer.innerHTML = initialStateEachChapterContainer;
    eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
 
@@ -462,7 +466,6 @@ function insertUserInMongo() {
          if (data.status == "Success") {
             userId = data.payload._id;
             addUser(data.payload);
-            console.log(data.payload)
          } else {
             alert('Request Failed')
          }
@@ -512,7 +515,6 @@ var userId = '';
 // Functions 
 setTimeout(function () {
       if (initialUserData.length > 0) {
-         console.log(initialUserData[0]);
          userId = initialUserData[0].id;
          if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
             openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
