@@ -201,9 +201,9 @@ function updateModuleUI(modules) {
               <div class="col-xs-6">
                 <img class="module-card-image" src="${modules[i].thumbnailPath}">
               </div>
-              <div class="col-xs-6">
+              <div class="col-xs-6 module-title-container">
                 <p class="module-card-heading">${modules[i].title}</p>
-                <p class="module-card-sub-heading">${modules[i].description}</p>
+                <!-- <p class="module-card-sub-heading">${modules[i].description}</p> -->
               </div>
           
       </div>
@@ -265,7 +265,7 @@ function updateChapterUI(chaptersList) {
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
-            <img src="${chaptersList[i].thumb}" style="width:100%">
+            <img src="${chaptersList[i].thumb}" style="width:80%">
           <p class="chapter-card-heading">${chaptersList[i].title}</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
@@ -392,7 +392,7 @@ function updateLastEachChapterUI(eachChapter, mid) {
 }
 
 function updateEachChapterUI(eachChapter) {
-
+   console.log(eachChapter)
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
    } else if (eachChapter.vid != '') {
@@ -406,6 +406,7 @@ function updateEachChapterUI(eachChapter) {
    }
 
    if (eachChapter.aud != "") {
+
       $('.asha_didi').removeClass('hide_didi')
       var sound = new Howl({
          src: [eachChapter.aud],

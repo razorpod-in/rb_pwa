@@ -17,6 +17,10 @@ limitations under the License.
 /* html{
   overflow-y: hidden;
 } */
+
+body{
+  background-color: #E3CC8E
+}
 hr.top_bar {
   margin-bottom: 0px;
   border-top: 3px solid #DD137B;
@@ -177,6 +181,7 @@ hr.bottom_bar {
   border-radius: 12px;
   border: 2px solid #00803A;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  background-color: white;
 }
 
 .module-card-image {
@@ -185,12 +190,21 @@ hr.bottom_bar {
   border-radius: 12px;
 }
 
+.module-title-container{
+  vertical-align: middle;
+  text-align: -webkit-auto;
+  display: inline-block;
+  line-height: 140px;
+}
+
 .module-card-heading {
   font-weight: 600;
   margin-top: 10px;
   font-size: 18px;
   line-height: 25px;
   color: #383431;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .module-card-sub-heading {
@@ -205,6 +219,11 @@ hr.bottom_bar {
 }
 
 /* Chapter Page */
+#chapter-card-container{
+  height: 1000px;
+  overflow: scroll;
+}
+
 .chapter-screen-logo {
   margin-top: 20px;
   width: 50%;
@@ -227,6 +246,7 @@ hr.bottom_bar {
   font-size: 16px;
   color: #383431;
   font-weight: 600;
+  text-align: center;
 }
 .chapter-image{
   width: 80%;
