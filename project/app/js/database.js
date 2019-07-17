@@ -233,7 +233,6 @@ function updateModuleUI(modules) {
    chapterContainer.style.display = "none";
    document.getElementById("tabs-screen").style.display = "block";
    moduleContainer.style.display = "block";
-
 }
 
 function addChapters(chapters) {
@@ -400,11 +399,16 @@ function openLastEachChapter(mid, id) {
       // Do something with the request.result!
       if (request.result) {
          var thatChapter = request.result.chapterArray
+         var eachChapter ='';
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
-               var eachChapter = thatChapter[i];
+               eachChapter = thatChapter[i];
                updateLastEachChapterUI(eachChapter, mid);
             }
+         }
+
+         if(eachChapter == ''){
+            openLastChapter(mid);
          }
       }
    };
@@ -585,7 +589,6 @@ var userId = '';
 // Functions 
 setTimeout(function () {
       if (initialUserData.length > 0) {
-         console.log(initialUserData);
          userId = initialUserData[0].id;
          if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
             openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
