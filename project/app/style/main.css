@@ -311,6 +311,40 @@ hr.bottom_bar {
   margin-bottom: 90px !important;
 }
 
+/* Profile Screen */
+.profile-screen {
+  margin: 7% 2% 2% 2%;
+    }
+img {
+  border-radius: 50%;
+}
+.profile-info {
+  margin-top:9%;
+  margin-bottom:7%;
+  vertical-align: middle;
+  font-family: Noto Sans Devanagari UI;
+  font-size: 17px;
+  line-height: 23px;
+}
+.profile-heading {
+  font-family: Noto Sans Devanagari UI;
+  line-height: 30px;
+  font-size: 21px;
+  color: #000000;
+  font-weight: 900;
+}
+.profile-padding {
+  padding: 2%;
+}
+.name {
+  color: #DD137B;
+  font-weight: 900;
+}
+.phone {
+  color: #0093DD;
+  font-weight: 900;
+}
+
 .profile {
   border-radius: 50%;
   display: inline-block;
