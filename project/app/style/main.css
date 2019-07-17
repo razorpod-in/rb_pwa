@@ -61,7 +61,7 @@ hr.bottom_bar {
 
 /* Splash Screen */
 .splash-screen-logo {
-  margin-top: 70%;
+  /* margin-top: 70%; */
 }
 
 /* Pick persona screen */
@@ -147,7 +147,7 @@ hr.bottom_bar {
 .reg-form-div {
   padding-top: 5%;
   left: 2.5%;
-  height: 250px;
+  height: 280px;
   bottom: -2%;
   background-color: white;
   width: 95%;
@@ -164,6 +164,22 @@ hr.bottom_bar {
   width: 60%;
   margin-bottom: 10px;
   color: #000000;
+}
+
+.reg-form-text{
+  display: inline;
+  margin-left: 15px;
+  color: black;
+  font-size: 16px;
+}
+.reg-form-checkbox-input{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.reg-form-checkbox{
+  display: inline;
+  width: 15px;
+  height: 15px;
 }
 
 /* Tabs */
