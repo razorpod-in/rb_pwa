@@ -230,6 +230,10 @@ function updateModuleUI(modules) {
      
       moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
+   chapterContainer.style.display = "none";
+   document.getElementById("tabs-screen").style.display = "block";
+   moduleContainer.style.display = "block";
+
 }
 
 function addChapters(chapters) {
@@ -280,6 +284,35 @@ function openChapter(mid) {
 
 }
 
+function openLastChapter(mid) {
+   var transaction = db.transaction(["chapters"]);
+   var objectStore = transaction.objectStore("chapters");
+   var request = objectStore.get(mid);
+   var chaptersList = '';
+
+   request.onsuccess = function (event) {
+
+      // Do something with the request.result!
+      if (request.result) {
+         chaptersList = request.result.chapterArray;
+         updateLastChapterUI(chaptersList);
+      }
+      var userTransaction = db.transaction(["user"], "readwrite");
+      var userObjectStore = userTransaction.objectStore("user");
+      var userRequest = userObjectStore.get(userId);
+      userRequest.onsuccess = function (event) {
+         var userData = userRequest.result;
+         userData.lastModule = mid;
+         key = userData.number;
+         var userUpdateRequest = userObjectStore.put(userData);
+         userUpdateRequest.onsuccess = function (event) {
+            // Do something with the request.result!
+         };
+      };
+   };
+
+}
+
 function updateChapterUI(chaptersList) {
    chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Chapters</p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
@@ -292,6 +325,23 @@ function updateChapterUI(chaptersList) {
    }
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
+   chapterContainer.style.display = "block";
+}
+
+function updateLastChapterUI(chaptersList) {
+   chapterContainer.innerHTML = ' <div class="row"><a onclick="readAllModules()"><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Chapters</p></center>';
+   for (var i = 0; i < chaptersList.length; i++) {
+      var chapterCard = `
+        <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
+            <img src="${chaptersList[i].thumb}" style="width:80%">
+          <p class="chapter-card-heading">${chaptersList[i].title}</p>
+        </div>`;
+      chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
+   }
+   document.getElementById("splash-screen").style.display = "none";
+   moduleContainer.style.display = "none";
+   eachChapterContainer.style.display = "none";
+   document.getElementById("tabs-screen").style.display = "block";
    chapterContainer.style.display = "block";
 }
 
@@ -534,15 +584,20 @@ var userId = '';
 
 // Functions 
 setTimeout(function () {
-      // if (initialUserData.length > 0) {
-      //    userId = initialUserData[0].id;
-      //    if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
-      //       openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-      //    }
-      // } else {
+      if (initialUserData.length > 0) {
+         console.log(initialUserData);
+         userId = initialUserData[0].id;
+         if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+            openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
+         }
+
+         else if(initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == ''){
+            openLastChapter(initialUserData[0].lastModule);
+         }
+      } else {
          document.getElementById("splash-screen").style.display = "none";
          document.getElementById("pick-screen").style.display = "block";
-      // }
+      }
 
    },
    timePeriodInMs);
