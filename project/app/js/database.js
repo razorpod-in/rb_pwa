@@ -259,22 +259,6 @@ function openChapter(mid) {
    var request = objectStore.get(mid);
    var chaptersList = '';
 
-   var userTransaction = db.transaction(["user"], "readwrite");
-   var userObjectStore = userTransaction.objectStore("user");
-   var userRequest = userObjectStore.get(userId);
-   userRequest.onsuccess = function (event) {
-      var userData = userRequest.result;
-      if(userData.moduleVisited.includes(mid)){
-         console.log("Already Exists");
-      }
-      else{
-         userData.moduleVisited.push(mid);
-      }
-      var userUpdateRequest = userObjectStore.put(userData);
-      userUpdateRequest.onsuccess = function (event) {
-         // Do something with the request.result!
-      };
-   };
    request.onsuccess = function (event) {
 
       // Do something with the request.result!
@@ -288,6 +272,13 @@ function openChapter(mid) {
       userRequest.onsuccess = function (event) {
          var userData = userRequest.result;
          userData.lastModule = mid;
+         if(userData.moduleVisited.includes(mid)){
+            console.log("Already Exists");
+         }
+         else{
+            userData.moduleVisited.push(mid);
+            userData.chapterVisited.push([]);
+         }
          key = userData.number;
          var userUpdateRequest = userObjectStore.put(userData);
          userUpdateRequest.onsuccess = function (event) {
@@ -393,9 +384,18 @@ function openEachChapter(mid, id) {
       var userTransaction = db.transaction(["user"], "readwrite");
       var userObjectStore = userTransaction.objectStore("user");
       var userRequest = userObjectStore.get(userId);
+      var indexMid ='';
       userRequest.onsuccess = function (event) {
          var userData = userRequest.result;
+         
          userData.lastChapter = id;
+         for(var i=0;i<userData.moduleVisited.length;i++){
+            if(userData.moduleVisited[i]==mid){
+               indexMid = i;
+            }
+         }
+
+         userData.chapterVisited[indexMid].push(id);
          var userUpdateRequest = userObjectStore.put(userData);
          userUpdateRequest.onsuccess = function (event) {
             // Do something with the request.result!
