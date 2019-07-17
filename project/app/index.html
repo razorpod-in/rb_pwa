@@ -60,7 +60,7 @@ limitations under the License.
 <body>
   <div id="splash-screen">
     <center>
-      <img src="images/NIP Logo Unit.svg" alt="main-logo" class="splash-screen-logo" />
+      <img src="images/Splash_Screen.png" alt="main-logo" class="splash-screen-logo" />
     </center>
   </div>
 
@@ -94,8 +94,9 @@ limitations under the License.
       <div class="reg-form-div">
         <p class="pick-screen-heading">Please choose one</p>
         <form>
-          <input type="text" placeholder="9001 126 303" class="reg-form-input" id="num_id" onkeyup="valid_form()" />
+          <input type="text" placeholder="9001126303" class="reg-form-input" id="num_id" onkeyup="valid_form()" />
           <input type="text" placeholder="Kamla Devi" class="reg-form-input" id="name_id" onkeyup="valid_form()" />
+          <div class="reg-form-checkbox-input "><input type="checkbox" class="reg-form-checkbox" id="accept_id" onchange="valid_form()" /><p class="reg-form-text">I accept</p>  </div>
         </form>
         <div class="pick-screen-button" id="b2" onclick="router_tabs_screen()">
           <p class="pick-screen-button-text">I have chosen</p>
@@ -137,7 +138,15 @@ limitations under the License.
         </center>
       </div>
       <hr class="top_bar" />
-      info
+      <div class="content homepage_content">
+        Welcome to the Resources
+      </div>
+      <center>
+        <div class="pick-screen-button clicked" id="b4" onclick="gofirst()">
+          <p class="pick-screen-button-text">Proceed to Learning</p>
+        </div>
+
+      </center>
     </div>
     <div class="tab-content" id="lady">
       <div>

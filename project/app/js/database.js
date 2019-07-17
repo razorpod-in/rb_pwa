@@ -194,9 +194,9 @@ function readAllModules() {
 function updateModuleUI(modules) {
    moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Modules</p></center>';
    for (var i = 0; i < modules.length; i++) {
-      var moduleCard = `
-      <div class="module-card" onclick="openChapter('${modules[i].id}')">
-          
+      if (i == modules.length - 1) {
+         var moduleCard = `
+      <div class="module-card" onclick="openChapter('${modules[i].id}')" style="margin-bottom: 100px;">
       <div class="row">
               <div class="col-xs-6">
                 <img class="module-card-image" src="${modules[i].thumbnailPath}">
@@ -208,6 +208,24 @@ function updateModuleUI(modules) {
           
       </div>
   </div>`;
+      }
+      else{
+         var moduleCard = `
+         <div class="module-card" onclick="openChapter('${modules[i].id}')">
+             
+         <div class="row">
+                 <div class="col-xs-6">
+                   <img class="module-card-image" src="${modules[i].thumbnailPath}">
+                 </div>
+                 <div class="col-xs-6 module-title-container">
+                   <p class="module-card-heading">${modules[i].title}</p>
+                   <!-- <p class="module-card-sub-heading">${modules[i].description}</p> -->
+                 </div>
+             
+         </div>
+     </div>`;
+      }
+     
       moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
 }
@@ -365,7 +383,6 @@ function updateLastEachChapterUI(eachChapter, mid) {
          }
       });
       sound.play();
-
    }
    var eachChapterCard = `
    <center>
@@ -392,7 +409,6 @@ function updateLastEachChapterUI(eachChapter, mid) {
 }
 
 function updateEachChapterUI(eachChapter) {
-   console.log(eachChapter)
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
    } else if (eachChapter.vid != '') {
@@ -405,20 +421,7 @@ function updateEachChapterUI(eachChapter) {
       </div>`
    }
 
-   if (eachChapter.aud != "") {
 
-      $('.asha_didi').removeClass('hide_didi')
-      var sound = new Howl({
-         src: [eachChapter.aud],
-         preload: true,
-         onend: function () {
-            $('.asha_didi').addClass('hide_didi')
-            console.log('Sound Over. Didi Hide')
-         }
-      });
-      sound.play();
-
-   }
    var eachChapterCard = `
    <center>
    <div class="row">
@@ -439,6 +442,20 @@ function updateEachChapterUI(eachChapter) {
 
    chapterContainer.style.display = "none";
    eachChapterContainer.style.display = "block";
+   if (eachChapter.aud != "") {
+      console.log("There is aud");
+      $('.asha_didi').removeClass('hide_didi')
+      var sound = new Howl({
+         src: [eachChapter.aud],
+         preload: true,
+         onend: function () {
+            $('.asha_didi').addClass('hide_didi')
+            console.log('Sound Over. Didi Hide')
+         }
+      });
+      sound.play();
+
+   }
 }
 
 
@@ -515,15 +532,15 @@ var userId = '';
 
 // Functions 
 setTimeout(function () {
-      if (initialUserData.length > 0) {
-         userId = initialUserData[0].id;
-         if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
-            openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-         }
-      } else {
+      // if (initialUserData.length > 0) {
+      //    userId = initialUserData[0].id;
+      //    if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+      //       openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
+      //    }
+      // } else {
          document.getElementById("splash-screen").style.display = "none";
          document.getElementById("pick-screen").style.display = "block";
-      }
+      // }
 
    },
    timePeriodInMs);
@@ -568,7 +585,8 @@ function router_registration() {
 function valid_form() {
    var num_user = document.getElementById("num_id").value;
    var name_user = document.getElementById("name_id").value;
-   if (num_user.length == 10 && name_user.length >= 4) {
+   var accept_user = document.getElementById("accept_id").checked;
+   if (num_user.length == 10 && name_user.length >= 4 && accept_user == true) {
       user_info_status = 1;
       user_name = name_user;
       user_number = num_user;
@@ -619,6 +637,9 @@ function open_tab(event, tabName) {
 }
 
 function backNav(pagename) {
+   if(sound){
+      sound.stop();
+   }
    if (pagename == 'module') {
       chapterContainer.style.display = "none";
       moduleContainer.style.display = "block";
