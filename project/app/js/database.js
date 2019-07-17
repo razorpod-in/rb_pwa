@@ -383,7 +383,6 @@ function updateLastEachChapterUI(eachChapter, mid) {
          }
       });
       sound.play();
-
    }
    var eachChapterCard = `
    <center>
@@ -410,7 +409,6 @@ function updateLastEachChapterUI(eachChapter, mid) {
 }
 
 function updateEachChapterUI(eachChapter) {
-   console.log(eachChapter)
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
    } else if (eachChapter.vid != '') {
@@ -423,20 +421,7 @@ function updateEachChapterUI(eachChapter) {
       </div>`
    }
 
-   if (eachChapter.aud != "") {
 
-      $('.asha_didi').removeClass('hide_didi')
-      var sound = new Howl({
-         src: [eachChapter.aud],
-         preload: true,
-         onend: function () {
-            $('.asha_didi').addClass('hide_didi')
-            console.log('Sound Over. Didi Hide')
-         }
-      });
-      sound.play();
-
-   }
    var eachChapterCard = `
    <center>
    <div class="row">
@@ -457,6 +442,20 @@ function updateEachChapterUI(eachChapter) {
 
    chapterContainer.style.display = "none";
    eachChapterContainer.style.display = "block";
+   if (eachChapter.aud != "") {
+      console.log("There is aud");
+      $('.asha_didi').removeClass('hide_didi')
+      var sound = new Howl({
+         src: [eachChapter.aud],
+         preload: true,
+         onend: function () {
+            $('.asha_didi').addClass('hide_didi')
+            console.log('Sound Over. Didi Hide')
+         }
+      });
+      sound.play();
+
+   }
 }
 
 
@@ -533,15 +532,15 @@ var userId = '';
 
 // Functions 
 setTimeout(function () {
-      if (initialUserData.length > 0) {
-         userId = initialUserData[0].id;
-         if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
-            openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-         }
-      } else {
+      // if (initialUserData.length > 0) {
+      //    userId = initialUserData[0].id;
+      //    if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+      //       openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
+      //    }
+      // } else {
          document.getElementById("splash-screen").style.display = "none";
          document.getElementById("pick-screen").style.display = "block";
-      }
+      // }
 
    },
    timePeriodInMs);
@@ -638,6 +637,9 @@ function open_tab(event, tabName) {
 }
 
 function backNav(pagename) {
+   if(sound){
+      sound.stop();
+   }
    if (pagename == 'module') {
       chapterContainer.style.display = "none";
       moduleContainer.style.display = "block";
