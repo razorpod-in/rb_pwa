@@ -447,7 +447,7 @@ function updateEachChapterUI(eachChapter) {
    if (eachChapter.aud != "") {
       console.log("There is aud");
       $('.asha_didi').removeClass('hide_didi')
-      var sound = new Howl({
+       sound = new Howl({
          src: [eachChapter.aud],
          preload: true,
          onend: function () {
@@ -547,7 +547,7 @@ setTimeout(function () {
    },
    timePeriodInMs);
 
-var sound = new Howl({
+ sound = new Howl({
    src: ['assets/amr/intro.mp3'],
    preload: true,
    onend: function () {
