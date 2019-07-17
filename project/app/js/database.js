@@ -1,5 +1,6 @@
 // var version = 1;
 var version = Date.now();
+
 if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -29,6 +30,7 @@ if (!window.indexedDB) {
 var reponseMod = '';
 var reponseChap = [];
 var moduleIDArray = [];
+var sound = ""
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -374,7 +376,7 @@ function updateLastEachChapterUI(eachChapter, mid) {
 
    if (eachChapter.aud != "") {
       $('.asha_didi').removeClass('hide_didi')
-      var sound = new Howl({
+       sound = new Howl({
          src: [eachChapter.aud],
          preload: true,
          onend: function () {
@@ -637,9 +639,11 @@ function open_tab(event, tabName) {
 }
 
 function backNav(pagename) {
+   console.log(sound)
    if(sound){
       sound.stop();
    }
+   sound.stop();
    if (pagename == 'module') {
       chapterContainer.style.display = "none";
       moduleContainer.style.display = "block";
