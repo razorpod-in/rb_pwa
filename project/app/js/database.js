@@ -231,7 +231,6 @@ function updateModuleUI(modules) {
       moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
    chapterContainer.style.display = "none";
-   document.getElementById("tabs-screen").style.display = "block";
    moduleContainer.style.display = "block";
 }
 
@@ -260,6 +259,22 @@ function openChapter(mid) {
    var request = objectStore.get(mid);
    var chaptersList = '';
 
+   var userTransaction = db.transaction(["user"], "readwrite");
+   var userObjectStore = userTransaction.objectStore("user");
+   var userRequest = userObjectStore.get(userId);
+   userRequest.onsuccess = function (event) {
+      var userData = userRequest.result;
+      if(userData.moduleVisited.includes(mid)){
+         console.log("Already Exists");
+      }
+      else{
+         userData.moduleVisited.push(mid);
+      }
+      var userUpdateRequest = userObjectStore.put(userData);
+      userUpdateRequest.onsuccess = function (event) {
+         // Do something with the request.result!
+      };
+   };
    request.onsuccess = function (event) {
 
       // Do something with the request.result!
@@ -556,6 +571,8 @@ function addUser(userData) {
          type: userData.bid,
          lastModule: '',
          lastChapter: '',
+         moduleVisited: [],
+         chapterVisited: [],
       });
    request.onsuccess = function (event) {
       // alert("User has been added to your database.");
