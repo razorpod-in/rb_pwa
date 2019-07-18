@@ -268,7 +268,7 @@ function openChapter(mid) {
       var userRequest = userObjectStore.get(userId);
       
       userRequest.onsuccess = function (event) {
-         var indexMid1 ='';
+         var indexMid1 ='test';
          chaptersList = request.result.chapterArray;
          var userData = userRequest.result;
 
@@ -278,7 +278,7 @@ function openChapter(mid) {
             }
          }
          console.log(indexMid1);
-         if(indexMid1 != '' || indexMid1==0){
+         if(indexMid1 != 'test'){
             if(userData.chapterVisited[indexMid1].length == chaptersList.length){
                updateQuestionUI();
             }
