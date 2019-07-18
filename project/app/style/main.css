@@ -18,8 +18,14 @@ limitations under the License.
   overflow-y: hidden;
 } */
 
-body{
+/* body{
   background-color: #ffffff!important
+} */
+.main-app-screen{
+  background-image: url(../images/background-01.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height:100vh;
 }
 hr.top_bar {
   margin-bottom: 0px;
