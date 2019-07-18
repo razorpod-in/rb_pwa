@@ -31,6 +31,7 @@ var reponseMod = '';
 var reponseChap = [];
 var moduleIDArray = [];
 var sound = ""
+var reponseQues =[];
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -61,18 +62,19 @@ const getChaptersFromNetwork = async () => {
 
       return reponseChap;
    } catch (error) {
-      readAll();
       console.error(error)
    }
 }
 
 const getQuestionsFromNetwork = async () => {
    try {
-      var reponseQuestions = await axios.get('/server/questions');
-      reponseQues = reponseQuestions.data.payload;
-      return reponseQuestions.data.payload;
+      for (var i = 0; i < moduleIDArray.length; i++) {
+         var url = '/server/questions/' + moduleIDArray[i];
+         var reponseQuestion = await axios.get(url);
+         reponseQues.push(reponseQuestion.data.payload);
+      }
+      return reponseQues;
    } catch (error) {
-      readAll();
       console.error(error)
    }
 }
@@ -351,19 +353,24 @@ function updateLastChapterUI(chaptersList) {
 }
 
 function addQuestions(questions) {
-   var primaryId = '';
-   questionsArray = [];
-   questions.forEach(question => {
-      primaryId = question.mid;
-      questionsArray.push(question);
-   })
+   for (var i = 0; i < questions.length; i++) {
+      var primaryId = '';
+      questionArray = [];
+      if(questions[i].length > 0){
+         primaryId = questions[i][0].mid;
+         for (var j = 0; j < questions[i].length; j++) {
+            questionArray.push(questions[i][j]);
+         }
+         var request = db.transaction(["questions"], "readwrite")
+         .objectStore("questions")
+         .add({
+            id: primaryId,
+            questionArray: questionArray,
+         });
+      }
+   }
 
-   var request = db.transaction(["questions"], "readwrite")
-      .objectStore("questions")
-      .add({
-         id: primaryId,
-         questionsArray: questionsArray,
-      });
+
 }
 
 function openEachChapter(mid, id) {
