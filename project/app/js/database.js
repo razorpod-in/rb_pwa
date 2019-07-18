@@ -31,11 +31,12 @@ var reponseMod = '';
 var reponseChap = [];
 var moduleIDArray = [];
 var sound = ""
-var reponseQues =[];
+var reponseQues = [];
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
 const eachChapterContainer = document.getElementById('each-chapter-card-container');
+const questionContainer = document.getElementById('question-card-container');
 
 const getModulesFromNetwork = async () => {
 
@@ -196,8 +197,7 @@ function readAllModules() {
 }
 
 function updateModuleUI(modules) {
-   // document.getElementById("main-app-body").style.cssText = "background-color:#E3CC8E!important"
-   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading"> निम्नलिखित चीज़ो का ध्यान रखें</p></center>';
+   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Modules</p></center>';
    for (var i = 0; i < modules.length; i++) {
       if (i == modules.length - 1) {
          var moduleCard = `
@@ -213,8 +213,7 @@ function updateModuleUI(modules) {
           
       </div>
   </div>`;
-      }
-      else{
+      } else {
          var moduleCard = `
          <div class="module-card" onclick="openChapter('${modules[i].id}')">
              
@@ -230,7 +229,7 @@ function updateModuleUI(modules) {
          </div>
      </div>`;
       }
-     
+
       moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
    chapterContainer.style.display = "none";
@@ -263,26 +262,42 @@ function openChapter(mid) {
    var chaptersList = '';
 
    request.onsuccess = function (event) {
-
-      // Do something with the request.result!
-      if (request.result) {
-         chaptersList = request.result.chapterArray;
-         updateChapterUI(chaptersList);
-      }
+     
       var userTransaction = db.transaction(["user"], "readwrite");
       var userObjectStore = userTransaction.objectStore("user");
       var userRequest = userObjectStore.get(userId);
+      
       userRequest.onsuccess = function (event) {
+         var indexMid1 ='';
+         chaptersList = request.result.chapterArray;
          var userData = userRequest.result;
-         userData.lastModule = mid;
-         if(userData.moduleVisited.includes(mid)){
-            console.log("Already Exists");
+
+         for (var i = 0; i < userData.moduleVisited.length; i++) {
+            if (userData.moduleVisited[i] == mid) {
+               indexMid1 = i;
+            }
+         }
+         console.log(indexMid1);
+         if(indexMid1 != '' || indexMid1==0){
+            if(userData.chapterVisited[indexMid1].length == chaptersList.length){
+               updateQuestionUI();
+            }
+            else{
+               updateChapterUI(chaptersList);
+            }
          }
          else{
+            updateChapterUI(chaptersList);
+         }
+         
+         
+         userData.lastModule = mid;
+         if (userData.moduleVisited.includes(mid)) {
+            console.log("Already Exists");
+         } else {
             userData.moduleVisited.push(mid);
             userData.chapterVisited.push([]);
          }
-         key = userData.number;
          var userUpdateRequest = userObjectStore.put(userData);
          userUpdateRequest.onsuccess = function (event) {
             // Do something with the request.result!
@@ -322,12 +337,11 @@ function openLastChapter(mid) {
 }
 
 function updateChapterUI(chaptersList) {
-   // document.getElementById("main-app-body").style.cssText = "background-color:#E3CC8E!important;"
-   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading">अध्याय</p></center>';
+   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Chapters</p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
-            <img class="chapter-thumbnail" src="${chaptersList[i].thumb}" style="width:80%">
+            <img src="${chaptersList[i].thumb}" style="width:80%">
           <p class="chapter-card-heading">${chaptersList[i].title}</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
@@ -358,58 +372,69 @@ function addQuestions(questions) {
    for (var i = 0; i < questions.length; i++) {
       var primaryId = '';
       questionArray = [];
-      if(questions[i].length > 0){
+      if (questions[i].length > 0) {
          primaryId = questions[i][0].mid;
          for (var j = 0; j < questions[i].length; j++) {
             questionArray.push(questions[i][j]);
          }
          var request = db.transaction(["questions"], "readwrite")
-         .objectStore("questions")
-         .add({
-            id: primaryId,
-            questionArray: questionArray,
-         });
+            .objectStore("questions")
+            .add({
+               id: primaryId,
+               questionArray: questionArray,
+            });
       }
    }
+}
 
-
+function updateQuestionUI() {
+   questionContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Topic</p></center><center><h4 class="task-heading">Question</h4><p class="tast-text">text</p><div class="options"><input type="radio" name="gender" id="" value="">option</div><div class="options"><input type="radio" name="gender" id="" value="">option</div><div class="options"><input type="radio" name="gender" id="" value="">option</div><div class="options"><input type="radio" name="gender" id="" value="">option</div></center></div>';
+   moduleContainer.style.display = "none";
+   eachChapterContainer.style.display = "none";
+   questionContainer.style.display = "block";
 }
 
 function openEachChapter(mid, id) {
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
+   var thatChapter = [];
    request.onsuccess = function (event) {
-      // Do something with the request.result!
-      if (request.result) {
-         var thatChapter = request.result.chapterArray
+      thatChapter = request.result.chapterArray
+      var userTransaction = db.transaction(["user"], "readwrite");
+      var userObjectStore = userTransaction.objectStore("user");
+      var userRequest = userObjectStore.get(userId);
+      var indexMid = '';
+      userRequest.onsuccess = function (event) {
+         var userData = userRequest.result;
+
+         userData.lastChapter = id;
+         for (var i = 0; i < userData.moduleVisited.length; i++) {
+            if (userData.moduleVisited[i] == mid) {
+               indexMid = i;
+            }
+         }
+
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
                var eachChapter = thatChapter[i];
                updateEachChapterUI(eachChapter);
             }
          }
-      }
-      var userTransaction = db.transaction(["user"], "readwrite");
-      var userObjectStore = userTransaction.objectStore("user");
-      var userRequest = userObjectStore.get(userId);
-      var indexMid ='';
-      userRequest.onsuccess = function (event) {
-         var userData = userRequest.result;
-         
-         userData.lastChapter = id;
-         for(var i=0;i<userData.moduleVisited.length;i++){
-            if(userData.moduleVisited[i]==mid){
-               indexMid = i;
-            }
-         }
 
-         userData.chapterVisited[indexMid].push(id);
+         var chapterStatus = userData.chapterVisited[indexMid].includes(id);
+         if (chapterStatus) {
+            console.log("Chapter visited");
+         } else {
+            userData.chapterVisited[indexMid].push(id);
+         }
          var userUpdateRequest = userObjectStore.put(userData);
          userUpdateRequest.onsuccess = function (event) {
             // Do something with the request.result!
          };
       };
+
+
    };
 }
 
@@ -423,7 +448,7 @@ function openLastEachChapter(mid, id) {
       // Do something with the request.result!
       if (request.result) {
          var thatChapter = request.result.chapterArray
-         var eachChapter ='';
+         var eachChapter = '';
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
                eachChapter = thatChapter[i];
@@ -431,7 +456,7 @@ function openLastEachChapter(mid, id) {
             }
          }
 
-         if(eachChapter == ''){
+         if (eachChapter == '') {
             openLastChapter(mid);
          }
       }
@@ -454,7 +479,7 @@ function updateLastEachChapterUI(eachChapter, mid) {
 
    if (eachChapter.aud != "") {
       $('.asha_didi').removeClass('hide_didi')
-       sound = new Howl({
+      sound = new Howl({
          src: [eachChapter.aud],
          preload: true,
          onend: function () {
@@ -523,9 +548,8 @@ function updateEachChapterUI(eachChapter) {
    chapterContainer.style.display = "none";
    eachChapterContainer.style.display = "block";
    if (eachChapter.aud != "") {
-      console.log("There is aud");
       $('.asha_didi').removeClass('hide_didi')
-       sound = new Howl({
+      sound = new Howl({
          src: [eachChapter.aud],
          preload: true,
          onend: function () {
@@ -618,9 +642,7 @@ setTimeout(function () {
          userId = initialUserData[0].id;
          if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
             openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-         }
-
-         else if(initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == ''){
+         } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
             openLastChapter(initialUserData[0].lastModule);
          }
       } else {
@@ -631,7 +653,7 @@ setTimeout(function () {
    },
    timePeriodInMs);
 
- sound = new Howl({
+sound = new Howl({
    src: ['assets/amr/intro.mp3'],
    preload: true,
    onend: function () {
@@ -723,8 +745,7 @@ function open_tab(event, tabName) {
 }
 
 function backNav(pagename) {
-   console.log(sound)
-   if(sound){
+   if (sound) {
       sound.stop();
    }
    sound.stop();

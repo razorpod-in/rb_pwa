@@ -355,6 +355,28 @@ hr.bottom_bar {
   font-weight: 900;
 }
 
+/* Question Page */
+.task-heading {
+  font-family: Noto Sans Devanagari UI;
+  font-size: 18px;
+  line-height: 25px;
+  color: #383431;
+  font-weight: 900;
+}
+.task-text {
+  font-family: Noto Sans Devanagari UI;
+  font-size: 14px;
+  line-height: 19px;
+  color: #5C5550;
+}
+.options {
+  border: 2px solid #5C5550;
+  box-sizing: border-box;
+  border-radius: 12px;
+  margin:7%;
+  padding:2%;
+}
+
 .profile {
   border-radius: 50%;
   display: inline-block;
