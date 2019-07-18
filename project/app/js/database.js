@@ -337,7 +337,7 @@ function openLastChapter(mid) {
 }
 
 function updateChapterUI(chaptersList) {
-   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> आपके अध्याय</p></center>';
+   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"></p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
@@ -352,7 +352,7 @@ function updateChapterUI(chaptersList) {
 }
 
 function updateLastChapterUI(chaptersList) {
-   chapterContainer.innerHTML = ' <div class="row"><a onclick="readAllModules()"><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> आपके अध्याय</p></center>';
+   chapterContainer.innerHTML = ' <div class="row"><a onclick="readAllModules()"><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"></p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
