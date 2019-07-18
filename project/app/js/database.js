@@ -194,7 +194,8 @@ function readAllModules() {
 }
 
 function updateModuleUI(modules) {
-   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Modules</p></center>';
+   // document.getElementById("main-app-body").style.cssText = "background-color:#E3CC8E!important"
+   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading"> निम्नलिखित चीज़ो का ध्यान रखें</p></center>';
    for (var i = 0; i < modules.length; i++) {
       if (i == modules.length - 1) {
          var moduleCard = `
@@ -319,11 +320,12 @@ function openLastChapter(mid) {
 }
 
 function updateChapterUI(chaptersList) {
-   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"> Your Chapters</p></center>';
+   // document.getElementById("main-app-body").style.cssText = "background-color:#E3CC8E!important;"
+   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading">अध्याय</p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
-            <img src="${chaptersList[i].thumb}" style="width:80%">
+            <img class="chapter-thumbnail" src="${chaptersList[i].thumb}" style="width:80%">
           <p class="chapter-card-heading">${chaptersList[i].title}</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
