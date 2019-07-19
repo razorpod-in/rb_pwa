@@ -78,6 +78,36 @@ router.route('/modules')
 
 
 
+// GET MODULE from MODULE TYPE
+
+router.route('/modules/:moduleType')
+    .get(function (req, res, next) {
+        var moduleType = req.params.moduleType
+        if (moduleType) {
+            Modules.find({ "moduleType": moduleType }).exec((err, modules) => {
+                if (modules) {
+                    res.json({
+                        status: "Success",
+                        message: "Successfully fetched modules",
+                        payload: modules
+                    })
+                } else {
+                    res.json({
+                        status: "Failed",
+                        message: "Failed to fetch modules"
+                    })
+                }
+            })
+        } else {
+            res.json({
+                status: "Failed",
+                message: "Failed to fetch modules"
+            })
+        }
+    })
+
+
+
 // GET SINGLE MODULE (Model.findOne())
 
 router.get('/module/:id', (req, res, next) => {
