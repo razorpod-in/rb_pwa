@@ -262,13 +262,13 @@ function openChapter(mid) {
    var chaptersList = '';
 
    request.onsuccess = function (event) {
-     
+
       var userTransaction = db.transaction(["user"], "readwrite");
       var userObjectStore = userTransaction.objectStore("user");
       var userRequest = userObjectStore.get(userId);
-      
+
       userRequest.onsuccess = function (event) {
-         var indexMid1 ='test';
+         var indexMid1 = 'test';
          chaptersList = request.result.chapterArray;
          var userData = userRequest.result;
 
@@ -277,20 +277,33 @@ function openChapter(mid) {
                indexMid1 = i;
             }
          }
-         console.log(indexMid1);
-         if(indexMid1 != 'test'){
-            if(userData.chapterVisited[indexMid1].length == chaptersList.length){
-               updateQuestionUI();
-            }
-            else{
+         if (indexMid1 != 'test') {
+            if (userData.chapterVisited[indexMid1].length == chaptersList.length) {
+               var quesTransaction = db.transaction(["questions"], "readwrite");
+               var quesObjectStore = quesTransaction.objectStore("questions");
+               var quesrequest = quesObjectStore.get(mid);
+               var quesList = '';
+               quesrequest.onsuccess = function (event) {
+                  quesList = quesrequest.result.questionArray;
+
+                  var ques = quesrequest.result.questionArray[0];
+                  quesList.splice(0,1);
+                  quesrequest.result.questionArray = quesList;
+                  var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
+                  quesUpdateRequest.onsuccess = function (event) {
+                     // Do something with the request.result!
+                  };
+                  updateQuestionUI(ques);
+               }
+               
+            } else {
                updateChapterUI(chaptersList);
             }
-         }
-         else{
+         } else {
             updateChapterUI(chaptersList);
          }
-         
-         
+
+
          userData.lastModule = mid;
          if (userData.moduleVisited.includes(mid)) {
             console.log("Already Exists");
@@ -387,8 +400,8 @@ function addQuestions(questions) {
    }
 }
 
-function updateQuestionUI() {
-   questionContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Topic</p></center><center><h4 class="task-heading">इनमें से किसी भी प्रकार के लक्षण होने के मामले में आपको क्या करना चाहिए?</h4><p class="tast-text"></p><div class="options"><input type="radio" name="gender" id="" value="">घर में अन्य महिलाओं से पूछताछ करें। </div><div class="options"><input type="radio" name="gender" id="" value="">लक्षण अपने आप खत्म हो जाने की प्रतीक्षा करें।</div><div class="options"><input type="radio" name="gender" id="" value="">तुरंत निकटतम अस्पताल में जाएँ। </div><div class="options"><input type="radio" name="gender" id="" value="">ऊपर के सभी</div></center></div>';
+function updateQuestionUI(ques) {
+   questionContainer.innerHTML = `<div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Question</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p><div class="options"><input type="radio" name="gender" id="" value="">घर में अन्य महिलाओं से पूछताछ करें। </div><div class="options"><input type="radio" name="gender" id="" value="">लक्षण अपने आप खत्म हो जाने की प्रतीक्षा करें।</div><div class="options"><input type="radio" name="gender" id="" value="">तुरंत निकटतम अस्पताल में जाएँ। </div><div class="options"><input type="radio" name="gender" id="" value="">ऊपर के सभी</div></center></div>`;
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
    questionContainer.style.display = "block";
