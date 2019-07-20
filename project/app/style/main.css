@@ -337,6 +337,14 @@ hr.bottom_bar {
   /* margin-bottom: 90px !important; */
 }
 
+.full-image{
+  width: 100%;
+}
+
+.congo-lady{
+  margin-bottom: 50px;
+  width: 30%;
+}
 /* Profile Screen */
 .profile-screen {
   margin: 7% 2% 2% 2%;

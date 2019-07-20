@@ -410,11 +410,13 @@ function updateQuestionUI(ques) {
       var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
       optionArray.push(optionElement);
    }
-   questionContainer.innerHTML = `<div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Question</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}')">Submit </div></center></div>`;
+   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Question</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">Submit </div></center></div>`;
 
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
    questionContainer.style.display = "block";
+   rightAnswerContainer.style.display = "none";
+   wrongAnswerContainer.style.display = "none";
 }
 
 function openEachChapter(mid, id) {
@@ -441,11 +443,10 @@ function openEachChapter(mid, id) {
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
                var eachChapter = thatChapter[i];
-               if(thatChapter[i+1] && thatChapter[i+1]._id){
-                  var next_id = thatChapter[i+1]._id;
-                  updateEachChapterUI(eachChapter,next_id);
-               }
-               else{
+               if (thatChapter[i + 1] && thatChapter[i + 1]._id) {
+                  var next_id = thatChapter[i + 1]._id;
+                  updateEachChapterUI(eachChapter, next_id);
+               } else {
                   openChapter(mid);
                }
             }
@@ -542,7 +543,7 @@ function updateLastEachChapterUI(eachChapter, mid) {
    eachChapterContainer.style.display = "block";
 }
 
-function updateEachChapterUI(eachChapter,next_id) {
+function updateEachChapterUI(eachChapter, next_id) {
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
    } else if (eachChapter.vid != '') {
@@ -798,7 +799,7 @@ function optionClicked(id) {
 
    for (var i = 0; i < options.length; i++) {
       options[i].style.backgroundColor = "white";
-      optionSelected.style.color = "black";
+      options[i].style.color = "black";
 
    }
    optionSelected.style.backgroundColor = "#0093DD";
@@ -807,9 +808,16 @@ function optionClicked(id) {
    optionCheck = id;
 }
 
-function questionSubmit(rightAnswer) {
+function questionSubmit(rightAnswer,mid) {
    if (rightAnswer == optionCheck) {
-      rightAnswerContainer.innerHTML = `<center><p class="pick-screen-heading">Congo</p> <img src="./images/stars.png" /> <img src="./images/profile icon.png" /><div class="pick-screen-button" id="b1" onclick="alert()"><p class="pick-screen-button-text">मैंने इसे चुना है</p></div></center>`;
+      rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+      <p class="pick-screen-heading">Congo</p>
+       <img src="./images/stars.png" class="full-image"/> 
+       <img src="./images/profile icon.png" class="congo-lady"/>
+       <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
+       <p class="pick-screen-button-text">Next</p>
+       </div>
+       </center>`;
       rightAnswerContainer.style.display = "block";
       questionContainer.style.display = "none";
       console.log("you are right");
