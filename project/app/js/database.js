@@ -37,6 +37,8 @@ const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
 const eachChapterContainer = document.getElementById('each-chapter-card-container');
 const questionContainer = document.getElementById('question-card-container');
+const rightAnswerContainer = document.getElementById('right-answer-card-container');
+const wrongAnswerContainer = document.getElementById('wrong-answer-card-container');
 
 const getModulesFromNetwork = async (user_type) => {
    try {
@@ -798,6 +800,9 @@ function optionClicked(id) {
 
 function questionSubmit(rightAnswer) {
    if (rightAnswer == optionCheck) {
+      rightAnswerContainer.innerHTML = `<center><p class="pick-screen-heading">Congo</p> <img src="./images/stars.png" /> <img src="./images/profile icon.png" /><div class="pick-screen-button" id="b1" onclick="alert()"><p class="pick-screen-button-text">मैंने इसे चुना है</p></div></center>`;
+      rightAnswerContainer.style.display = "block";
+      questionContainer.style.display = "none";
       console.log("you are right");
    } else {
       console.log("nikal laude");
