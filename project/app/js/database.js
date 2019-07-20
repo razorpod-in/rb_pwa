@@ -40,7 +40,7 @@ const questionContainer = document.getElementById('question-card-container');
 
 const getModulesFromNetwork = async (user_type) => {
    try {
-      var url = '/server/modules/'+user_type;
+      var url = '/server/modules/' + user_type;
       var reponseModules = await axios.get(url);
       reponseMod = reponseModules.data.payload;
       for (var i = 0; i < reponseMod.length; i++) {
@@ -286,7 +286,7 @@ function openChapter(mid) {
                   quesList = quesrequest.result.questionArray;
 
                   var ques = quesrequest.result.questionArray[0];
-                  quesList.splice(0,1);
+                  quesList.splice(0, 1);
                   quesrequest.result.questionArray = quesList;
                   var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
                   quesUpdateRequest.onsuccess = function (event) {
@@ -294,7 +294,7 @@ function openChapter(mid) {
                   };
                   updateQuestionUI(ques);
                }
-               
+
             } else {
                updateChapterUI(chaptersList);
             }
@@ -399,8 +399,17 @@ function addQuestions(questions) {
    }
 }
 
+var rightAns = '';
+
 function updateQuestionUI(ques) {
-   questionContainer.innerHTML = `<div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Question</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p><div class="options"><input type="radio" name="gender" id="" value="">घर में अन्य महिलाओं से पूछताछ करें। </div><div class="options"><input type="radio" name="gender" id="" value="">लक्षण अपने आप खत्म हो जाने की प्रतीक्षा करें।</div><div class="options"><input type="radio" name="gender" id="" value="">तुरंत निकटतम अस्पताल में जाएँ। </div><div class="options"><input type="radio" name="gender" id="" value="">ऊपर के सभी</div></center></div>`;
+   rightAns = ques.answer;
+   var optionArray = [];
+   for (var i = 0; i < ques.options.length; i++) {
+      var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
+      optionArray.push(optionElement);
+   }
+   questionContainer.innerHTML = `<div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Question</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}')">Submit </div></center></div>`;
+
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
    questionContainer.style.display = "block";
@@ -768,5 +777,29 @@ function backNav(pagename) {
    } else if (pagename == 'chapter') {
       chapterContainer.style.display = "block";
       eachChapterContainer.style.display = "none";
+   }
+}
+var optionCheck = '';
+
+function optionClicked(id) {
+   var optionSelected = document.getElementById(id);
+   var options = document.getElementsByClassName("options");
+
+   for (var i = 0; i < options.length; i++) {
+      options[i].style.backgroundColor = "white";
+      optionSelected.style.color = "black";
+
+   }
+   optionSelected.style.backgroundColor = "#0093DD";
+   optionSelected.style.color = "white";
+
+   optionCheck = id;
+}
+
+function questionSubmit(rightAnswer) {
+   if (rightAnswer == optionCheck) {
+      console.log("you are right");
+   } else {
+      console.log("nikal laude");
    }
 }

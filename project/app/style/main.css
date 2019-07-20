@@ -379,8 +379,23 @@ hr.bottom_bar {
   border: 2px solid #5C5550;
   box-sizing: border-box;
   border-radius: 12px;
-  margin:7%;
+  margin-top:0%;
+  margin-bottom:0%;
+  margin-right:7%;
+  margin-left:7%;
   padding:2%;
+}
+.options-submit{
+  border: 2px solid #5C5550;
+  box-sizing: border-box;
+  border-radius: 12px;
+  margin-top:5%;
+  margin-bottom:0%;
+  margin-right:7%;
+  margin-left:7%;
+  padding:2%;
+  background-color: #00803A;
+  color: white;
 }
 
 .profile {
@@ -480,7 +495,7 @@ input {
   border: none;
   border-bottom: 1px solid #e0e0e0;
   color: #757575;
-  display: block;
+  /* display: block; */
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   margin: 0;

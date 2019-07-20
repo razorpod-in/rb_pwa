@@ -52,24 +52,26 @@ limitations under the License.
             color: #383431;
             font-weight: 900;
         }
+
         .task-text {
             font-family: Noto Sans Devanagari UI;
             font-size: 14px;
             line-height: 19px;
             color: #5C5550;
         }
+
         .options {
             border: 2px solid #5C5550;
             box-sizing: border-box;
             border-radius: 12px;
-            margin:7%;
-            padding:2%;
+            margin: 7%;
+            padding: 2%;
         }
     </style>
 
 </head>
 
-<body >
+<body>
     <div class="row">
         <a onclick="history.back()">
             <div class="col-xs-3">
@@ -93,24 +95,21 @@ limitations under the License.
             <p class="tast-text">
                 text
             </p>
-            <div class="options">
-                <input type="radio" name="gender" id="" value="">option
+            <div class="options" onclick="optionClicked('1')" id="1">
+                optionoptionoptionoption
             </div>
-            <div class="options">
-                <input type="radio" name="gender" id="" value="">option
-            </div>
-            <div class="options">
-                <input type="radio" name="gender" id="" value="">option
-            </div>
-            <div class="options">
-                <input type="radio" name="gender" id="" value="">option
-            </div>
+            <div class="options" onclick="optionClicked('2')" id="2">
+                gchjcgjghj </div>
+            <div class="options" onclick="optionClicked('3')" id="3">
+                awawaw </div>
+            <div class="options" onclick="optionClicked('4')" id="4">
+                gfcjgcj </div>
 
         </center>
     </div>
 
     <div class="row footer-nav">
-    
+
         <hr class="bottom_bar" />
         <div class="col-xs-3">
             <center>
@@ -131,15 +130,25 @@ limitations under the License.
             <center>
                 <img src="images/nav-icons/lady.png" />
             </center>
-    
+
         </div>
-    </div> 
+    </div>
     <script>
-        
+
     </script>
     <script src="js/idb-promised.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        function optionClicked(id) {
+            var optionSelected = document.getElementById(id);
+            var options = document.getElementsByClassName("options");
 
+            for (var i = 0; i < options.length; i++) {
+                options[i].style.backgroundColor = "white";
+            }
+            optionSelected.style.backgroundColor = "blue";
+        }
+    </script>
 </body>
 
 </html>
