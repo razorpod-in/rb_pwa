@@ -820,8 +820,15 @@ function questionSubmit(rightAnswer,mid) {
        </center>`;
       rightAnswerContainer.style.display = "block";
       questionContainer.style.display = "none";
-      console.log("you are right");
    } else {
-      console.log("nikal laude");
+      wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+      <p class="pick-screen-heading">You are wrong</p>
+       <img src="./images/wrong.png" class="congo-lady"/>
+       <div class="next-screen-button" id="b1" onclick="alert('${mid}')">
+       <p class="pick-screen-button-text">Next</p>
+       </div>
+       </center>`;
+       wrongAnswerContainer.style.display = "block";
+      questionContainer.style.display = "none";
    }
 }
