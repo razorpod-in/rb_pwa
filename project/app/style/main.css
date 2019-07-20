@@ -273,6 +273,16 @@ hr.bottom_bar {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 }
 
+.next-screen-button {
+  margin-bottom: 90px;
+  background-color: #00803A;
+  border-radius: 20px;
+  color:white;
+  height: 41px;
+  width: 70%;
+  box-shadow: -1px 8px #005210;
+}
+
 .chapter-card-heading {
   margin-top: 10px;
   font-size: 16px;
@@ -324,7 +334,7 @@ hr.bottom_bar {
 }
 
 .last-element{
-  margin-bottom: 90px !important;
+  /* margin-bottom: 90px !important; */
 }
 
 /* Profile Screen */

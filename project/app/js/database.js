@@ -441,7 +441,13 @@ function openEachChapter(mid, id) {
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
                var eachChapter = thatChapter[i];
-               updateEachChapterUI(eachChapter);
+               if(thatChapter[i+1] && thatChapter[i+1]._id){
+                  var next_id = thatChapter[i+1]._id;
+                  updateEachChapterUI(eachChapter,next_id);
+               }
+               else{
+                  openChapter(mid);
+               }
             }
          }
 
@@ -536,7 +542,7 @@ function updateLastEachChapterUI(eachChapter, mid) {
    eachChapterContainer.style.display = "block";
 }
 
-function updateEachChapterUI(eachChapter) {
+function updateEachChapterUI(eachChapter,next_id) {
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
    } else if (eachChapter.vid != '') {
@@ -560,6 +566,9 @@ function updateEachChapterUI(eachChapter) {
            </div>
        </div>
    </div>
+   <div class="next-screen-button" onclick="openEachChapter('${eachChapter.mid}','${next_id}')">
+        <p class="pick-screen-button-text">Next</p>
+      </div>
    <div >
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
