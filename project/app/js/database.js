@@ -38,10 +38,10 @@ const chapterContainer = document.getElementById('chapter-card-container');
 const eachChapterContainer = document.getElementById('each-chapter-card-container');
 const questionContainer = document.getElementById('question-card-container');
 
-const getModulesFromNetwork = async () => {
-
+const getModulesFromNetwork = async (user_type) => {
    try {
-      var reponseModules = await axios.get('/server/modules');
+      var url = '/server/modules/'+user_type;
+      var reponseModules = await axios.get(url);
       reponseMod = reponseModules.data.payload;
       for (var i = 0; i < reponseMod.length; i++) {
          moduleIDArray.push(reponseMod[i]._id);
@@ -95,7 +95,6 @@ request.onsuccess = function (event) {
    initialObjectStore.getAll().onsuccess = function (event) {
       initialUserData = event.target.result;
    };
-   loadContentNetworkFirst();
 };
 
 
@@ -125,7 +124,7 @@ request.onupgradeneeded = function (event) {
 
 
 function loadContentNetworkFirst() {
-   getModulesFromNetwork()
+   getModulesFromNetwork(user_type)
       .then(dataFromNetwork => {
          addModules(dataFromNetwork)
          readAllModules()
@@ -683,12 +682,12 @@ function select_one(id_select) {
    }
    if (id_select.id == "c1") {
       selected = "1"
-      user_type = 'pregnant';
+      user_type = 'pregnancy';
       document.getElementById(id_select.id).style.borderColor = "green";
       document.getElementById("c2").style.borderColor = "white";
    } else {
       selected = '2'
-      user_type = 'mother';
+      user_type = 'motherhood';
       document.getElementById(id_select.id).style.borderColor = "green";
       document.getElementById("c1").style.borderColor = "white";
    }
@@ -698,6 +697,7 @@ function select_one(id_select) {
 function router_registration() {
    var status = (selected == "none") ? null : 1;
    if (status) {
+      loadContentNetworkFirst(user_type);
       document.getElementById("registration-screen").style.display = "block";
       document.getElementById("pick-screen").style.display = "none";
    }
