@@ -499,7 +499,13 @@ function openLastEachChapter(mid, id) {
          for (var i = 0; i < thatChapter.length; i++) {
             if (thatChapter[i]._id == id) {
                eachChapter = thatChapter[i];
-               updateLastEachChapterUI(eachChapter, mid);
+               if (thatChapter[i + 1] && thatChapter[i + 1]._id) {
+                  var next_id = thatChapter[i + 1]._id;
+                  updateLastEachChapterUI(eachChapter, mid , next_id);
+               } else {
+                  openChapter(mid);
+               }
+               
             }
          }
 
@@ -510,7 +516,7 @@ function openLastEachChapter(mid, id) {
    };
 }
 
-function updateLastEachChapterUI(eachChapter, mid) {
+function updateLastEachChapterUI(eachChapter, mid, next_id) {
 
    if (eachChapter.img != '') {
       var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
@@ -540,11 +546,14 @@ function updateLastEachChapterUI(eachChapter, mid) {
    <div class="row">
        <div class="single-image">
            ${visualCard}
-           <div class="description-content last-element">
+           <div class="description-content">
             ${eachChapter.desc}
            </div>
        </div>
    </div>
+   <div class="next-screen-button" onclick="openEachChapter('${eachChapter.mid}','${next_id}')">
+        <p class="pick-screen-button-text">Next</p>
+      </div>
    <div >
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
@@ -632,13 +641,6 @@ function clearChapterVisited(mid) {
          };
    }
 }
-/**
- * fullName - Required
- * phone - Required
- * lastModuleVisited - module id
- * lastChapterVisited - chapter id
- * bid - Browser ID 
- */
 
 function insertUserInMongo() {
    /**
