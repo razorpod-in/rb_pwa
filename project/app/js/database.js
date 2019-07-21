@@ -491,7 +491,6 @@ function openEachChapter(mid, id) {
 }
 
 function openLastEachChapter(mid, id) {
-
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
@@ -502,17 +501,32 @@ function openLastEachChapter(mid, id) {
          var thatChapter = request.result.chapterArray
          var eachChapter = '';
          for (var i = 0; i < thatChapter.length; i++) {
-            if (thatChapter[i]._id == id) {
-               eachChapter = thatChapter[i];
+            if (i == (thatChapter.length - 1) && thatChapter[i]._id == id) {
+               var eachChapter = thatChapter[i];
+               updateLastEachEndChapterUI(eachChapter);
+            } else if (thatChapter[i]._id == id) {
+               var eachChapter = thatChapter[i];
                if (thatChapter[i + 1] && thatChapter[i + 1]._id) {
                   var next_id = thatChapter[i + 1]._id;
                   updateLastEachChapterUI(eachChapter, mid, next_id);
                } else {
                   openChapter(mid);
                }
-
             }
          }
+
+         // for (var i = 0; i < thatChapter.length; i++) {
+         //    if (thatChapter[i]._id == id) {
+         //       eachChapter = thatChapter[i];
+         //       if (thatChapter[i + 1] && thatChapter[i + 1]._id) {
+         //          var next_id = thatChapter[i + 1]._id;
+         //          updateLastEachChapterUI(eachChapter, mid, next_id);
+         //       } else {
+         //          openChapter(mid);
+         //       }
+
+         //    }
+         // }
 
          if (eachChapter == '') {
             openLastChapter(mid);
@@ -677,6 +691,60 @@ function updateEachEndChapterUI(eachChapter) {
    }
 }
 
+function updateLastEachEndChapterUI(eachChapter) {
+   if (eachChapter.img != '') {
+      var visualCard = `<img class="chapter-image" src=${eachChapter.img} alt="">`;
+   } else if (eachChapter.vid != '') {
+      var visualCard = ` <div class="row">
+      <div class = "col-md-12">
+      <video id='my-video' class='video-js' loop="loop" autoplay preload='auto' poster='' data-setup='{}'>
+         <source src='${eachChapter.vid}' type='video/webm'>
+      </video>
+      </div>
+      </div>`
+   }
+
+
+   var eachChapterCard = `
+   <center>
+   <div class="row">
+       <div class="single-image">
+           ${visualCard}
+           <div class="description-content last-element">
+            ${eachChapter.desc}
+           </div>
+       </div>
+   </div>
+   <div class="next-screen-button" onclick="openChapter('${eachChapter.mid}')">
+        <p class="pick-screen-button-text">Next</p>
+      </div>
+   <div >
+       <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
+   </div>
+</center>`;
+   var initialStateEachChapterContainer = '<div class="row"><a onclick=backNav("chapter")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
+   eachChapterContainer.innerHTML = initialStateEachChapterContainer;
+   eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
+
+   document.getElementById("splash-screen").style.display = "none";
+   moduleContainer.style.display = "none";
+   document.getElementById("tabs-screen").style.display = "block";
+   eachChapterContainer.style.display = "block";
+
+   if (eachChapter.aud != "") {
+      $('.asha_didi').removeClass('hide_didi')
+      sound = new Howl({
+         src: [eachChapter.aud],
+         preload: true,
+         onend: function () {
+            $('.asha_didi').addClass('hide_didi')
+            // console.log('Sound Over. Didi Hide')
+         }
+      });
+      sound.play();
+
+   }
+}
 function clearChapterVisited(mid) {
    var indexMid1 = 'test';
    var userTransaction = db.transaction(["user"], "readwrite");
