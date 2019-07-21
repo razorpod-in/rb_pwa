@@ -32,6 +32,7 @@ var reponseChap = [];
 var moduleIDArray = [];
 var sound = ""
 var reponseQues = [];
+var rightAns = '';
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -85,11 +86,10 @@ const getQuestionsFromNetwork = async () => {
 var db;
 var initialUserData = '';
 var request = window.indexedDB.open("nutrition", version);
+
 request.onerror = function (event) {
    console.log("error: ");
 };
-
-
 
 request.onsuccess = function (event) {
    db = request.result;
@@ -98,7 +98,6 @@ request.onsuccess = function (event) {
       initialUserData = event.target.result;
    };
 };
-
 
 request.onupgradeneeded = function (event) {
    var db = event.target.result;
@@ -117,13 +116,17 @@ request.onupgradeneeded = function (event) {
          keyPath: "id"
       });
    }
+   if (!db.objectStoreNames.contains('duplicate-questions')) {
+      var questionStore = db.createObjectStore("duplicate-questions", {
+         keyPath: "id"
+      });
+   }
    if (!db.objectStoreNames.contains('user')) {
       var userStore = db.createObjectStore("user", {
          keyPath: "id"
       });
    }
 }
-
 
 function loadContentNetworkFirst() {
    getModulesFromNetwork(user_type)
@@ -307,7 +310,7 @@ function openChapter(mid) {
 
          userData.lastModule = mid;
          if (userData.moduleVisited.includes(mid)) {
-            console.log("Already Exists");
+            // console.log("Already Exists");
          } else {
             userData.moduleVisited.push(mid);
             userData.chapterVisited.push([]);
@@ -399,9 +402,23 @@ function addQuestions(questions) {
             });
       }
    }
+   for (var i = 0; i < questions.length; i++) {
+      var primaryId = '';
+      questionArray = [];
+      if (questions[i].length > 0) {
+         primaryId = questions[i][0].mid;
+         for (var j = 0; j < questions[i].length; j++) {
+            questionArray.push(questions[i][j]);
+         }
+         var request = db.transaction(["duplicate-questions"], "readwrite")
+            .objectStore("duplicate-questions")
+            .add({
+               id: primaryId,
+               questionArray: questionArray,
+            });
+      }
+   }
 }
-
-var rightAns = '';
 
 function updateQuestionUI(ques) {
    rightAns = ques.answer;
@@ -514,7 +531,6 @@ function updateLastEachChapterUI(eachChapter, mid) {
          preload: true,
          onend: function () {
             $('.asha_didi').addClass('hide_didi')
-            console.log('Sound Over. Didi Hide')
          }
       });
       sound.play();
@@ -587,7 +603,7 @@ function updateEachChapterUI(eachChapter, next_id) {
          preload: true,
          onend: function () {
             $('.asha_didi').addClass('hide_didi')
-            console.log('Sound Over. Didi Hide')
+            // console.log('Sound Over. Didi Hide')
          }
       });
       sound.play();
@@ -711,7 +727,7 @@ sound = new Howl({
    preload: true,
    onend: function () {
       $('.asha_didi').addClass('hide_didi')
-      console.log('Sound Over. Didi Hide')
+      // console.log('Sound Over. Didi Hide')
    }
 });
 
