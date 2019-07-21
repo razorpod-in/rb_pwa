@@ -269,9 +269,9 @@ function openChapter(mid) {
       var userRequest = userObjectStore.get(userId);
 
       userRequest.onsuccess = function (event) {
-         var indexMid1 = 'test';
          chaptersList = request.result.chapterArray;
          var userData = userRequest.result;
+         var indexMid1 = 'test';
 
          for (var i = 0; i < userData.moduleVisited.length; i++) {
             if (userData.moduleVisited[i] == mid) {
@@ -595,7 +595,27 @@ function updateEachChapterUI(eachChapter, next_id) {
    }
 }
 
-
+function clearChapterVisited(mid) {
+   var indexMid1 = 'test';
+   var userTransaction = db.transaction(["user"], "readwrite");
+   var userObjectStore = userTransaction.objectStore("user");
+   var userRequest = userObjectStore.get(userId);
+   userRequest.onsuccess = function (event) {
+      var userData = userRequest.result;
+      for (var i = 0; i < userData.moduleVisited.length; i++) {
+         if (userData.moduleVisited[i] == mid) {
+            indexMid1 = i;
+         }
+      }
+      userData.chapterVisited[indexMid1]=[];
+      
+      var userUpdateRequest = userObjectStore.put(userData);
+         userUpdateRequest.onsuccess = function (event) {
+            openChapter(mid);
+            // Do something with the request.result!
+         };
+   }
+}
 /**
  * fullName - Required
  * phone - Required
@@ -808,7 +828,7 @@ function optionClicked(id) {
    optionCheck = id;
 }
 
-function questionSubmit(rightAnswer,mid) {
+function questionSubmit(rightAnswer, mid) {
    if (rightAnswer == optionCheck) {
       rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
       <p class="pick-screen-heading">Congo</p>
@@ -824,11 +844,11 @@ function questionSubmit(rightAnswer,mid) {
       wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
       <p class="pick-screen-heading">You are wrong</p>
        <img src="./images/wrong.png" class="congo-lady"/>
-       <div class="next-screen-button" id="b1" onclick="alert('${mid}')">
+       <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
        <p class="pick-screen-button-text">Next</p>
        </div>
        </center>`;
-       wrongAnswerContainer.style.display = "block";
+      wrongAnswerContainer.style.display = "block";
       questionContainer.style.display = "none";
    }
 }
