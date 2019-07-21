@@ -21,12 +21,13 @@ limitations under the License.
 /* body{
   background-color: #ffffff!important
 } */
-.main-app-screen{
+.main-app-screen {
   background-image: url(../images/background-01.png);
   background-repeat: no-repeat;
   background-size: cover;
-  height:100vh;
+  height: 100vh;
 }
+
 hr.top_bar {
   margin-bottom: 0px;
   border-top: 3px solid #DD137B;
@@ -36,16 +37,18 @@ hr.bottom_bar {
   margin-top: 0px;
   border-top: 3px solid #0093DD;
 }
+
 .row {
   margin-right: 0px;
   margin-left: 0px;
 }
-.back-button{
+
+.back-button {
   margin-top: 40px;
   margin-left: 20px;
 }
 
-.submit-button{
+.submit-button {
   text-decoration: none;
   cursor: pointer;
 }
@@ -68,9 +71,9 @@ hr.bottom_bar {
 /* Splash Screen */
 .splash-screen-logo {
   /* margin-top: 70%; */
-      height: 823px;
-      width: 100%;
-    
+  height: 823px;
+  width: 100%;
+
 }
 
 /* Pick persona screen */
@@ -83,7 +86,7 @@ hr.bottom_bar {
   font-weight: 900;
   color: black;
   font-size: 21px;
-  margin-top:20px;
+  margin-top: 20px;
 }
 
 .pick-screen-circle {
@@ -97,8 +100,8 @@ hr.bottom_bar {
   background-size: cover;
 }
 
-.pick-screen-subheading{
-  font-size:19px;
+.pick-screen-subheading {
+  font-size: 19px;
   font-weight: 300;
 }
 
@@ -107,14 +110,16 @@ hr.bottom_bar {
   margin: 30px;
   width: 38%;
   background-color: #C4C4C4;
-  height:192px;
+  height: 192px;
   border-radius: 50%;
   border-color: green;
 }
+
 .pick-screen-button.clicked:active {
   box-shadow: none;
   transition: ease-in 0.1s;
 }
+
 .inner-pick-screen-circle {
   padding-top: 50%;
   width: 50%;
@@ -143,12 +148,13 @@ hr.bottom_bar {
 
 /* Registration Page */
 
-.reg-screen{
+.reg-screen {
   background-image: url(../assets/png/reg_bg2.png);
   background-repeat: no-repeat;
   background-size: cover;
-  height:100vh;
+  height: 100vh;
 }
+
 .reg-screen-heading {
   width: 70%;
 }
@@ -181,18 +187,20 @@ hr.bottom_bar {
   color: #000000;
 }
 
-.reg-form-text{
+.reg-form-text {
   display: inline;
   margin-left: 15px;
   color: black;
   font-size: 16px;
 }
-.reg-form-checkbox-input{
+
+.reg-form-checkbox-input {
   width: 100%;
   margin-bottom: 10px;
-  
+
 }
-.reg-form-checkbox{
+
+.reg-form-checkbox {
   display: inline;
   width: 15px;
   height: 15px;
@@ -222,7 +230,7 @@ hr.bottom_bar {
   border-radius: 12px;
 }
 
-.module-title-container{
+.module-title-container {
   vertical-align: middle;
   text-align: -webkit-auto;
   display: inline-block;
@@ -251,7 +259,7 @@ hr.bottom_bar {
 }
 
 /* Chapter Page */
-#chapter-card-container{
+#chapter-card-container {
   height: 1000px;
   overflow: scroll;
 }
@@ -277,7 +285,7 @@ hr.bottom_bar {
   margin-bottom: 90px;
   background-color: #00803A;
   border-radius: 20px;
-  color:white;
+  color: white;
   height: 41px;
   width: 70%;
   box-shadow: -1px 8px #005210;
@@ -290,38 +298,40 @@ hr.bottom_bar {
   font-weight: 600;
   text-align: center;
 }
-.chapter-image{
+
+.chapter-image {
   width: 80%;
 }
 
-.chapter-thumbnail{
+.chapter-thumbnail {
   margin-left: 15px;
 }
 
-.description-content{
+.description-content {
   text-align: center;
   width: 80%;
   margin: 20px;
   font-size: 22px;
 }
 
-.asha-tai{
+.asha-tai {
   position: fixed;
   margin-left: 20px;
   bottom: 12%;
 }
 
-.single-container{
-  background: rgb(144,196,62);
-  background: linear-gradient(90deg, rgba(144,196,62,1) 0%, rgba(97,154,65,1) 100%);
+.single-container {
+  background: rgb(144, 196, 62);
+  background: linear-gradient(90deg, rgba(144, 196, 62, 1) 0%, rgba(97, 154, 65, 1) 100%);
 }
 
 .my-video-dimensions {
   width: 100% !important;
 }
+
 /* Home Page */
 
-.homepage_content{
+.homepage_content {
   text-align: center;
   font-size: 55px;
   margin: 20px;
@@ -329,37 +339,40 @@ hr.bottom_bar {
 
 /* Each Chapter Page */
 
-.video-js{
+.video-js {
   width: 100%;
 }
 
-.last-element{
+.last-element {
   /* margin-bottom: 90px !important; */
 }
 
-.full-image{
+.full-image {
   width: 100%;
 }
 
-.congo-lady{
+.congo-lady {
   margin-bottom: 50px;
   width: 30%;
 }
+
 /* Profile Screen */
 .profile-screen {
   margin: 7% 2% 2% 2%;
-    }
+}
+
 /* img {
   border-radius: 50%;
 } */
 .profile-info {
-  margin-top:9%;
-  margin-bottom:7%;
+  margin-top: 9%;
+  margin-bottom: 7%;
   vertical-align: middle;
   font-family: Noto Sans Devanagari UI;
   font-size: 17px;
   line-height: 23px;
 }
+
 .profile-heading {
   font-family: Noto Sans Devanagari UI;
   line-height: 30px;
@@ -367,13 +380,16 @@ hr.bottom_bar {
   color: #000000;
   font-weight: 900;
 }
+
 .profile-padding {
   padding: 2%;
 }
+
 .name {
   color: #DD137B;
   font-weight: 900;
 }
+
 .phone {
   color: #0093DD;
   font-weight: 900;
@@ -387,31 +403,34 @@ hr.bottom_bar {
   color: #383431;
   font-weight: 900;
 }
+
 .task-text {
   font-family: Noto Sans Devanagari UI;
   font-size: 14px;
   line-height: 19px;
   color: #5C5550;
 }
+
 .options {
   border: 2px solid #5C5550;
   box-sizing: border-box;
   border-radius: 12px;
-  margin-top:0%;
-  margin-bottom:0%;
-  margin-right:7%;
-  margin-left:7%;
-  padding:2%;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-right: 7%;
+  margin-left: 7%;
+  padding: 2%;
 }
-.options-submit{
+
+.options-submit {
   border: 2px solid #5C5550;
   box-sizing: border-box;
   border-radius: 12px;
-  margin-top:5%;
-  margin-bottom:0%;
-  margin-right:7%;
-  margin-left:7%;
-  padding:2%;
+  margin-top: 5%;
+  margin-bottom: 90px;
+  margin-right: 7%;
+  margin-left: 7%;
+  padding: 2%;
   background-color: #00803A;
   color: white;
 }
@@ -645,17 +664,17 @@ footer {
 /*
   Asha Didi CSS
 */
-.asha_didi{
-    position: absolute;
-    left: 0;
-    z-index: 10000;
-    bottom: 10%;
-    height: 120px;
-    display: block;
-    transition: ease-in 1s;
+.asha_didi {
+  position: absolute;
+  left: 0;
+  z-index: 10000;
+  bottom: 10%;
+  height: 120px;
+  display: block;
+  transition: ease-in 1s;
 }
 
-.hide_didi{
+.hide_didi {
   display: none;
   transition: ease-in 2s;
 }
@@ -668,9 +687,7 @@ footer {
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {}
 
 /* Portrait */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  
-}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {}
 
 /* Landscape */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {}
@@ -681,9 +698,7 @@ footer {
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {}
 
 /* Portrait */
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  
-}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {}
 
 /* Landscape */
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {}
@@ -694,9 +709,7 @@ footer {
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {}
 
 /* Portrait */
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  
-}
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {}
 
 /* Landscape */
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {}
