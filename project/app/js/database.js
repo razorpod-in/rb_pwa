@@ -354,7 +354,7 @@ function openLastChapter(mid) {
 }
 
 function updateChapterUI(chaptersList) {
-   chapterContainer.innerHTML = ' <div class="row"><a onclick=backNav("module")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"></p></center>';
+   chapterContainer.innerHTML = ' <div class="row"><a onclick=readAllModules()><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"></p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
@@ -458,7 +458,12 @@ function openEachChapter(mid, id) {
          }
 
          for (var i = 0; i < thatChapter.length; i++) {
-            if (thatChapter[i]._id == id) {
+            if ( i == (thatChapter.length-1) && thatChapter[i]._id == id ){
+               var next_id ='';
+               var eachChapter = thatChapter[i];
+               updateEachChapterUI(eachChapter, next_id);
+            }
+            else if (thatChapter[i]._id == id) {
                var eachChapter = thatChapter[i];
                if (thatChapter[i + 1] && thatChapter[i + 1]._id) {
                   var next_id = thatChapter[i + 1]._id;
