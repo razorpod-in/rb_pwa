@@ -365,6 +365,8 @@ function updateChapterUI(chaptersList) {
    }
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
+   rightAnswerContainer.style.display = "none";
+   wrongAnswerContainer.style.display = "none";
    chapterContainer.style.display = "block";
 }
 
@@ -692,7 +694,20 @@ function clearChapterVisited(mid) {
       var userUpdateRequest = userObjectStore.put(userData);
       userUpdateRequest.onsuccess = function (event) {
          openChapter(mid);
-         // Do something with the request.result!
+         var quesdupTransaction = db.transaction(["duplicate-questions"], "readwrite");
+         var quesdupObjectStore = quesdupTransaction.objectStore("duplicate-questions");
+         var quesdupRequest = quesdupObjectStore.get(mid);
+         quesdupRequest.onsuccess = function (event) {
+            var quesTransaction = db.transaction(["questions"], "readwrite");
+            var quesObjectStore = quesTransaction.objectStore("questions");
+            var quesRequest = quesObjectStore.get(mid);
+            quesRequest.onsuccess = function (event) {
+               var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
+               quesUpdateRequest.onsuccess = function (event) {
+                  console.log("questions updated");
+               }
+            }
+         }
       };
    }
 }
