@@ -23,9 +23,9 @@ limitations under the License.
 } */
 .main-app-screen {
   background-image: url(../images/background-01.png);
-  background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
+  background-repeat: repeat;
 }
 
 hr.top_bar {
@@ -259,6 +259,10 @@ hr.bottom_bar {
 }
 
 /* Chapter Page */
+#chapter-card-container .col-xs-6{
+  text-align: center;
+}
+
 #chapter-card-container {
   height: 1000px;
   overflow: scroll;

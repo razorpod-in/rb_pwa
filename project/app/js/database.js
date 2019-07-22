@@ -367,7 +367,7 @@ function updateChapterUI(chaptersList) {
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
-            <img src="${chaptersList[i].thumb}" style="width:80%">
+            <img src="${chaptersList[i].thumb}" style="width:80%;height: 150px">
           <p class="chapter-card-heading">${chaptersList[i].title}</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
@@ -387,7 +387,7 @@ function updateLastChapterUI(chaptersList) {
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
         <div class="col-xs-6" onclick="openEachChapter('${chaptersList[i].mid}','${chaptersList[i]._id}')"> 
-            <img src="${chaptersList[i].thumb}" style="width:80%">
+            <img src="${chaptersList[i].thumb}" style="width:80%;height: 150px">
           <p class="chapter-card-heading">${chaptersList[i].title}</p>
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
