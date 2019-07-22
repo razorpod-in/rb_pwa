@@ -999,7 +999,7 @@ function questionSubmit(rightAnswer, mid) {
        <img src="./images/stars.png" class="full-image"/> 
        <img src="./images/profile icon.png" class="congo-lady"/>
        <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
-       < p class = "pick-screen-button-text"> आगामी </p>
+       <p class="pick-screen-button-text"> आगामी </p>
        </div>
        </center>`;
       rightAnswerContainer.style.display = "block";
