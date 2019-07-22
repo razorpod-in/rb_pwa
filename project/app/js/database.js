@@ -33,6 +33,7 @@ var moduleIDArray = [];
 var sound = ""
 var reponseQues = [];
 var rightAns = '';
+var optionClickedStatus = 0;
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -240,6 +241,9 @@ function updateModuleUI(modules) {
    }
    chapterContainer.style.display = "none";
    moduleContainer.style.display = "block";
+   resetModuleContainer.style.display = "none";
+   rightAnswerContainer.style.display = "none";
+   wrongAnswerContainer.style.display = "none";
 }
 
 function addChapters(chapters) {
@@ -265,13 +269,13 @@ function openChapter(mid) {
    if (sound) {
       sound.stop();
    }
-
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
    var chaptersList = '';
 
    request.onsuccess = function (event) {
+
       if (sound) {
          sound.stop();
       }
@@ -280,6 +284,7 @@ function openChapter(mid) {
       var userRequest = userObjectStore.get(userId);
 
       userRequest.onsuccess = function (event) {
+
          chaptersList = request.result.chapterArray;
          var userData = userRequest.result;
          var indexMid1 = 'test';
@@ -290,25 +295,36 @@ function openChapter(mid) {
             }
          }
          if (indexMid1 != 'test') {
+
             if (userData.chapterVisited[indexMid1].length == chaptersList.length) {
                var quesTransaction = db.transaction(["questions"], "readwrite");
                var quesObjectStore = quesTransaction.objectStore("questions");
                var quesrequest = quesObjectStore.get(mid);
                var quesList = '';
                quesrequest.onsuccess = function (event) {
+
                   quesList = quesrequest.result.questionArray;
                   if (quesList.length == 0) {
                      resetModuleUI(mid);
-                     // readAllModules();
                   } else {
                      var ques = quesrequest.result.questionArray[0];
                      quesList.splice(0, 1);
                      quesrequest.result.questionArray = quesList;
                      var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
                      quesUpdateRequest.onsuccess = function (event) {
-                        // Do something with the request.result!
                      };
-                     updateQuestionUI(ques);
+                     var userTransaction = db.transaction(["user"], "readwrite");
+                     var userObjectStore = userTransaction.objectStore("user");
+                     var userRequest = userObjectStore.get(userId);
+
+                     userRequest.onsuccess = function (event) {
+                        userRequest.result.lastQuestion.push(ques);
+                        updateQuestionUI(ques);
+                        var userUpdateRequest = userObjectStore.put(userRequest.result);
+                        userUpdateRequest.onsuccess = function (event) {
+                           // console.log("1 = ", userRequest.result);
+                        };
+                     }
                   }
 
                }
@@ -319,8 +335,6 @@ function openChapter(mid) {
          } else {
             updateChapterUI(chaptersList);
          }
-
-
          userData.lastModule = mid;
          if (userData.moduleVisited.includes(mid)) {
             // console.log("Already Exists");
@@ -369,17 +383,19 @@ function openLastChapter(mid) {
 function resetModuleUI(mid) {
    resetModuleContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
       <p class="pick-screen-heading"> Reset your modules page </p>
-       <div class="next-screen-button" id="b1" onclick="alert('${mid}')">
+       <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
        <p class="pick-screen-button-text"> Reset Modules </p>
        </div>
        <div class="next-screen-button" id="b1" onclick="readAllModules()">
        <p class="pick-screen-button-text"> Go back to list of modules </p>
        </div>
        </center>`;
-   resetModuleContainer.style.display = "block";
-   wrongAnswerContainer.style.display = "none";
+   moduleContainer.style.display = "none";
+   chapterContainer.style.display = "none";
+   eachChapterContainer.style.display = "none";
    rightAnswerContainer.style.display = "none";
-   questionContainer.style.display = "none";
+   wrongAnswerContainer.style.display = "none";
+   resetModuleContainer.style.display = "block";
 }
 
 function updateChapterUI(chaptersList) {
@@ -458,19 +474,24 @@ function addQuestions(questions) {
 }
 
 function updateQuestionUI(ques) {
+   optionClickedStatus = 0;
    rightAns = ques.answer;
    var optionArray = [];
    for (var i = 0; i < ques.options.length; i++) {
       var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
       optionArray.push(optionElement);
    }
-   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
+   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" id="question_submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
 
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
    questionContainer.style.display = "block";
    rightAnswerContainer.style.display = "none";
    wrongAnswerContainer.style.display = "none";
+   
+   document.getElementById("splash-screen").style.display = "none";
+   document.getElementById("tabs-screen").style.display = "block";
+
 }
 
 function openEachChapter(mid, id) {
@@ -745,7 +766,7 @@ function updateLastEachEndChapterUI(eachChapter) {
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
 </center>`;
-   var initialStateEachChapterContainer = '<div class="row"><a onclick=backNav("chapter")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
+   var initialStateEachChapterContainer = `<div class="row"><a onclick=openChapter("${eachChapter.mid}")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />`;
    eachChapterContainer.innerHTML = initialStateEachChapterContainer;
    eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
 
@@ -795,9 +816,7 @@ function clearChapterVisited(mid) {
             var quesRequest = quesObjectStore.get(mid);
             quesRequest.onsuccess = function (event) {
                var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
-               quesUpdateRequest.onsuccess = function (event) {
-                  console.log("questions updated");
-               }
+               quesUpdateRequest.onsuccess = function (event) {}
             }
          }
       };
@@ -837,6 +856,7 @@ function addUser(userData) {
          type: userData.bid,
          lastModule: '',
          lastChapter: '',
+         lastQuestion: [],
          moduleVisited: [],
          chapterVisited: [],
       });
@@ -873,9 +893,13 @@ var userId = '';
 setTimeout(function () {
       if (initialUserData.length > 0) {
          userId = initialUserData[0].id;
-         if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+         if(initialUserData[0].lastQuestion != []){
+            updateQuestionUI(initialUserData[0].lastQuestion[0]);
+         }
+         else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
             openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-         } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
+         } 
+         else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
             openLastChapter(initialUserData[0].lastModule);
          }
       } else {
@@ -994,6 +1018,7 @@ function backNav(pagename) {
 var optionCheck = '';
 
 function optionClicked(id) {
+   optionClickedStatus = 1;
    var optionSelected = document.getElementById(id);
    var options = document.getElementsByClassName("options");
 
@@ -1004,44 +1029,59 @@ function optionClicked(id) {
    }
    optionSelected.style.backgroundColor = "#0093DD";
    optionSelected.style.color = "white";
-
+   document.getElementById("question_submit").className = 'options-submit-2'
    optionCheck = id;
 }
 
 function questionSubmit(rightAnswer, mid) {
-   if (rightAnswer == optionCheck) {
-      // Right / Correct Answer Logic
 
-      sound = new Howl({
-         src: ['images/CORRECT.ogg'],
-         preload: true
-      });
-      sound.play();
-      rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
-       <img src="./images/stars.png" class="full-image"/> 
-       <img src="./images/profile icon.png" class="congo-lady"/>
-       <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
-       <p class="pick-screen-button-text"> आगामी </p>
-       </div>
-       </center>`;
-      rightAnswerContainer.style.display = "block";
-      questionContainer.style.display = "none";
+   if (optionClickedStatus == 1) {
+      var userTransaction = db.transaction(["user"], "readwrite");
+      var userObjectStore = userTransaction.objectStore("user");
+      var userRequest = userObjectStore.get(userId);
 
-   } else {
-      sound = new Howl({
-         src: ['images/WRONG.ogg'],
-         preload: true
-      });
-      sound.play();
-      wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class="pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
-       <img src="./images/wrong.png" class="congo-lady"/>
-       <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
-       <p class="pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
-       </div>
-       </center>`;
-      wrongAnswerContainer.style.display = "block";
-      questionContainer.style.display = "none";
+      userRequest.onsuccess = function (event) {
+         userRequest.result.lastQuestion=[];
+         var userUpdateRequest = userObjectStore.put(userRequest.result);
+         userUpdateRequest.onsuccess = function (event) {
+            console.log("1 = ", userRequest.result);
+         };
+      }
+      if (rightAnswer == optionCheck) {
+         // Right / Correct Answer Logic
+
+         sound = new Howl({
+            src: ['images/CORRECT.ogg'],
+            preload: true
+         });
+         sound.play();
+         rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+         <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
+          <img src="./images/stars.png" class="full-image"/> 
+          <img src="./images/profile icon.png" class="congo-lady"/>
+          <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
+          <p class="pick-screen-button-text"> आगामी </p>
+          </div>
+          </center>`;
+         rightAnswerContainer.style.display = "block";
+         questionContainer.style.display = "none";
+
+      } else {
+         sound = new Howl({
+            src: ['images/WRONG.ogg'],
+            preload: true
+         });
+         sound.play();
+         wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+         <p class="pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
+          <img src="./images/wrong.png" class="congo-lady"/>
+          <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
+          <p class="pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
+          </div>
+          </center>`;
+         wrongAnswerContainer.style.display = "block";
+         questionContainer.style.display = "none";
+      }
    }
+
 }

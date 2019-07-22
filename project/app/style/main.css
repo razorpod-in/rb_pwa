@@ -128,12 +128,12 @@ hr.bottom_bar {
 }
 
 .pick-screen-button {
+  box-shadow: -1px 8px #585858;
   background-color: #E5E5E5;
-  border-radius: 20px;
   color: #A1AEB7;
+  border-radius: 20px;
   height: 41px;
   width: 70%;
-  box-shadow: -1px 8px #585858;
 }
 
 .clicked {
@@ -426,7 +426,7 @@ hr.bottom_bar {
   padding: 2%;
 }
 
-.options-submit {
+.options-submit-2 {
   border: 2px solid #5C5550;
   box-sizing: border-box;
   border-radius: 12px;
@@ -437,6 +437,19 @@ hr.bottom_bar {
   padding: 2%;
   background-color: #00803A;
   color: white;
+}
+
+.options-submit {
+  border: 2px solid #5C5550;
+  box-sizing: border-box;
+  border-radius: 12px;
+  margin-top: 5%;
+  margin-bottom: 90px;
+  margin-right: 7%;
+  margin-left: 7%;
+  padding: 2%;
+  background-color: #E5E5E5;
+  color: #A1AEB7;
 }
 
 .profile {
