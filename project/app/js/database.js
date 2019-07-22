@@ -260,6 +260,7 @@ function addChapters(chapters) {
 }
 
 function openChapter(mid) {
+   sound.stop()
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
@@ -986,6 +987,13 @@ function optionClicked(id) {
 
 function questionSubmit(rightAnswer, mid) {
    if (rightAnswer == optionCheck) {
+      // Right / Correct Answer Logic
+
+      sound = new Howl({
+         src: ['images/CORRECT.ogg'],
+         preload: true
+      });
+      sound.play();
       rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
       <p class="pick-screen-heading">Congo</p>
        <img src="./images/stars.png" class="full-image"/> 
@@ -996,7 +1004,13 @@ function questionSubmit(rightAnswer, mid) {
        </center>`;
       rightAnswerContainer.style.display = "block";
       questionContainer.style.display = "none";
+
    } else {
+      sound = new Howl({
+         src: ['images/WRONG.ogg'],
+         preload: true
+      });
+      sound.play();
       wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
       <p class="pick-screen-heading">You are wrong</p>
        <img src="./images/wrong.png" class="congo-lady"/>
