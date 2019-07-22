@@ -905,7 +905,7 @@ function valid_form() {
    var num_user = document.getElementById("num_id").value;
    var name_user = document.getElementById("name_id").value;
    var accept_user = document.getElementById("accept_id").checked;
-   if (num_user.length == 10 && name_user.length >= 4 && accept_user == true) {
+   if (num_user.length == 11 && name_user.length >= 4 && accept_user == true) {
       user_info_status = 1;
       user_name = name_user;
       user_number = num_user;
