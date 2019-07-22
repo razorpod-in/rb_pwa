@@ -1007,7 +1007,7 @@ function questionSubmit(rightAnswer, mid) {
       });
       sound.play();
       rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      < p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
+      <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
        <img src="./images/stars.png" class="full-image"/> 
        <img src="./images/profile icon.png" class="congo-lady"/>
        <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
@@ -1024,10 +1024,10 @@ function questionSubmit(rightAnswer, mid) {
       });
       sound.play();
       wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      < p class = "pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
+      <p class="pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
        <img src="./images/wrong.png" class="congo-lady"/>
        <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
-       < p class = "pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
+       <p class="pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
        </div>
        </center>`;
       wrongAnswerContainer.style.display = "block";
