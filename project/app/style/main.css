@@ -71,7 +71,7 @@ hr.bottom_bar {
 /* Splash Screen */
 .splash-screen-logo {
   /* margin-top: 70%; */
-  height: 823px;
+  height: -webkit-fill-available;
   width: 100%;
 
 }
