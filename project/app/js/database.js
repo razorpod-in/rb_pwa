@@ -240,6 +240,9 @@ function updateModuleUI(modules) {
    }
    chapterContainer.style.display = "none";
    moduleContainer.style.display = "block";
+   resetModuleContainer.style.display = "none";
+   rightAnswerContainer.style.display = "none";
+   wrongAnswerContainer.style.display = "none";
 }
 
 function addChapters(chapters) {
@@ -265,13 +268,13 @@ function openChapter(mid) {
    if (sound) {
       sound.stop();
    }
-
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
    var chaptersList = '';
 
    request.onsuccess = function (event) {
+
       if (sound) {
          sound.stop();
       }
@@ -280,6 +283,7 @@ function openChapter(mid) {
       var userRequest = userObjectStore.get(userId);
 
       userRequest.onsuccess = function (event) {
+
          chaptersList = request.result.chapterArray;
          var userData = userRequest.result;
          var indexMid1 = 'test';
@@ -290,16 +294,17 @@ function openChapter(mid) {
             }
          }
          if (indexMid1 != 'test') {
+
             if (userData.chapterVisited[indexMid1].length == chaptersList.length) {
                var quesTransaction = db.transaction(["questions"], "readwrite");
                var quesObjectStore = quesTransaction.objectStore("questions");
                var quesrequest = quesObjectStore.get(mid);
                var quesList = '';
                quesrequest.onsuccess = function (event) {
+
                   quesList = quesrequest.result.questionArray;
                   if (quesList.length == 0) {
                      resetModuleUI(mid);
-                     // readAllModules();
                   } else {
                      var ques = quesrequest.result.questionArray[0];
                      quesList.splice(0, 1);
@@ -369,17 +374,19 @@ function openLastChapter(mid) {
 function resetModuleUI(mid) {
    resetModuleContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
       <p class="pick-screen-heading"> Reset your modules page </p>
-       <div class="next-screen-button" id="b1" onclick="alert('${mid}')">
+       <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
        <p class="pick-screen-button-text"> Reset Modules </p>
        </div>
        <div class="next-screen-button" id="b1" onclick="readAllModules()">
        <p class="pick-screen-button-text"> Go back to list of modules </p>
        </div>
        </center>`;
-   resetModuleContainer.style.display = "block";
-   wrongAnswerContainer.style.display = "none";
+   moduleContainer.style.display = "none";
+   chapterContainer.style.display = "none";
+   eachChapterContainer.style.display = "none";
    rightAnswerContainer.style.display = "none";
-   questionContainer.style.display = "none";
+   wrongAnswerContainer.style.display = "none";
+   resetModuleContainer.style.display = "block";
 }
 
 function updateChapterUI(chaptersList) {
@@ -745,7 +752,7 @@ function updateLastEachEndChapterUI(eachChapter) {
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
 </center>`;
-   var initialStateEachChapterContainer = '<div class="row"><a onclick=backNav("chapter")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
+   var initialStateEachChapterContainer = `<div class="row"><a onclick=openChapter("${eachChapter.mid}")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />`;
    eachChapterContainer.innerHTML = initialStateEachChapterContainer;
    eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
 
