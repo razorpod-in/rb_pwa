@@ -51,7 +51,7 @@ const getModulesFromNetwork = async (user_type) => {
       }
       return reponseModules.data.payload;
    } catch (error) {
-      console.log("You are offline bitch");
+      console.log("You are offline");
       console.error(error)
    }
 }
@@ -430,7 +430,7 @@ function updateQuestionUI(ques) {
       var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
       optionArray.push(optionElement);
    }
-   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">Question</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">Submit </div></center></div>`;
+   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
 
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
@@ -995,11 +995,11 @@ function questionSubmit(rightAnswer, mid) {
       });
       sound.play();
       rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class="pick-screen-heading">Congo</p>
+      < p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
        <img src="./images/stars.png" class="full-image"/> 
        <img src="./images/profile icon.png" class="congo-lady"/>
        <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
-       <p class="pick-screen-button-text">Next</p>
+       < p class = "pick-screen-button-text"> आगामी </p>
        </div>
        </center>`;
       rightAnswerContainer.style.display = "block";
@@ -1012,10 +1012,10 @@ function questionSubmit(rightAnswer, mid) {
       });
       sound.play();
       wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class="pick-screen-heading">You are wrong</p>
+      < p class = "pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
        <img src="./images/wrong.png" class="congo-lady"/>
        <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
-       <p class="pick-screen-button-text">Next</p>
+       < p class = "pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
        </div>
        </center>`;
       wrongAnswerContainer.style.display = "block";
