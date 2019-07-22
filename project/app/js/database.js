@@ -33,6 +33,7 @@ var moduleIDArray = [];
 var sound = ""
 var reponseQues = [];
 var rightAns = '';
+var optionClickedStatus =0;
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -465,13 +466,14 @@ function addQuestions(questions) {
 }
 
 function updateQuestionUI(ques) {
+   optionClickedStatus = 0;
    rightAns = ques.answer;
    var optionArray = [];
    for (var i = 0; i < ques.options.length; i++) {
       var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
       optionArray.push(optionElement);
    }
-   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
+   questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" id="question_submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
 
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
@@ -803,7 +805,6 @@ function clearChapterVisited(mid) {
             quesRequest.onsuccess = function (event) {
                var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
                quesUpdateRequest.onsuccess = function (event) {
-                  console.log("questions updated");
                }
             }
          }
@@ -1001,6 +1002,7 @@ function backNav(pagename) {
 var optionCheck = '';
 
 function optionClicked(id) {
+   optionClickedStatus = 1;
    var optionSelected = document.getElementById(id);
    var options = document.getElementsByClassName("options");
 
@@ -1011,44 +1013,48 @@ function optionClicked(id) {
    }
    optionSelected.style.backgroundColor = "#0093DD";
    optionSelected.style.color = "white";
-
+   document.getElementById("question_submit").className = 'options-submit-2'
    optionCheck = id;
 }
 
 function questionSubmit(rightAnswer, mid) {
-   if (rightAnswer == optionCheck) {
-      // Right / Correct Answer Logic
 
-      sound = new Howl({
-         src: ['images/CORRECT.ogg'],
-         preload: true
-      });
-      sound.play();
-      rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
-       <img src="./images/stars.png" class="full-image"/> 
-       <img src="./images/profile icon.png" class="congo-lady"/>
-       <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
-       <p class="pick-screen-button-text"> आगामी </p>
-       </div>
-       </center>`;
-      rightAnswerContainer.style.display = "block";
-      questionContainer.style.display = "none";
-
-   } else {
-      sound = new Howl({
-         src: ['images/WRONG.ogg'],
-         preload: true
-      });
-      sound.play();
-      wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class="pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
-       <img src="./images/wrong.png" class="congo-lady"/>
-       <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
-       <p class="pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
-       </div>
-       </center>`;
-      wrongAnswerContainer.style.display = "block";
-      questionContainer.style.display = "none";
+   if(optionClickedStatus == 1){
+      if (rightAnswer == optionCheck) {
+         // Right / Correct Answer Logic
+   
+         sound = new Howl({
+            src: ['images/CORRECT.ogg'],
+            preload: true
+         });
+         sound.play();
+         rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+         <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
+          <img src="./images/stars.png" class="full-image"/> 
+          <img src="./images/profile icon.png" class="congo-lady"/>
+          <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
+          <p class="pick-screen-button-text"> आगामी </p>
+          </div>
+          </center>`;
+         rightAnswerContainer.style.display = "block";
+         questionContainer.style.display = "none";
+   
+      } else {
+         sound = new Howl({
+            src: ['images/WRONG.ogg'],
+            preload: true
+         });
+         sound.play();
+         wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+         <p class="pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
+          <img src="./images/wrong.png" class="congo-lady"/>
+          <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
+          <p class="pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
+          </div>
+          </center>`;
+         wrongAnswerContainer.style.display = "block";
+         questionContainer.style.display = "none";
+      }
    }
+
 }
