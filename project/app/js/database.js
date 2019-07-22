@@ -260,14 +260,19 @@ function addChapters(chapters) {
 }
 
 function openChapter(mid) {
-   sound.stop()
+   if (sound) {
+      sound.stop();
+   }
+   
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
    var chaptersList = '';
 
    request.onsuccess = function (event) {
-
+      if (sound) {
+         sound.stop();
+      }
       var userTransaction = db.transaction(["user"], "readwrite");
       var userObjectStore = userTransaction.objectStore("user");
       var userRequest = userObjectStore.get(userId);
@@ -355,6 +360,9 @@ function openLastChapter(mid) {
 }
 
 function updateChapterUI(chaptersList) {
+   if (sound) {
+      sound.stop();
+   }
    chapterContainer.innerHTML = ' <div class="row"><a onclick=readAllModules()><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"></p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
@@ -372,6 +380,9 @@ function updateChapterUI(chaptersList) {
 }
 
 function updateLastChapterUI(chaptersList) {
+   if (sound) {
+      sound.stop();
+   }
    chapterContainer.innerHTML = ' <div class="row"><a onclick="readAllModules()"><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" /><center><p class="pick-screen-heading"></p></center>';
    for (var i = 0; i < chaptersList.length; i++) {
       var chapterCard = `
@@ -440,6 +451,7 @@ function updateQuestionUI(ques) {
 }
 
 function openEachChapter(mid, id) {
+   sound.stop();
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
@@ -572,7 +584,7 @@ function updateLastEachChapterUI(eachChapter, mid, next_id) {
        </div>
    </div>
    <div class="next-screen-button" onclick="openEachChapter('${eachChapter.mid}','${next_id}')">
-        <p class="pick-screen-button-text">Next</p>
+        <p class="pick-screen-button-text">आगामी</p>
       </div>
    <div >
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
@@ -613,7 +625,7 @@ function updateEachChapterUI(eachChapter, next_id) {
        </div>
    </div>
    <div class="next-screen-button" onclick="openEachChapter('${eachChapter.mid}','${next_id}')">
-        <p class="pick-screen-button-text">Next</p>
+        <p class="pick-screen-button-text">आगामी</p>
       </div>
    <div >
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
@@ -665,7 +677,7 @@ function updateEachEndChapterUI(eachChapter) {
        </div>
    </div>
    <div class="next-screen-button" onclick="openChapter('${eachChapter.mid}')">
-        <p class="pick-screen-button-text">Next</p>
+        <p class="pick-screen-button-text"> आगामी </p>
       </div>
    <div >
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
@@ -717,7 +729,7 @@ function updateLastEachEndChapterUI(eachChapter) {
        </div>
    </div>
    <div class="next-screen-button" onclick="openChapter('${eachChapter.mid}')">
-        <p class="pick-screen-button-text">Next</p>
+        <p class="pick-screen-button-text"> आगामी </p>
       </div>
    <div >
        <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
