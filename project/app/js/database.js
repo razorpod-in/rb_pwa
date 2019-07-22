@@ -40,6 +40,8 @@ const eachChapterContainer = document.getElementById('each-chapter-card-containe
 const questionContainer = document.getElementById('question-card-container');
 const rightAnswerContainer = document.getElementById('right-answer-card-container');
 const wrongAnswerContainer = document.getElementById('wrong-answer-card-container');
+const resetModuleContainer = document.getElementById('reset-module-card-container');
+
 
 const getModulesFromNetwork = async (user_type) => {
    try {
@@ -263,7 +265,7 @@ function openChapter(mid) {
    if (sound) {
       sound.stop();
    }
-   
+
    var transaction = db.transaction(["chapters"]);
    var objectStore = transaction.objectStore("chapters");
    var request = objectStore.get(mid);
@@ -295,15 +297,20 @@ function openChapter(mid) {
                var quesList = '';
                quesrequest.onsuccess = function (event) {
                   quesList = quesrequest.result.questionArray;
+                  if (quesList.length == 0) {
+                     resetModuleUI(mid);
+                     // readAllModules();
+                  } else {
+                     var ques = quesrequest.result.questionArray[0];
+                     quesList.splice(0, 1);
+                     quesrequest.result.questionArray = quesList;
+                     var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
+                     quesUpdateRequest.onsuccess = function (event) {
+                        // Do something with the request.result!
+                     };
+                     updateQuestionUI(ques);
+                  }
 
-                  var ques = quesrequest.result.questionArray[0];
-                  quesList.splice(0, 1);
-                  quesrequest.result.questionArray = quesList;
-                  var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
-                  quesUpdateRequest.onsuccess = function (event) {
-                     // Do something with the request.result!
-                  };
-                  updateQuestionUI(ques);
                }
 
             } else {
@@ -357,6 +364,22 @@ function openLastChapter(mid) {
       };
    };
 
+}
+
+function resetModuleUI(mid) {
+   resetModuleContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
+      <p class="pick-screen-heading"> Reset your modules page </p>
+       <div class="next-screen-button" id="b1" onclick="alert('${mid}')">
+       <p class="pick-screen-button-text"> Reset Modules </p>
+       </div>
+       <div class="next-screen-button" id="b1" onclick="readAllModules()">
+       <p class="pick-screen-button-text"> Go back to list of modules </p>
+       </div>
+       </center>`;
+   resetModuleContainer.style.display = "block";
+   wrongAnswerContainer.style.display = "none";
+   rightAnswerContainer.style.display = "none";
+   questionContainer.style.display = "none";
 }
 
 function updateChapterUI(chaptersList) {
@@ -527,19 +550,6 @@ function openLastEachChapter(mid, id) {
                }
             }
          }
-
-         // for (var i = 0; i < thatChapter.length; i++) {
-         //    if (thatChapter[i]._id == id) {
-         //       eachChapter = thatChapter[i];
-         //       if (thatChapter[i + 1] && thatChapter[i + 1]._id) {
-         //          var next_id = thatChapter[i + 1]._id;
-         //          updateLastEachChapterUI(eachChapter, mid, next_id);
-         //       } else {
-         //          openChapter(mid);
-         //       }
-
-         //    }
-         // }
 
          if (eachChapter == '') {
             openLastChapter(mid);
@@ -758,6 +768,7 @@ function updateLastEachEndChapterUI(eachChapter) {
 
    }
 }
+
 function clearChapterVisited(mid) {
    var indexMid1 = 'test';
    var userTransaction = db.transaction(["user"], "readwrite");
