@@ -33,7 +33,7 @@ var moduleIDArray = [];
 var sound = ""
 var reponseQues = [];
 var rightAns = '';
-var optionClickedStatus =0;
+var optionClickedStatus = 0;
 
 const moduleContainer = document.getElementById('module-card-container');
 const chapterContainer = document.getElementById('chapter-card-container');
@@ -312,9 +312,19 @@ function openChapter(mid) {
                      quesrequest.result.questionArray = quesList;
                      var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
                      quesUpdateRequest.onsuccess = function (event) {
-                        // Do something with the request.result!
                      };
-                     updateQuestionUI(ques);
+                     var userTransaction = db.transaction(["user"], "readwrite");
+                     var userObjectStore = userTransaction.objectStore("user");
+                     var userRequest = userObjectStore.get(userId);
+
+                     userRequest.onsuccess = function (event) {
+                        userRequest.result.lastQuestion.push(ques);
+                        updateQuestionUI(ques);
+                        var userUpdateRequest = userObjectStore.put(userRequest.result);
+                        userUpdateRequest.onsuccess = function (event) {
+                           // console.log("1 = ", userRequest.result);
+                        };
+                     }
                   }
 
                }
@@ -325,8 +335,6 @@ function openChapter(mid) {
          } else {
             updateChapterUI(chaptersList);
          }
-
-
          userData.lastModule = mid;
          if (userData.moduleVisited.includes(mid)) {
             // console.log("Already Exists");
@@ -480,6 +488,10 @@ function updateQuestionUI(ques) {
    questionContainer.style.display = "block";
    rightAnswerContainer.style.display = "none";
    wrongAnswerContainer.style.display = "none";
+   
+   document.getElementById("splash-screen").style.display = "none";
+   document.getElementById("tabs-screen").style.display = "block";
+
 }
 
 function openEachChapter(mid, id) {
@@ -804,8 +816,7 @@ function clearChapterVisited(mid) {
             var quesRequest = quesObjectStore.get(mid);
             quesRequest.onsuccess = function (event) {
                var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
-               quesUpdateRequest.onsuccess = function (event) {
-               }
+               quesUpdateRequest.onsuccess = function (event) {}
             }
          }
       };
@@ -845,6 +856,7 @@ function addUser(userData) {
          type: userData.bid,
          lastModule: '',
          lastChapter: '',
+         lastQuestion: [],
          moduleVisited: [],
          chapterVisited: [],
       });
@@ -881,9 +893,13 @@ var userId = '';
 setTimeout(function () {
       if (initialUserData.length > 0) {
          userId = initialUserData[0].id;
-         if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+         if(initialUserData[0].lastQuestion != []){
+            updateQuestionUI(initialUserData[0].lastQuestion[0]);
+         }
+         else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
             openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-         } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
+         } 
+         else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
             openLastChapter(initialUserData[0].lastModule);
          }
       } else {
@@ -1019,10 +1035,21 @@ function optionClicked(id) {
 
 function questionSubmit(rightAnswer, mid) {
 
-   if(optionClickedStatus == 1){
+   if (optionClickedStatus == 1) {
+      var userTransaction = db.transaction(["user"], "readwrite");
+      var userObjectStore = userTransaction.objectStore("user");
+      var userRequest = userObjectStore.get(userId);
+
+      userRequest.onsuccess = function (event) {
+         userRequest.result.lastQuestion=[];
+         var userUpdateRequest = userObjectStore.put(userRequest.result);
+         userUpdateRequest.onsuccess = function (event) {
+            console.log("1 = ", userRequest.result);
+         };
+      }
       if (rightAnswer == optionCheck) {
          // Right / Correct Answer Logic
-   
+
          sound = new Howl({
             src: ['images/CORRECT.ogg'],
             preload: true
@@ -1038,7 +1065,7 @@ function questionSubmit(rightAnswer, mid) {
           </center>`;
          rightAnswerContainer.style.display = "block";
          questionContainer.style.display = "none";
-   
+
       } else {
          sound = new Howl({
             src: ['images/WRONG.ogg'],
