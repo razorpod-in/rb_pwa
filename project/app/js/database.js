@@ -618,7 +618,7 @@ function updateLastEachChapterUI(eachChapter, mid, next_id) {
         <p class="pick-screen-button-text">आगामी</p>
       </div>
    <div >
-       <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
+       <img class="asha_didi hide_didi" src="images/asha.gif" alt="">
    </div>
 </center>`;
    var initialStateEachChapterContainer = '<div class="row"><a onclick=openChapter("' + mid + '")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
@@ -948,11 +948,20 @@ function router_registration() {
    }
 }
 
+
+var validform = {
+
+}
+
 function valid_form() {
    var num_user = document.getElementById("num_id").value;
    var name_user = document.getElementById("name_id").value;
    var accept_user = document.getElementById("accept_id").checked;
-   if (num_user.length == 11 && name_user.length >= 4 && accept_user == true) {
+
+
+
+
+   if (num_user.length == 10 && typeof num_user == "number" && name_user.length >= 4 && accept_user == true) {
       user_info_status = 1;
       user_name = name_user;
       user_number = num_user;
