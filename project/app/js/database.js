@@ -239,6 +239,7 @@ function updateModuleUI(modules) {
 
       moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
+   document.getElementById("tabs-screen").style.display = "block";
    chapterContainer.style.display = "none";
    moduleContainer.style.display = "block";
    resetModuleContainer.style.display = "none";
@@ -476,10 +477,10 @@ function addQuestions(questions) {
 function updateQuestionUI(ques) {
    optionClickedStatus = 0;
    rightAns = ques.answer;
-   var optionArray = [];
+   var optionArray = '';
    for (var i = 0; i < ques.options.length; i++) {
       var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
-      optionArray.push(optionElement);
+      optionArray = optionArray + optionElement;
    }
    questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" id="question_submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
 
@@ -893,7 +894,7 @@ var userId = '';
 setTimeout(function () {
       if (initialUserData.length > 0) {
          userId = initialUserData[0].id;
-         if(initialUserData[0].lastQuestion != []){
+         if(initialUserData[0].lastQuestion.length > 0){
             updateQuestionUI(initialUserData[0].lastQuestion[0]);
          }
          else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
@@ -901,6 +902,11 @@ setTimeout(function () {
          } 
          else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
             openLastChapter(initialUserData[0].lastModule);
+         }
+         else{
+            readAllModules();
+         document.getElementById("splash-screen").style.display = "none";
+
          }
       } else {
          document.getElementById("splash-screen").style.display = "none";
