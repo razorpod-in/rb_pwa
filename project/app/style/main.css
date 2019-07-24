@@ -419,11 +419,11 @@ hr.bottom_bar {
   border: 2px solid #5C5550;
   box-sizing: border-box;
   border-radius: 12px;
-  margin-top: 0%;
-  margin-bottom: 0%;
+  margin-top: 3%;
+  margin-bottom: 3%;
   margin-right: 7%;
   margin-left: 7%;
-  padding: 2%;
+  padding: 2%;w
 }
 
 .options-submit-2 {

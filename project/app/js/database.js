@@ -311,8 +311,7 @@ function openChapter(mid) {
                      quesList.splice(0, 1);
                      quesrequest.result.questionArray = quesList;
                      var quesUpdateRequest = quesObjectStore.put(quesrequest.result);
-                     quesUpdateRequest.onsuccess = function (event) {
-                     };
+                     quesUpdateRequest.onsuccess = function (event) {};
                      var userTransaction = db.transaction(["user"], "readwrite");
                      var userObjectStore = userTransaction.objectStore("user");
                      var userRequest = userObjectStore.get(userId);
@@ -348,7 +347,6 @@ function openChapter(mid) {
          };
       };
    };
-
 }
 
 function openLastChapter(mid) {
@@ -411,6 +409,7 @@ function updateChapterUI(chaptersList) {
         </div>`;
       chapterContainer.insertAdjacentHTML('beforeend', chapterCard);
    }
+   resetModuleContainer.style.display = "none";
    moduleContainer.style.display = "none";
    eachChapterContainer.style.display = "none";
    rightAnswerContainer.style.display = "none";
@@ -476,10 +475,10 @@ function addQuestions(questions) {
 function updateQuestionUI(ques) {
    optionClickedStatus = 0;
    rightAns = ques.answer;
-   var optionArray = [];
+   var optionArray = '';
    for (var i = 0; i < ques.options.length; i++) {
       var optionElement = `<div class="options" onclick="optionClicked('${ques.options[i]._id}')" id="${ques.options[i]._id}">${ques.options[i].text} </div>`;
-      optionArray.push(optionElement);
+      optionArray = optionArray + optionElement;
    }
    questionContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="task-screen"><center><p class="pick-screen-heading">सवाल</p></center><center><h4 class="task-heading"></h4><p class="tast-text">${ques.text}</p>${optionArray}<div class="options-submit" id="question_submit" onclick="questionSubmit('${rightAns}','${ques.mid}')">आगामी </div></center></div>`;
 
@@ -488,7 +487,8 @@ function updateQuestionUI(ques) {
    questionContainer.style.display = "block";
    rightAnswerContainer.style.display = "none";
    wrongAnswerContainer.style.display = "none";
-   
+   resetModuleContainer.style.display = "none";
+
    document.getElementById("splash-screen").style.display = "none";
    document.getElementById("tabs-screen").style.display = "block";
 
@@ -717,6 +717,7 @@ function updateEachEndChapterUI(eachChapter) {
    var initialStateEachChapterContainer = '<div class="row"><a onclick=backNav("chapter")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
    eachChapterContainer.innerHTML = initialStateEachChapterContainer;
    eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
+   resetModuleContainer.style.display = "none";
 
    chapterContainer.style.display = "none";
    eachChapterContainer.style.display = "block";
@@ -770,6 +771,7 @@ function updateLastEachEndChapterUI(eachChapter) {
    eachChapterContainer.innerHTML = initialStateEachChapterContainer;
    eachChapterContainer.insertAdjacentHTML('beforeend', eachChapterCard);
 
+   resetModuleContainer.style.display = "none";
    document.getElementById("splash-screen").style.display = "none";
    moduleContainer.style.display = "none";
    document.getElementById("tabs-screen").style.display = "block";
@@ -891,24 +893,8 @@ var userId = '';
 
 // Functions 
 setTimeout(function () {
-      if (initialUserData.length > 0) {
-         userId = initialUserData[0].id;
-         if(initialUserData[0].lastQuestion != []){
-            updateQuestionUI(initialUserData[0].lastQuestion[0]);
-         }
-         else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
-            openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-         } 
-         else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
-            openLastChapter(initialUserData[0].lastModule);
-         }
-      } else {
-         document.getElementById("splash-screen").style.display = "none";
-         document.getElementById("pick-screen").style.display = "block";
-      }
-
-   },
-   timePeriodInMs);
+   lastActivityTrack();
+}, timePeriodInMs);
 
 sound = new Howl({
    src: ['assets/amr/intro.mp3'],
@@ -918,6 +904,31 @@ sound = new Howl({
       // console.log('Sound Over. Didi Hide')
    }
 });
+
+function lastActivityTrack() {
+   open_tab(event, 'book');
+   var initialObjectStore = db.transaction("user").objectStore("user");
+   initialObjectStore.getAll().onsuccess = function (event) {
+      initialUserData = event.target.result;
+   };
+   if (initialUserData.length > 0) {
+      userId = initialUserData[0].id;
+      if (initialUserData[0].lastQuestion.length > 0) {
+         updateQuestionUI(initialUserData[0].lastQuestion[0]);
+      } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+         openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
+      } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
+         openLastChapter(initialUserData[0].lastModule);
+      } else {
+         readAllModules();
+         document.getElementById("splash-screen").style.display = "none";
+         document.getElementById("tabs-screen").style.display = "block";
+      }
+   } else {
+      document.getElementById("splash-screen").style.display = "none";
+      document.getElementById("pick-screen").style.display = "block";
+   }
+}
 
 function select_one(id_select) {
    if (selected == "none") {
@@ -1050,7 +1061,7 @@ function questionSubmit(rightAnswer, mid) {
       var userRequest = userObjectStore.get(userId);
 
       userRequest.onsuccess = function (event) {
-         userRequest.result.lastQuestion=[];
+         userRequest.result.lastQuestion = [];
          var userUpdateRequest = userObjectStore.put(userRequest.result);
          userUpdateRequest.onsuccess = function (event) {
             console.log("1 = ", userRequest.result);
