@@ -960,10 +960,6 @@ function router_registration() {
 }
 
 
-var validform = {
-
-}
-
 function valid_form() {
    var num_user = document.getElementById("num_id").value;
    var name_user = document.getElementById("name_id").value;
@@ -972,7 +968,7 @@ function valid_form() {
 
 
 
-   if (num_user.length == 10 && typeof num_user == "number" && name_user.length >= 4 && accept_user == true) {
+   if (num_user.length == 10 && name_user.length >= 4 && accept_user == true && !isNaN(num_user)) {
       user_info_status = 1;
       user_name = name_user;
       user_number = num_user;
