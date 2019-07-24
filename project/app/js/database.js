@@ -968,7 +968,7 @@ function valid_form() {
 
 
 
-   if (num_user.length == 10 && name_user.length >= 4 && accept_user == true && !isNaN(num_user)) {
+   if (num_user.length == 10 && name_user.length >= 2 && accept_user == true && !isNaN(num_user)) {
       user_info_status = 1;
       user_name = name_user;
       user_number = num_user;
