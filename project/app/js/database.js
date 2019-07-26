@@ -306,6 +306,22 @@ function openChapter(mid) {
 
                   quesList = quesrequest.result.questionArray;
                   if (quesList.length == 0) {
+                     var userTransaction = db.transaction(["user"], "readwrite");
+                     var userObjectStore = userTransaction.objectStore("user");
+                     var userRequest = userObjectStore.get(userId);
+
+                     userRequest.onsuccess = function (event) {
+                        var userData = userRequest.result;
+                        if (userData.rewards.includes(mid)) {
+                           // console.log("Already Exists");
+                        } else {
+                           userData.rewards.push(mid);
+                        }
+                        var userUpdateRequest = userObjectStore.put(userRequest.result);
+                        userUpdateRequest.onsuccess = function (event) {
+                           // console.log("1 = ", userRequest.result);
+                        };
+                     }
                      resetModuleUI(mid);
                   } else {
                      var ques = quesrequest.result.questionArray[0];
@@ -862,6 +878,7 @@ function addUser(userData) {
          lastQuestion: [],
          moduleVisited: [],
          chapterVisited: [],
+         rewards: [],
       });
    request.onsuccess = function (event) {
       // alert("User has been added to your database.");
@@ -1060,7 +1077,6 @@ function questionSubmit(rightAnswer, mid) {
          userRequest.result.lastQuestion = [];
          var userUpdateRequest = userObjectStore.put(userRequest.result);
          userUpdateRequest.onsuccess = function (event) {
-            console.log("1 = ", userRequest.result);
          };
       }
       if (rightAnswer == optionCheck) {

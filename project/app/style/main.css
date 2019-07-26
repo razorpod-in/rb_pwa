@@ -690,7 +690,7 @@ footer {
   Asha Didi CSS
 */
 .asha_didi {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 9%;
   height: 120px;
