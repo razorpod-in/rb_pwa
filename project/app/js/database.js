@@ -903,6 +903,7 @@ function remove() {
 }
 
 function updateProfileUI() {
+   open_tab(event, 'book');
    var UI = '';
    var userTransaction = db.transaction(["user"], "readwrite");
    var userObjectStore = userTransaction.objectStore("user");
