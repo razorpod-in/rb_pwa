@@ -364,6 +364,9 @@ hr.bottom_bar {
 /* Profile Screen */
 .profile-screen {
   margin: 7% 2% 2% 2%;
+  height: fit-content;
+  overflow: scroll;
+  margin-bottom: 100px;
 }
 
 /* img {
