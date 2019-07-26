@@ -373,9 +373,9 @@ hr.bottom_bar {
   margin-bottom: 100px;
 }
 
-/* img {
-  border-radius: 50%;
-} */
+.profile-chapter-icons{
+  width: 100%;
+}
 .profile-info {
   margin-top: 9%;
   margin-bottom: 7%;
