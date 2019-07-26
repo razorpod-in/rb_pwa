@@ -204,7 +204,7 @@ function readAllModules() {
 }
 
 function updateModuleUI(modules) {
-   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading">निम्नलिखित चीज़ो का ध्यान रखें </p></center>';
+   moduleContainer.innerHTML = '<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center><p class="pick-screen-heading">शुरू करने के लिए निम्नलिखित में से चयन करें</p></center>';
    for (var i = 0; i < modules.length; i++) {
       if (i == modules.length - 1) {
          var moduleCard = `
