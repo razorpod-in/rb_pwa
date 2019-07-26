@@ -210,6 +210,7 @@ hr.bottom_bar {
 /* Tabs */
 .footer-nav {
   background-color: white;
+  z-index: 99;
   bottom: 0;
   position: fixed;
   width: 100%;
@@ -338,10 +339,13 @@ hr.bottom_bar {
 
 .homepage_content {
   text-align: center;
-  font-size: 55px;
+  font-size: 25px;
   margin: 20px;
 }
 
+.home-page-asha-tai{
+  width: 50%;
+}
 /* Each Chapter Page */
 
 .video-js {
@@ -688,8 +692,7 @@ footer {
 .asha_didi {
   position: absolute;
   left: 0;
-  z-index: 10000;
-  bottom: 10%;
+  bottom: 9%;
   height: 120px;
   display: block;
   transition: ease-in 1s;

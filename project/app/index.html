@@ -96,8 +96,9 @@ limitations under the License.
       <div class="reg-form-div">
         <p class="pick-screen-heading">पंजीकरण</p>
         <form>
-          <input type="text" placeholder="+91" class="reg-form-input" style="width: 18%;" disabled/>
-          <input type="number" placeholder="9999123456" class="reg-form-input" id="num_id" onkeyup="valid_form()" style="width: 44%;"/>
+          <input type="text" placeholder="+91" class="reg-form-input" style="width: 18%;" disabled />
+          <input type="number" placeholder="9999123456" class="reg-form-input" id="num_id" onkeyup="valid_form()"
+            style="width: 44%;" />
           <input type="text" placeholder="आपका नाम" class="reg-form-input" id="name_id" onkeyup="valid_form()" />
           <div class="reg-form-checkbox-input ">
             <input type="checkbox" class="reg-form-checkbox" id="accept_id" onchange="valid_form()" />
@@ -121,11 +122,13 @@ limitations under the License.
         </center>
       </div>
       <hr class="top_bar" />
-      <div class="content homepage_content">
-        आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है
-      </div>
+      <div class="content homepage_content" id="home_page_content"></div>
       <center>
-        <div class="pick-screen-button clicked" id="b4" onclick="lastActivityTrack()">
+        <img src="./assets/svg/asha_tai_big.svg" class="home-page-asha-tai" />
+        <p class="content homepage_content">
+            व्यक्तिगत स्वच्छता और साफ-सफाई ऐसा अभ्यास है जिसे व्यक्ति को सदैव पालन करना चाहिए, और गर्भावस्था के दौरान तो और भी विशेष रूप से पालन करना चाहिए। 
+        </p>
+        <div class="pick-screen-button clicked" id="b4" onclick="lastActivityTrack()" style="margin-bottom: 120px;">
           <p class="pick-screen-button-text">सीखने के लिए आगे बढ़ें</p>
         </div>
 

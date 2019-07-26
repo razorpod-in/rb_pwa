@@ -239,6 +239,7 @@ function updateModuleUI(modules) {
 
       moduleContainer.insertAdjacentHTML('beforeend', moduleCard);
    }
+   document.getElementById("pick-screen").style.display = "none";
    chapterContainer.style.display = "none";
    moduleContainer.style.display = "block";
    resetModuleContainer.style.display = "none";
@@ -912,6 +913,7 @@ function lastActivityTrack() {
       initialUserData = event.target.result;
    };
    if (initialUserData.length > 0) {
+      document.getElementById("home_page_content").innerHTML = "welcome "+ initialUserData[0].name +" आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
       userId = initialUserData[0].id;
       if (initialUserData[0].lastQuestion.length > 0) {
          updateQuestionUI(initialUserData[0].lastQuestion[0]);
@@ -965,9 +967,6 @@ function valid_form() {
    var name_user = document.getElementById("name_id").value;
    var accept_user = document.getElementById("accept_id").checked;
 
-
-
-
    if (num_user.length == 10 && name_user.length >= 2 && accept_user == true && !isNaN(num_user)) {
       user_info_status = 1;
       user_name = name_user;
@@ -992,6 +991,7 @@ function valid_form() {
 function router_tabs_screen() {
    if (user_info_status > 0) {
       insertUserInMongo();
+      document.getElementById("home_page_content").innerHTML = "welcome "+ user_name +" आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
       document.getElementById("registration-screen").style.display = "none";
       document.getElementById("tabs-screen").style.display = "block";
    }
