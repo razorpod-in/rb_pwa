@@ -399,12 +399,12 @@ function openLastChapter(mid) {
 
 function resetModuleUI(mid) {
    resetModuleContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
-      <p class="pick-screen-heading"> Reset your modules page </p>
+      <p class="pick-screen-heading"> अपने मॉड्यूल पृष्ठ को रीसेट करें </p>
        <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
-       <p class="pick-screen-button-text"> Reset Modules </p>
+       <p class="pick-screen-button-text"> मॉड्यूल रीसेट करें </p>
        </div>
        <div class="next-screen-button" id="b1" onclick="readAllModules()">
-       <p class="pick-screen-button-text"> Go back to list of modules </p>
+       <p class="pick-screen-button-text"> मॉड्यूल की सूची पर वापस जाएँ </p>
        </div>
        </center>`;
    moduleContainer.style.display = "none";
@@ -925,7 +925,7 @@ function updateProfileUI() {
                imageArray = imageArray + `<div class="col-xs-3"><img src = "../images/grey/${moduleIDArray[i]}.png" class="profile-chapter-icons" onclick="openChapter('${moduleIDArray[i]}')"></div>`
             }
          }
-         UI = ` <div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="profile-screen"><div class="row"><div class="col-xs-5 profile-padding"><center><img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%"></center></div><div class="col-xs-7 profile-padding" style="margin-top: 3%;"><center class="profile-info name"><svg width="11%" height="11%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12C0 18.6 5.4 24 12 24C18.6 24 24 18.6 24 12C24 5.4 18.6 0 12 0ZM12 3.6C14.04 3.6 15.6 5.16 15.6 7.2C15.6 9.24 14.04 10.8 12 10.8C9.96 10.8 8.4 9.24 8.4 7.2C8.4 5.16 9.96 3.6 12 3.6ZM12 20.64C9 20.64 6.36 19.08 4.8 16.8C4.8 14.4 9.6 13.08 12 13.08C14.4 13.08 19.2 14.4 19.2 16.8C17.64 19.08 15 20.64 12 20.64Z" fill="#DD137B" /></svg> &nbsp &nbsp ${userData.name}</center><center class="profile-info phone"><svg width="11%" height="11%" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.99823 8.66726C5.55163 11.7785 8.22154 14.3336 11.3327 16.0018L13.7776 13.5569C14.113 13.2215 14.5543 13.1112 14.8897 13.3363C16.1121 13.782 17.4448 14.0027 18.8879 14.0027C19.5543 14.0027 20 14.4484 20 15.1147V18.8923C20 19.5587 19.5543 20.0044 18.8879 20.0044C8.44219 20 0 11.5534 0 1.11209C0 0.445719 0.445719 0 1.11209 0H5C5.66637 0 6.11209 0.445719 6.11209 1.11209C6.11209 2.44484 6.33274 3.77758 6.77846 5.11033C6.88879 5.44572 6.77846 5.88703 6.55781 6.22242L3.99823 8.66726Z" fill="#0093DD" /></svg> &nbsp &nbsp ${userData.number}</center></div></div><center><p class="pick-screen-heading">आपकी प्रगति</p>
+         UI = ` <div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><div class="profile-screen"><div class="row"><div class="col-xs-5 profile-padding"><center><img src="images/profile_dummy.svg" alt="Avatar" style="width:100%"></center></div><div class="col-xs-7 profile-padding" style="margin-top: 3%;"><center class="profile-info name"><svg width="11%" height="11%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12C0 18.6 5.4 24 12 24C18.6 24 24 18.6 24 12C24 5.4 18.6 0 12 0ZM12 3.6C14.04 3.6 15.6 5.16 15.6 7.2C15.6 9.24 14.04 10.8 12 10.8C9.96 10.8 8.4 9.24 8.4 7.2C8.4 5.16 9.96 3.6 12 3.6ZM12 20.64C9 20.64 6.36 19.08 4.8 16.8C4.8 14.4 9.6 13.08 12 13.08C14.4 13.08 19.2 14.4 19.2 16.8C17.64 19.08 15 20.64 12 20.64Z" fill="#DD137B" /></svg> &nbsp &nbsp ${userData.name}</center><center class="profile-info phone"><svg width="11%" height="11%" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.99823 8.66726C5.55163 11.7785 8.22154 14.3336 11.3327 16.0018L13.7776 13.5569C14.113 13.2215 14.5543 13.1112 14.8897 13.3363C16.1121 13.782 17.4448 14.0027 18.8879 14.0027C19.5543 14.0027 20 14.4484 20 15.1147V18.8923C20 19.5587 19.5543 20.0044 18.8879 20.0044C8.44219 20 0 11.5534 0 1.11209C0 0.445719 0.445719 0 1.11209 0H5C5.66637 0 6.11209 0.445719 6.11209 1.11209C6.11209 2.44484 6.33274 3.77758 6.77846 5.11033C6.88879 5.44572 6.77846 5.88703 6.55781 6.22242L3.99823 8.66726Z" fill="#0093DD" /></svg> &nbsp &nbsp ${userData.number}</center></div></div><center><p class="pick-screen-heading">आपकी प्रगति</p>
          </center><div class="row">${imageArray}</div><center><p class="pick-screen-heading">आपका पुरस्कार</p></center></div>`;
          profileContainer.innerHTML = UI;
       }
@@ -1041,7 +1041,7 @@ function valid_form() {
 function router_tabs_screen() {
    if (user_info_status > 0) {
       insertUserInMongo();
-      document.getElementById("home_page_content").innerHTML = "welcome " + user_name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
+      document.getElementById("home_page_content").innerHTML = "" + user_name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
       document.getElementById("registration-screen").style.display = "none";
       document.getElementById("tabs-screen").style.display = "block";
    }
@@ -1115,14 +1115,14 @@ function questionSubmit(rightAnswer, mid) {
          // Right / Correct Answer Logic
 
          sound = new Howl({
-            src: ['images/CORRECT.ogg'],
+            src: ['images/CORRECT.mp3'],
             preload: true
          });
          sound.play();
          rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
          <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
-          <img src="./images/stars.png" class="full-image"/> 
-          <img src="./images/profile icon.png" class="congo-lady"/>
+         <!--  <img src="./images/stars.gif" class="full-image"/> -->
+         <img src="./images/tickmark.svg" class="congo-lady"/>
           <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
           <p class="pick-screen-button-text"> आगामी </p>
           </div>
