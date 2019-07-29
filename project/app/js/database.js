@@ -963,8 +963,14 @@ function lastActivityTrack() {
       initialUserData = event.target.result;
    };
    if (initialUserData.length > 0) {
-      document.getElementById("home_page_content").innerHTML = "welcome " + initialUserData[0].name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
+      document.getElementById("home_page_content").innerHTML = "" + initialUserData[0].name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
       userId = initialUserData[0].id;
+      // sound.stop();
+      // sound = new Howl({
+      //    src: ['images/home_screen.mp3'],
+      //    preload: true
+      // })
+      // sound.play();
       if (initialUserData[0].lastQuestion.length > 0) {
          updateQuestionUI(initialUserData[0].lastQuestion[0]);
       } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
@@ -1042,13 +1048,22 @@ function router_tabs_screen() {
    if (user_info_status > 0) {
       insertUserInMongo();
       document.getElementById("home_page_content").innerHTML = "" + user_name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
+      
       document.getElementById("registration-screen").style.display = "none";
       document.getElementById("tabs-screen").style.display = "block";
    }
 }
 
 function open_tab(event, tabName) {
-
+   
+   if (tabName === "home") {
+      sound.stop();
+      sound = new Howl({
+         src: ['images/home_screen.mp3'],
+         preload: true
+      })
+      sound.play();
+   }
    var i, tabcontent, tablinks;
    tabcontent = document.getElementsByClassName("tab-content");
 
