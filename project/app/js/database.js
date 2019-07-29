@@ -200,6 +200,7 @@ function readAllModules() {
       var modules = event.target.result;
       updateModuleUI(modules);
       return modules;
+      updateProfileUI();
    };
 
 }
@@ -552,7 +553,7 @@ function openEachChapter(mid, id) {
 
          var chapterStatus = userData.chapterVisited[indexMid].includes(id);
          if (chapterStatus) {
-            console.log("Chapter visited");
+            // console.log("Chapter visited");
          } else {
             userData.chapterVisited[indexMid].push(id);
          }
@@ -957,6 +958,7 @@ sound = new Howl({
 });
 
 function lastActivityTrack() {
+   document.getElementById("pick-screen").style.display = "block";
    open_tab(event, 'book');
    var initialObjectStore = db.transaction("user").objectStore("user");
    initialObjectStore.getAll().onsuccess = function (event) {
