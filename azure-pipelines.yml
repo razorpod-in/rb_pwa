@@ -18,5 +18,4 @@ steps:
 - script: |
     cd project
     npm install
-    npm run --silent start
   displayName: 'npm install and build'
