@@ -305,8 +305,9 @@ function openChapter(mid) {
                var quesrequest = quesObjectStore.get(mid);
                var quesList = '';
                quesrequest.onsuccess = function (event) {
-
-                  quesList = quesrequest.result.questionArray;
+                  if (quesrequest.result) {
+                     quesList = quesrequest.result.questionArray;
+                  }
                   if (quesList.length == 0) {
                      var userTransaction = db.transaction(["user"], "readwrite");
                      var userObjectStore = userTransaction.objectStore("user");
@@ -344,7 +345,6 @@ function openChapter(mid) {
                         };
                      }
                   }
-
                }
 
             } else {
@@ -837,8 +837,11 @@ function clearChapterVisited(mid) {
             var quesObjectStore = quesTransaction.objectStore("questions");
             var quesRequest = quesObjectStore.get(mid);
             quesRequest.onsuccess = function (event) {
-               var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
-               quesUpdateRequest.onsuccess = function (event) {}
+               if(quesRequest.result){
+                  var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
+                  quesUpdateRequest.onsuccess = function (event) {}
+               }
+
             }
          }
       };
@@ -958,7 +961,7 @@ sound = new Howl({
 });
 
 function lastActivityTrack() {
-   document.getElementById("pick-screen").style.display = "block";
+   document.getElementById("pick-screen").style.display = "none";
    open_tab(event, 'book');
    var initialObjectStore = db.transaction("user").objectStore("user");
    initialObjectStore.getAll().onsuccess = function (event) {
@@ -1050,14 +1053,14 @@ function router_tabs_screen() {
    if (user_info_status > 0) {
       insertUserInMongo();
       document.getElementById("home_page_content").innerHTML = "" + user_name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
-      
+
       document.getElementById("registration-screen").style.display = "none";
       document.getElementById("tabs-screen").style.display = "block";
    }
 }
 
 function open_tab(event, tabName) {
-   
+
    if (tabName === "home") {
       sound.stop();
       sound = new Howl({
