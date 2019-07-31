@@ -303,6 +303,8 @@ hr.bottom_bar {
   color: #383431;
   font-weight: 600;
   text-align: center;
+  width: 80%;
+  margin: auto;
 }
 
 .chapter-image {
