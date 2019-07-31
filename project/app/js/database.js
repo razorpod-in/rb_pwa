@@ -638,7 +638,7 @@ function updateLastEachChapterUI(eachChapter, mid, next_id) {
         <p class="pick-screen-button-text">आगामी</p>
       </div>
    <div >
-       <img class="asha_didi hide_didi" src="images/asha.gif" alt="">
+       <img class="asha_didi hide_didi" src="assets/svg/asha_tai.svg" alt="">
    </div>
 </center>`;
    var initialStateEachChapterContainer = '<div class="row"><a onclick=openChapter("' + mid + '")><div class="col-xs-3"><img src="images/back_arrow.png" class="back-button" /></div></a><div class="col-xs-9"><img src="images/NIP Logo Unit.svg" alt="main-logo" class="chapter-screen-logo" /></div></div><hr class="top_bar" />';
