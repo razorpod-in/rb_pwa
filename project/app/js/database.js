@@ -1141,8 +1141,7 @@ function questionSubmit(rightAnswer, mid) {
          sound.play();
          rightAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
          <p class = "pick-screen-heading"> मुबारक हो आपका उत्तर सही है </p>
-         <!--  <img src="./images/stars.gif" class="full-image"/> -->
-         <img src="./images/tickmark.svg" class="congo-lady"/>
+         <img src="./images/CORRECT.gif" class="congo-lady"/>
           <div class="next-screen-button" id="b1" onclick="openChapter('${mid}')">
           <p class="pick-screen-button-text"> आगामी </p>
           </div>
@@ -1158,7 +1157,7 @@ function questionSubmit(rightAnswer, mid) {
          sound.play();
          wrongAnswerContainer.innerHTML = `<div><center><img src="images/NIP Logo Unit.svg" alt="main-logo" class="pick-screen-logo" /></center></div><hr class="top_bar" /><center>
          <p class="pick-screen-heading"> शायद आपको ये जानकारी ठीक से समझ नहीं आयी | </p>
-          <img src="./images/wrong.png" class="congo-lady"/>
+          <img src="./images/WRONG.gif" class="congo-lady"/>
           <div class="next-screen-button" id="b1" onclick="clearChapterVisited('${mid}')">
           <p class="pick-screen-button-text"> आइये एक और बार कोशिश करते हैं </p>
           </div>
