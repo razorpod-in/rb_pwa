@@ -228,7 +228,7 @@ hr.bottom_bar {
 
 .module-card-image {
   margin: 10px;
-  height: 125px;
+  height: 64px;
   border-radius: 12px;
 }
 
@@ -236,7 +236,8 @@ hr.bottom_bar {
   vertical-align: middle;
   text-align: -webkit-auto;
   display: inline-block;
-  line-height: 140px;
+  line-height: 80px;
+  height: 76px;
 }
 
 .module-card-heading {
