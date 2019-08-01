@@ -991,6 +991,7 @@ function lastActivityTrack() {
       document.getElementById("splash-screen").style.display = "none";
       document.getElementById("pick-screen").style.display = "block";
    }
+   updateProfileUI();
 }
 
 function select_one(id_select) {
