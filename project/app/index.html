@@ -155,22 +155,22 @@ limitations under the License.
       <hr class="top_bar" />
       <div class="content homepage_content">
         संसाधन
-        <div class="module-card" onclick="downloadFile('images/resources/1.pdf')">
+        <div class="module-card" onclick="downloadFile('images/resources/1/file.pdf')">
           <div class="row">
             <div class="col-xs-6">
-              <img class="module-card-image" src="images/color/5d2d6400858cf009781aadb7.png">
+              <img class="module-card-image module-card-resource" src="images/resources/1/thumb.png">
             </div>
-            <div class="col-xs-6 module-title-container">
+            <div class="col-xs-6 module-title-container module-title-container-resource">
               <p class="module-card-heading">स्वच्छता और साफ-सफाई </p>
             </div>
           </div>
         </div>
-        <div class="module-card" onclick="downloadFile('images/resources/2.pdf')">
+        <div class="module-card" onclick="downloadFile('images/resources/2/file.pdf')">
           <div class="row">
             <div class="col-xs-6">
-              <img class="module-card-image" src="images/color/5d2d6400858cf009781aadb7.png">
+              <img class="module-card-image module-card-resource" src="images/resources/2/thumb.png">
             </div>
-            <div class="col-xs-6 module-title-container">
+            <div class="col-xs-6 module-title-container module-title-container-resource">
               <p class="module-card-heading">स्वच्छता और साफ-सफाई </p>
             </div>
           </div>
@@ -216,7 +216,11 @@ limitations under the License.
 
   <script src="js/idb-promised.js"></script>
   <script src="js/database.js"></script>
-
+  <script>
+    function downloadFile(loc){
+      window.open(loc)
+    }
+  </script>
 </body>
 
 </html>

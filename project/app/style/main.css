@@ -226,11 +226,18 @@ hr.bottom_bar {
   background-color: white;
 }
 
-.module-card-image {
+.module-card-resource {
   margin: 10px;
   height: 64px;
   border-radius: 12px;
 }
+.module-card-image {
+    margin: 10px;
+    height: 120px;
+    border-radius: 12px;
+}
+
+
 
 .module-title-container {
   vertical-align: middle;
@@ -238,6 +245,13 @@ hr.bottom_bar {
   display: inline-block;
   line-height: 80px;
   height: 76px;
+}
+.module-title-container-resource {
+  vertical-align: middle;
+    text-align: -webkit-auto;
+    display: inline-block;
+    line-height: 135px;
+    height: 150px;
 }
 
 .module-card-heading {
