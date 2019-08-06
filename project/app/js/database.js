@@ -837,7 +837,7 @@ function clearChapterVisited(mid) {
             var quesObjectStore = quesTransaction.objectStore("questions");
             var quesRequest = quesObjectStore.get(mid);
             quesRequest.onsuccess = function (event) {
-               if(quesRequest.result){
+               if (quesRequest.result) {
                   var quesUpdateRequest = quesObjectStore.put(quesdupRequest.result);
                   quesUpdateRequest.onsuccess = function (event) {}
                }
@@ -963,34 +963,33 @@ sound = new Howl({
 function lastActivityTrack() {
    document.getElementById("pick-screen").style.display = "none";
    open_tab(event, 'book');
+   var initialUserData = '';
    var initialObjectStore = db.transaction("user").objectStore("user");
    initialObjectStore.getAll().onsuccess = function (event) {
       initialUserData = event.target.result;
-   };
-   if (initialUserData.length > 0) {
-      document.getElementById("home_page_content").innerHTML = "" + initialUserData[0].name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
-      userId = initialUserData[0].id;
-      // sound.stop();
-      // sound = new Howl({
-      //    src: ['images/home_screen.mp3'],
-      //    preload: true
-      // })
-      // sound.play();
-      if (initialUserData[0].lastQuestion.length > 0) {
-         updateQuestionUI(initialUserData[0].lastQuestion[0]);
-      } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
-         openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
-      } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
-         openLastChapter(initialUserData[0].lastModule);
+      if (initialUserData.length > 0) {
+         document.getElementById("home_page_content").innerHTML = "" + initialUserData[0].name + " आरबी न्यूट्रिशन इंडिया ऐप में आपका स्वागत है";
+         userId = initialUserData[0].id;
+
+         if (initialUserData[0].lastQuestion.length > 0) {
+            updateQuestionUI(initialUserData[0].lastQuestion[0]);
+         } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter != '') {
+            openLastEachChapter(initialUserData[0].lastModule, initialUserData[0].lastChapter)
+         } else if (initialUserData[0].lastModule != '' && initialUserData[0].lastChapter == '') {
+            openLastChapter(initialUserData[0].lastModule);
+         } else {
+            readAllModules();
+            document.getElementById("splash-screen").style.display = "none";
+            document.getElementById("tabs-screen").style.display = "block";
+         }
       } else {
-         readAllModules();
+         console.log('hi');
          document.getElementById("splash-screen").style.display = "none";
-         document.getElementById("tabs-screen").style.display = "block";
+         document.getElementById("pick-screen").style.display = "block";
       }
-   } else {
-      document.getElementById("splash-screen").style.display = "none";
-      document.getElementById("pick-screen").style.display = "block";
-   }
+   };
+
+
    updateProfileUI();
 }
 
