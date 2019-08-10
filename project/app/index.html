@@ -73,10 +73,12 @@ limitations under the License.
     </div>
 
     <center>
-      <div class="pick-screen-circle pregnant" id="c1" onclick="select_one(c1)">
+      <div class="pick-screen-circle" id="c1" onclick="select_one(c1img)">
+        <img src="../assets/png/pregnantWoman.png" id="c1img" class="pick-screen-circle-img" />
       </div>
       <p class="pick-screen-subheading">मैं गर्भवती हूँ</p>
-      <div class="pick-screen-circle young-mother" id="c2" onclick="select_one(c2)">
+      <div class="pick-screen-circle" id="c2" onclick="select_one(c2img)">
+        <img src="../assets/png/youngMother.png" id="c2img" class="pick-screen-circle-img" />
       </div>
       <p class="pick-screen-subheading">मैं माँ हूँ</p>
       <div>
@@ -217,7 +219,7 @@ limitations under the License.
   <script src="js/idb-promised.js"></script>
   <script src="js/database.js"></script>
   <script>
-    function downloadFile(loc){
+    function downloadFile(loc) {
       window.open(loc)
     }
   </script>

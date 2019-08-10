@@ -996,16 +996,16 @@ function select_one(id_select) {
 
       sound.play()
    }
-   if (id_select.id == "c1") {
+   if (id_select.id == "c1img") {
       selected = "1"
       user_type = 'pregnancy';
-      document.getElementById(id_select.id).style.borderColor = "green";
-      document.getElementById("c2").style.borderColor = "white";
+      document.getElementById(id_select.id).src = "../assets/png/pregnantWomanselected.png";
+      document.getElementById("c2img").src = "../assets/png/youngMother.png";
    } else {
       selected = '2'
       user_type = 'motherhood';
-      document.getElementById(id_select.id).style.borderColor = "green";
-      document.getElementById("c1").style.borderColor = "white";
+      document.getElementById("c1img").src = "../assets/png/pregnantWoman.png";
+      document.getElementById(id_select.id).src = "../assets/png/youngMotherselected.png";
    }
    document.getElementById("b1").classList.add('clicked');
 }
