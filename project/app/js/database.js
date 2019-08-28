@@ -367,6 +367,7 @@ function openChapter(mid) {
       };
    };
    updateProfileUI();
+   updateUserInMongo();
 }
 
 function openLastChapter(mid) {
@@ -867,6 +868,28 @@ function insertUserInMongo() {
          }
       })
 }
+
+function updateUserInMongo() {
+   var userTransaction = db.transaction(["user"], "readwrite");
+   var userObjectStore = userTransaction.objectStore("user");
+   var userRequest = userObjectStore.get(userId);
+   userRequest.onsuccess = function (event) {
+      userData = userRequest.result;
+      var url = '/api/users/'+userData.id;
+      axios.put(url, userData)
+      .then(response => response.data)
+      .catch(error => console.log(error))
+      .then(data => {
+         if (data.status == "Success") {
+            userId = data.payload._id;
+         } else {
+            alert('Request Failed')
+         }
+      })
+
+   }
+}
+
 function addUser(userData) {
    var request = db.transaction(["user"], "readwrite")
       .objectStore("user")
