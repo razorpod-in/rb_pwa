@@ -11,6 +11,9 @@ var userSchema = new Schema({
         type: String,
         required: true
     },
+    user_type: {
+        type: String
+    },
     lastModuleVisited: {
         type: String
     },
@@ -31,6 +34,7 @@ var userSchema = new Schema({
         alias: "browserId",
         required: true
     },
+    chapterVisited:[],
     createdAt: {
         type: String
     },

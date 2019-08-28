@@ -875,7 +875,9 @@ function updateUserInMongo() {
    var userRequest = userObjectStore.get(userId);
    userRequest.onsuccess = function (event) {
       userData = userRequest.result;
-      var url = '/api/users/'+userData.id;
+      console.log('USER')
+      console.log(userData)
+      var url = '/api/user/'+userData.id;
       axios.put(url, userData)
       .then(response => response.data)
       .catch(error => console.log(error))

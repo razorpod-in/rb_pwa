@@ -40,7 +40,7 @@ router.route('/users')
 router.route('/user/:id')
     .get(function(req,res,next){
         var userid = req.params.id
-        User.findOne({"_id": userid}).exec((err,usr) => {
+        Users.findOne({"_id": userid}).exec((err,usr) => {
             if(usr){
                 res.json({
                     status: "Success",
@@ -57,12 +57,26 @@ router.route('/user/:id')
     })
     .put(function(req,res,next){
         var userid = req.params.id
-        var payload = req.body
+        var pload = req.body
+        var payload = {}
+        
+        payload.fullName = pload.name;
+        payload.phone = pload.number;
+        payload.lastModuleVisited = pload.lastModule;
+        payload.lastChapterVisited = pload.lastChapter;
+        payload.rewards = pload.rewards;
+        payload.chapterVisited = []
+        pload.chapterVisited.forEach(element => {
+            payload.chapterVisited.push(element)
+        });
+        payload.user_type = pload.type
+
         var options = {
             new: true
         }
-        User.findOneAndUpdate({"_id": userid },payload,options,function(err,savedUser){
-            if(savedUser){
+        Users.findOneAndUpdate({"_id": userid },payload,options,function(err,savedUser){
+            if (savedUser) {
+                console.log(savedUser)
                 res.json({
                     status: "Success",
                     message: "User Data Updated Successfully",
